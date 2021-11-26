@@ -1,0 +1,21 @@
+.SideNav {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px 30px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-top: 20px;
+}
+.SideNav .navItem {
+    border-bottom: 1px solid rgb(184, 181, 181);
+
+    display: flex;
+
+    align-items: center;
+    color: #383860;
+}
+.SideNav .navItem span {
+   font-weight: bold;
+    color: #383860;
+    margin-left: 10px ;
+}
+

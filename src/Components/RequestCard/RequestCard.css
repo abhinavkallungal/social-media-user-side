@@ -1,0 +1,26 @@
+.RequestCard{
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-top: 20px;
+}
+.RequestCard .details{
+    display: flex;
+}
+.RequestCard img {
+    border-radius: 10px;
+    margin-right: 10px;
+}
+.RequestCard .details span{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.RequestCard .btns{
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+
+}
