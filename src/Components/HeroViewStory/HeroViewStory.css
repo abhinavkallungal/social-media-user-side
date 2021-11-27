@@ -1,0 +1,34 @@
+.HeroViewStory{
+    min-width: 99px;
+    height: 176px;
+    background-color: #ccc;
+    border-radius: 10px;
+    position: relative;
+    margin: 10px;
+
+}
+.HeroViewStory .img{
+    width: 100%;
+    height: 100%;
+}
+.HeroViewStory img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+
+
+}
+
+.HeroViewStory .content{
+    font-weight: bold;
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+   
+}
+
+.HeroViewStory .content span{
+    text-align: center;
+}

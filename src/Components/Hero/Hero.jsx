@@ -6,10 +6,16 @@ import { makeStyles } from '@mui/styles';
 import SideNav from '../SideNav/SideNav';
 import SidebarBanner from '../SidebarBanner/SidebarBanner';
 import RequestCard from '../RequestCard/RequestCard';
+import Addpost from '../AddPost/Addpost';
+
+import HeroStorySection from '../HeroStorySection/HeroStorySection';
+import ViewPostCard from '../ViewPostCard/ViewPostCard';
+import CreatePostModal from '../CreatePostModal/CreatePostModal';
 
 const useStyles = makeStyles({
     left: {
-       padding:'20px'
+       padding:'20px',
+
 
     },
     right: {
@@ -45,11 +51,19 @@ function Hero() {
                 <Grid item xs={12} md={2.5} className={classes.left} >
                     <ProfileCard />
                     <SideNav/>
+                    
                     <SidebarBanner/>
                 </Grid>
-                <Grid item xs={12} md={6.5} >test</Grid>
+                <Grid item xs={12} md={6.5} >
+                   <HeroStorySection/>
+                    <Addpost/>
+                    <ViewPostCard/>
+                    <ViewPostCard/>
+                </Grid>
                 <Grid item xs={12} md={3}  className={classes.right} >
                     <RequestCard/>
+                    <RequestCard/>
+                    <CreatePostModal/>
                 </Grid>
                 
                 

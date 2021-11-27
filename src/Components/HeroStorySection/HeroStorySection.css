@@ -1,0 +1,10 @@
+.HeroStorySection{
+    width: 100%;    
+}
+
+.HeroStorySection .d-flex{
+    width: 100%;
+    display: flex;
+    overflow: scroll;
+   
+}

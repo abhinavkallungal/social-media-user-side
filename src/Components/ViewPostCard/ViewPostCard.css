@@ -1,0 +1,68 @@
+.ViewPostCard{
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-top: 20px;
+}
+
+.ViewPostCard .postHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ViewPostCard .postHeader .profile{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.ViewPostCard .postHeader .profile img{
+  border-radius: 10px;
+  margin-right: 20px;
+}
+.ViewPostCard .postHeader .profile span{
+    font-weight: bold;
+    font-size: 18px;
+  }
+.ViewPostCard .postContent{
+   width: 100%;
+   height: auto;
+   margin-top: 20px;
+}
+.ViewPostCard .postContent span{
+  font-size: 16px;
+  font-weight: bold;
+  color: gray;
+ }
+.ViewPostCard .postContent img{
+    margin-top: 10px;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+ }
+ .ViewPostCard .engageCount{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+    border-bottom: 1px solid gray;
+    color: rgb(160, 160, 160);
+ }
+ .ViewPostCard .postBottom {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ .ViewPostCard .postBottom .d-flex{
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+ }
+ .ViewPostCard .postBottom .d-flex button{
+    margin-right: 20px;
+    height: 40px;
+}

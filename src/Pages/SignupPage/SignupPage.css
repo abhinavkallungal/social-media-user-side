@@ -1,0 +1,58 @@
+.SignupPage{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.SignupPage .item{
+    width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+} 
+
+.SignupPage .card {
+    max-width:400px ;
+    background-color: #ffffff;
+
+}
+
+
+.SignupPage .card .header {
+    color: #1877F2  ;
+    text-align: center;
+
+}
+.SignupPage .card .header h4{
+    color: #585858  ;
+
+}
+.SignupPage .card .form{
+    display: flex;
+    justify-content: center;
+}
+.SignupPage .card .signupBtn{
+    width: 70%;
+
+}
+.SignupPage .card .d-flex{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+.SignupPage .card .errormessage{
+   text-align: center;
+   color: rgb(250, 103, 103);
+}
+
+.SignupPage .card .agreepolicy{
+    margin: 20px 0px;
+    text-align: center;
+    color: rgb(117, 117, 117);
+ }
+
+ .SignupPage .footer{
+    width: 360px;
+     margin-top: 20px;
+     text-align: center;
+    padding: 50px 20px;
+ }

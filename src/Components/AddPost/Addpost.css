@@ -1,0 +1,19 @@
+.Addpost{
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.Addpost .d-flex{
+display: flex;
+align-items: center;
+padding: 5px;
+
+}
+.Addpost .d-flex img{
+    border-radius: 10px;
+    }

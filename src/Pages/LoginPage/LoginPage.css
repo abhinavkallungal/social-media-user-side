@@ -1,0 +1,60 @@
+.LoginPage{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.LoginPage .item{
+    width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+} 
+
+.LoginPage .card {
+    max-width:400px ;
+    background-color: #ffffff;
+    padding: 20px;
+
+}
+
+
+.LoginPage .card .header {
+    color: #1877F2  ;
+    text-align: center;
+
+}
+.LoginPage .card .header h4{
+    color: #585858  ;
+
+}
+.LoginPage .card .form{
+    display: flex;
+    justify-content: center;
+}
+.LoginPage .card .signupBtn{
+    width: 70%;
+
+}
+.LoginPage .card .d-flex{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+.LoginPage .card .errormessage{
+   text-align: center;
+   color: rgb(250, 103, 103);
+}
+
+.LoginPage .card .agreepolicy{
+    margin: 20px 0px;
+    text-align: center;
+    color: rgb(117, 117, 117);
+ }
+
+ .LoginPage .footer{
+     margin-top: 20px;
+     text-align: center;
+    padding: 50px 20px;
+    max-width:400px ;
+
+ }
