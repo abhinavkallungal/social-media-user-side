@@ -2,10 +2,9 @@ import React from 'react'
 import './BottomBar.css'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import FolderIcon from '@mui/icons-material/Folder';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+
+import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded } from '@mui/icons-material';
+
 
 function BottomBar() {
 
@@ -16,24 +15,28 @@ function BottomBar() {
     };
 
     return (
-        <BottomNavigation sx={{ width: "100%", position: 'fixed', bottom: 0, left: 0, right: 0 }} lg={{ display: 'none'}} value={value} onChange={handleChange}>
+        <div  className="BottomBar">
+
+        <BottomNavigation sx={{ width: "100%", position: 'fixed', bottom: 0, left: 0, right: 0 }}  value={value} onChange={handleChange} >
             <BottomNavigationAction
-                label="Recents"
-                value="recents"
-                icon={<RestoreIcon />}
+                label="Home"
+                value="Home"
+                icon={<HomeRounded />}
             />
             <BottomNavigationAction
-                label="Favorites"
-                value="favorites"
-                icon={<FavoriteIcon />}
+                label="Notifications"
+                value="Notifications"
+                icon={<NotificationsRounded />}
             />
             <BottomNavigationAction
-                label="Nearby"
-                value="nearby"
-                icon={<LocationOnIcon />}
+                label="Chat"
+                value="Chat"
+                icon={<ChatRounded />}
             />
-            <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
+            <BottomNavigationAction label="Friends" value="Friends" icon={<PeopleAltRounded />} />
         </BottomNavigation>
+        </div>
+
     );
 
 

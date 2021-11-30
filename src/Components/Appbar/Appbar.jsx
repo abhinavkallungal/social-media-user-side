@@ -6,8 +6,13 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, AddBoxRounded } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
+import CreatePostModal from '../CreatePostModal/CreatePostModal'
+import { useDispatch } from 'react-redux'
+import {logoutAction} from "../../Redux/userSlice"
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
+    
     logo: {
         color: "#007FFF",
         fontFamily: 'Montserrat, sans-serif',
@@ -24,6 +29,9 @@ const useStyles = makeStyles({
         backgroundColor: "#f1f1f1",
         padding: 0,
     },
+    mobileNavbar:{
+        display:'none'
+    },
     root: {
         background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
         border: 0,
@@ -38,6 +46,9 @@ const useStyles = makeStyles({
 
 
 function Appbar() {
+    const dispatch = useDispatch()
+    const history =useHistory()
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [user, setUser] = useState("")
     const open = Boolean(anchorEl);
@@ -48,6 +59,11 @@ function Appbar() {
         setAnchorEl(null);
     };
     const classes = useStyles();
+
+    const handleLogout=(e)=>{
+        dispatch(logoutAction())
+        history.push('/login')
+    }
 
     return (
         <>
@@ -61,23 +77,22 @@ function Appbar() {
                             Social Media
                         </Typography>
                         <div className="navItems">
-                            <Button variant="text" className={classes.navItem} style={{}} >
+                            <Button variant="text" className={classes.navItem,'navItem'} sx={classes.mobileNavbar} style={{}} >
                                 <HomeRounded color="primary" fontSize="medium" />
                             </Button>
-                            <Button variant="text" className={classes.navItem} >
+                            <Button variant="text" className={classes.navItem,'navItem'} >
                                 <NotificationsRounded color="primary" size="medium" />
                             </Button>
-                            <Button variant="text" className={classes.navItem}>
+                            <Button variant="text" className={classes.navItem,'navItem'}>
                                 <ChatRounded color="primary" size="medium" />
                             </Button>
-                            <Button variant="text" className={classes.navItem} >
+                            <Button variant="text" className={classes.navItem,'navItem'} >
                                 <PeopleAltRounded color="primary" size="medium" />
                             </Button>
 
 
 
-
-                            <Button className={classes.root} style={{ color: '#ffffff' }}><AddBoxRounded /> Create</Button>
+                            <CreatePostModal className={classes.root} style={{ color: '#ffffff' }} ></CreatePostModal>
 
                             <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
                                 {
@@ -145,7 +160,7 @@ function Appbar() {
                             </ListItemIcon>
                             Settings
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem onClick={handleLogout}>
                             <ListItemIcon>
                                 <LogoutIcon fontSize="small" />
                             </ListItemIcon>

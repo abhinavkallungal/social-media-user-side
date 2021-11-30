@@ -1,10 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './CreatePostModal.css'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { Typography, IconButton } from '@mui/material';
-import { CloseRounded} from '@mui/icons-material';
+import { CloseRounded } from '@mui/icons-material';
 import Modal from '@mui/material/Modal';
+import { createPost } from '../../Axios'
+import S3FileUpload from 'react-s3'
+import { useSelector, useDispatch } from 'react-redux';
+import { setNewPostAction } from '../../Redux/newPostSlice'
+import { useHistory } from 'react-router-dom';
+
+
+
+
+const config = {
+    bucketName: 'socialmedia-posts',
+    dirName: 'posts', /* optional */
+    region: 'us-west-1',
+    accessKeyId: 'AKIAVVVY46DQ7X6LQLMZ',
+    secretAccessKey: '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'
+}
 
 
 const style = {
@@ -23,19 +39,72 @@ const style = {
 
 
 
+
 function CreatePostModal() {
+
+    const dispatch = useDispatch()
+    const history = useHistory()
+
     const [open, setOpen] = React.useState(false);
+    const [image, setImage] = React.useState('');
+
+    const user = JSON.parse(useSelector(state => state.user.user))
+    const [post, setPost] = useState({ desc: "", files: "" })
+
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [age, setAge] = React.useState('');
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
-    };
+
+
+    const handleDisc = (e) => {
+        console.log(post);
+        setPost({ ...post, desc: e.target.value })
+
+    }
+
+    const imageChange = (e) => {
+        const file = URL.createObjectURL(e.target.files[0])
+        setImage(file)
+
+        S3FileUpload.uploadFile(e.target.files[0], config).then((data) => {
+            console.log(data);
+            setPost({ ...post, files: data.location })
+
+        }).catch((err) => {
+            console.log(err);
+        })
+
+    }
+
+    const handlePost = (e) => {
+        console.log(post);
+
+        if (post.desc === '' && post.files === '') {
+
+        } else {
+            createPost({ ...post, Accessibility: 'Public', userId: user._id }).then((data) => {
+                console.log(data);
+                dispatch(setNewPostAction(data))
+                setOpen(false)
+
+            }).catch((err) => {
+                if (err.response.status == 403) {
+                    localStorage.removeItem("token");
+                    
+                    history.push('/feed')
+                }
+            })
+
+        }
+
+    }
+
+
     return (
         <div className='CreatePostModal'>
+            <Button onClick={handleOpen} className='modalbtn' style={{ color: '#ffffff' }} >Create Post</Button>
 
-            <Button onClick={handleOpen}>Open modal</Button>
             <Modal
                 className='modal'
                 open={open}
@@ -46,7 +115,7 @@ function CreatePostModal() {
                 <Box sx={style} className='Box' >
                     <div className="header" >
                         <Typography variant='h6' component="h2" style={{ fontWeight: 'bold' }} >Create Post</Typography>
-                        <IconButton size='large' style={{ backgroundColor: '#eeeeee' }}>
+                        <IconButton size='large' style={{ backgroundColor: '#eeeeee' }} onClick={handleClose}>
                             <CloseRounded />
                         </IconButton>
 
@@ -69,18 +138,19 @@ function CreatePostModal() {
                         </div>
                     </div>
                     <div className="content">
-                        <textarea name="" id="" rows='5' placeholder='TEXT  HERE............'></textarea>
-                        <div className="img">
-                            <img src="" alt="" />
+                        <textarea name="" id="" rows='5' onChange={handleDisc} placeholder='TEXT  HERE............'></textarea>
+                        <div className="img" >
+                            <input type="file" onChange={imageChange} />
+                            <img src={image} alt="" />
                         </div>
                     </div>
 
                     <div className="footer">
-                        <Button className="btn" variant='contained'> POST IT</Button>
+                        <Button onClick={handlePost} className="btn" variant='contained'> POST IT</Button>
                     </div>
 
 
-                    
+
                 </Box>
             </Modal>
         </div>

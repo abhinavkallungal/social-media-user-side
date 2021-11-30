@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect,useState} from 'react'
 import './Hero.css'
 import {Grid} from '@mui/material'
 import ProfileCard from '../ProfileCard/ProfileCard'
@@ -7,10 +7,12 @@ import SideNav from '../SideNav/SideNav';
 import SidebarBanner from '../SidebarBanner/SidebarBanner';
 import RequestCard from '../RequestCard/RequestCard';
 import Addpost from '../AddPost/Addpost';
+import { useSelector } from 'react-redux';
 
 import HeroStorySection from '../HeroStorySection/HeroStorySection';
 import ViewPostCard from '../ViewPostCard/ViewPostCard';
 import CreatePostModal from '../CreatePostModal/CreatePostModal';
+import { getAllpost } from '../../Axios';
 
 const useStyles = makeStyles({
     left: {
@@ -44,6 +46,17 @@ const useStyles = makeStyles({
 
 function Hero() {
     const classes=useStyles()
+    const post  = useSelector(state => state.newPost)
+    const[posts,SetPosts]=useState([])
+    useEffect(() => {
+        getAllpost().then((posts)=>{
+            SetPosts(posts)
+        })
+
+       
+    }, [])
+    
+
     return (
         <div className="Hero">
             <Grid container>
@@ -51,19 +64,28 @@ function Hero() {
                 <Grid item xs={12} md={2.5} className={classes.left} >
                     <ProfileCard />
                     <SideNav/>
-                    
                     <SidebarBanner/>
                 </Grid>
                 <Grid item xs={12} md={6.5} >
                    <HeroStorySection/>
-                    <Addpost/>
-                    <ViewPostCard/>
-                    <ViewPostCard/>
+                    <Addpost/> 
+                    {
+                        post.post ? <ViewPostCard post={post.post}/> : null
+
+                    }
+                    {
+                        posts.map((post)=>{
+                            return <ViewPostCard post={post}/> 
+
+                        })
+                    }
+                   
+                    
                 </Grid>
                 <Grid item xs={12} md={3}  className={classes.right} >
+                
                     <RequestCard/>
                     <RequestCard/>
-                    <CreatePostModal/>
                 </Grid>
                 
                 

@@ -1,0 +1,11 @@
+.BottomBar{
+    display: none;
+    background-color: deeppink;
+
+
+}
+@media only screen and (max-width: 600px) {
+    .BottomBar{
+        display: block;
+    }
+}
