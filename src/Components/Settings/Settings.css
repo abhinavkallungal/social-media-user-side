@@ -1,0 +1,29 @@
+.Settings{
+    margin-top: 20px;
+}
+
+.Settings .card{
+    border-radius: 10px;
+
+}
+.Settings .card .head{
+    color: #007fff;
+font-size: 32px;
+margin-bottom: 20px;
+}
+
+.Settings .card .subhead{
+    font-size: 24px;
+    font-weight: bold;
+    color: gray;
+    margin-top: 20px;
+
+}
+
+
+.Settings .card .item{
+    font-size: 20px;
+    font-weight:bold;
+    border-bottom: 2px solid rgb(199, 199, 199);
+    padding: 20px ;
+}

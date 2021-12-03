@@ -12,6 +12,9 @@ import SignupPage from './Pages/SignupPage/SignupPage';
 import jwtDecode from 'jwt-decode';
 import { useDispatch } from 'react-redux'
 import { loginAction } from "./Redux/userSlice"
+import ProfilePage from './Pages/ProfilePage/ProfilePage';
+import SettingsPage from './Pages/SettingsPage/SettingsPage';
+import AccountDetailsPage from './Pages/AccountDetailsPage/AccountDetailsPage';
 
 
 function Router() {
@@ -77,6 +80,17 @@ function Router() {
             <Route exact path="/signup">
                 {Token ? <Redirect to="/" /> : <SignupPage />}
             </Route>
+            <Route  path="/profile">
+                {Token ?<ProfilePage/> :<ProfilePage/>}
+            </Route>
+
+            <Route  path="/settings">
+                {Token ? <SettingsPage/> :<SettingsPage/>}
+            </Route>
+            <Route  path="/Accountdetails">
+                {Token ? <AccountDetailsPage/> :<SettingsPage/>}
+            </Route>
+
 
         </Switch>
     )

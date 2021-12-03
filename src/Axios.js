@@ -52,6 +52,24 @@ export const verifyEmailotp =(fromdata)=>{
 
 }
 
+export const verifyMobileOtp =(fromdata)=>{
+    return new Promise(async(resolve,reject)=>{
+        axios.post('http://localhost:4000/api/v1/user/verifyMobileOtp',fromdata).then((data)=>{
+
+        localStorage.setItem("token", data.data.token)
+        localStorage.setItem("user",JSON.stringify( data.data.user))
+
+            resolve(data)
+
+        }).catch((err)=>{
+            console.log("otpverifissssscation err");
+            console.log('err',err);
+            reject(err)
+        })
+    })
+
+}
+
 export const login =(formdata)=>{
     return new Promise(async(resolve,reject)=>{
         console.log(formdata);

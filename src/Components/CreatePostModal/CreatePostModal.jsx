@@ -48,7 +48,7 @@ function CreatePostModal() {
     const [open, setOpen] = React.useState(false);
     const [image, setImage] = React.useState('');
 
-    const user = JSON.parse(useSelector(state => state.user.user))
+    const user =useSelector(state => state.user.user)
     const [post, setPost] = useState({ desc: "", files: "" })
 
 

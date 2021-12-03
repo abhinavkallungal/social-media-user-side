@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 
 
 function ProfileCard() {
-    const user = JSON.parse(useSelector(state => state.user.user))
+    const user = useSelector(state => state.user.user)
     console.log(user);
     return (
         <div className="ProfileCard" >

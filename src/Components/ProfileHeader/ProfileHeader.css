@@ -1,0 +1,176 @@
+
+
+.container {
+  background-color: #151728;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 1600px;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.main {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #181d2f;
+}
+
+
+
+.main .profile {
+  position: relative;
+  height: 40vh;
+  min-height: 250px;
+  max-height: 350px;
+  z-index: 1;
+}
+
+.profile-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  border-radius: 4px;
+}
+
+
+
+.profile-menu {
+  position: absolute;
+  bottom: 0;
+  padding-left: 200px;
+  background: #151728;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 0 0 4px 4px;
+  
+}
+
+.profile-menu-link {
+  padding: 20px 16px;
+  color: #5c5e6e;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.profile-menu-link.active, .profile-menu-link:hover {
+  color: #fff;
+  background-color: #1b1d2e;
+  border-bottom: 3px solid #1488fa;
+}
+
+.profile-avatar {
+  position: absolute;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  z-index: 1;
+  bottom: 16px;
+  left: 24px;
+}
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 3px solid #151728;
+}
+
+.profile-name {
+  margin-left: 24px;
+  margin-bottom: 24px;
+  font-size: 22px;
+  color: #fff;
+  font-weight: 600;
+  font-family: "DM Sans", sans-serif;
+}
+
+@media screen and (max-width: 700px) {
+  .profile-avatar {
+    top: -25px;
+    left: 50%;
+    -webkit-transform: translatex(-50%);
+            transform: translatex(-50%);
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .profile-img {
+    height: 100px;
+    width: 100px;
+  }
+  .profile-name {
+    margin: 5px 0;
+  }
+  .profile-menu {
+    padding-left: 0;
+    width: 100%;
+    overflow: auto;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .profile-menu-link {
+    padding: 16px;
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .profile-menu-link:nth-last-child(1),
+  .profile-menu-link:nth-last-child(2) {
+    display: none;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.11);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+/*# sourceMappingURL=style.css.map */
