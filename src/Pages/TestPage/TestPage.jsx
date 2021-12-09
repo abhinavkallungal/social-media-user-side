@@ -5,11 +5,6 @@ function TestPage() {
   const [selectedFiles, setSelectedFiles] = useState({})
   const [uploadProg, setUploadProg] = useState([])
 
-  var s3 = new AWS.S3({
-    apiVersion: '2012-10-17',
-    accessKeyId: 'AKIAVVVY46DQ3N7OCIED',
-    secretAccessKey: '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',
-  });
 
    const handleFile = event => {
       setSelectedFiles(event?.target?.files)
