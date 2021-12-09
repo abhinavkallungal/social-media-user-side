@@ -1,23 +1,38 @@
-import React from 'react'
+import React,{useEffect}  from 'react'
 import './ProfileCard.css'
 import { useSelector } from 'react-redux';
+import { useHistory , Link } from 'react-router-dom';
+
 
 
 
 function ProfileCard() {
-    const user = JSON.parse(useSelector(state => state.user.user))
+const history=useHistory()
+    const user =(useSelector((state) =>  state.user.user))
+    let data =user
     console.log(user);
+  
+
+    useEffect(() => {
+      
+    }, [user])
+
     return (
-        <div className="ProfileCard" >
-            <div className="img">
-                <img src="https://source.unsplash.com/user/erondu/50x50" alt="" />
-            </div>
-            <div>
-                <p> {user && user.name}</p>
-                <span>@{user && user.username}</span>
-            </div>
+           <Link to={`/profile/${data._id}`} style={{textDecoration:'none'}}>
+        <div className="ProfileCard"  >
+           <div className="d-flex" >
+
+<div className="img">
+    <img src="https://source.unsplash.com/user/erondu/50x50" alt="" />
+</div>
+<div>
+    <p> {data.name}</p>
+    <span>@{data.username}</span>
+</div>
+</div>
 
         </div>
+           </Link>
     )
 }
 

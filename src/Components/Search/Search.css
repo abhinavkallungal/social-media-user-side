@@ -1,0 +1,71 @@
+.Search .card{
+    
+    border-radius: 10px;
+    
+}
+
+.Search .card .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Search .card .profile .img {
+    width: 150px;
+    height: 150px;
+    background-color: gray;  
+}
+.Search .card .profile .img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.Search .Head{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    background-color: #007fff;
+    align-items: center;
+    border-radius: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.Search .Details .col-lg-6,.col-lg-12{
+    margin-top: 20px;
+
+}
+.Search .Details .saveButton{
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.Search .searchcard{
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    border-bottom: 2px solid red;
+
+
+}
+.Search .searchcard:hover{
+    cursor: pointer;
+    background-color: #eee;
+    
+   
+
+
+}
+
+.Search .searchcard .img{
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    padding: 20px;
+    background-color: gray;
+    
+}

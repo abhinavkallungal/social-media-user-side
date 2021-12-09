@@ -1,0 +1,116 @@
+.CreatePost .card {
+  border-radius: 10px;
+}
+.CreatePost .error {
+color: red;
+text-align: center  ;
+}
+.CreatePost .Head {
+  background-color: #007fff;
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  border-radius: 10px;
+
+
+}
+.CreatePost .Head .Typography {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  color: #ffffff;
+}
+.CreatePost .content {
+  display: flex;
+  padding: 20px;
+}
+.CreatePost .content .img {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background-color: #007fff;
+  margin-right: 10px;
+}
+.CreatePost .content textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  min-height: 100px;
+  max-height: 100px;
+  font-weight: bold;
+}
+.CreatePost .imagePreview {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.CreatePost .imagePreview .imgOne {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(214, 208, 208);
+  border-radius: 10px;
+}
+
+.CreatePost .imagePreview .imgOne img {
+  height: 400px;
+  width: 100%;
+  object-fit: cover ;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+.mySwiper{
+  border: 1px solid gray;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.CreatePost .addtoPost{
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  border: .5px solid rgb(219, 218, 218);
+  margin: 0px 10px;
+  font-weight: bolder;
+  color: grey;
+  background-color: #F9FBFA;
+}
+
+.CreatePost .footer{
+  padding: 0 10px;
+  margin-top: 30px;
+border-top: 1px solid grey;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+
