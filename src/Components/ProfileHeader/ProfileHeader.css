@@ -1,7 +1,7 @@
 
 
 .container {
-  background-color: #151728;
+  background-color: #ffffff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -9,6 +9,21 @@
   height: 100vh;
   overflow: hidden;
   margin: 0 auto;
+}
+
+.profile-ChangeIcon{
+  position: absolute;
+  left: 20px;
+  bottom: 0px;
+  z-index: 10;
+}
+
+.cover-ChangeIcon{
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  z-index: 10;
+
 }
 
 .main {
@@ -22,7 +37,6 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-color: #181d2f;
 }
 
 
@@ -45,7 +59,7 @@
      object-fit: cover;
   -o-object-position: center;
      object-position: center;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 
@@ -54,12 +68,12 @@
   position: absolute;
   bottom: 0;
   padding-left: 200px;
-  background: #151728;
+  background: #ffffff;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 10px 10px;
   
 }
 
@@ -96,7 +110,8 @@
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
-  border: 3px solid #151728;
+  border: 5px solid #ffffff;
+  position: relative;
 }
 
 .profile-name {

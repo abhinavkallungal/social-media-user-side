@@ -5,110 +5,110 @@ import axios from 'axios';
 const baseURL = 'http://localhost:4000'
 
 
-export const checkUserName=(formdata)=>{
-    return new Promise(async(resolve,reject)=>{
-        await axios.post('http://localhost:4000/api/v1/user/checkUserName',formdata).then((data)=>{
+export const checkUserName = (formdata) => {
+    return new Promise(async (resolve, reject) => {
+        await axios.post('http://localhost:4000/api/v1/user/checkUserName', formdata).then((data) => {
             resolve(data)
 
-        }).catch((err)=>{
-            
-            reject({usernameExist:true,message:"choose another one"})
+        }).catch((err) => {
+
+            reject({ usernameExist: true, message: "choose another one" })
         })
     })
 }
 
 
 export const doSignup = (formdata) => {
-        return new Promise(async (resolve, reject) => {
-                await axios.post('http://localhost:4000/api/v1/user/signup', formdata).then((data) => {
+    console.log(formdata);
+    return new Promise(async (resolve, reject) => {
+        await axios.post('http://localhost:4000/api/v1/user/signup', formdata).then((data) => {
+            resolve(data.data)
 
-                resolve(data.data)
-
-                }).catch((err) => {
-                        console.log("catch", err);
-                        reject(err)
-                })
-
+        }).catch((err) => {
+            reject(err)
         })
+
+    })
 
 
 }
 
-export const verifyEmailotp =(fromdata)=>{
-    return new Promise(async(resolve,reject)=>{
-        axios.post('http://localhost:4000/api/v1/user/verifyEmailOtp',fromdata).then((data)=>{
+export const verifyEmailotp = (fromdata) => {
+    return new Promise(async (resolve, reject) => {
+        axios.post('http://localhost:4000/api/v1/user/verifyEmailOtp', fromdata).then((data) => {
 
-        localStorage.setItem("token", data.data.token)
-        localStorage.setItem("user",JSON.stringify( data.data.user))
+            localStorage.setItem("token", data.data.token)
+            localStorage.setItem("user", JSON.stringify(data.data.user))
 
             resolve(data)
 
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log("otpverification err");
-            console.log('err',err);
+            console.log('err', err);
             reject(err)
         })
     })
 
 }
 
-export const verifyMobileOtp =(fromdata)=>{
-    return new Promise(async(resolve,reject)=>{
-        axios.post('http://localhost:4000/api/v1/user/verifyMobileOtp',fromdata).then((data)=>{
+export const verifyMobileOtp = (fromdata) => {
+    return new Promise(async (resolve, reject) => {
+        axios.post('http://localhost:4000/api/v1/user/verifyMobileOtp', fromdata).then((data) => {
 
-        localStorage.setItem("token", data.data.token)
-        localStorage.setItem("user",JSON.stringify( data.data.user))
+            localStorage.setItem("token", data.data.token)
+            localStorage.setItem("user", JSON.stringify(data.data.user))
 
             resolve(data)
 
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log("otpverifissssscation err");
-            console.log('err',err);
+            console.log('err', err);
             reject(err)
         })
     })
 
 }
 
-export const login =(formdata)=>{
-    return new Promise(async(resolve,reject)=>{
+export const login = (formdata) => {
+    return new Promise(async (resolve, reject) => {
         console.log(formdata);
-        axios.post('http://localhost:4000/api/v1/user/login',formdata).then((data)=>{
+        axios.post('http://localhost:4000/api/v1/user/login', formdata).then((data) => {
 
-        console.log("login data",data);
-        localStorage.setItem("token", data.data.token)
-        console.log("login user",data.data.user);
-        console.log("login success");
-        localStorage.setItem("user",JSON.stringify( data.data.user))
+            console.log("login data", data);
+            localStorage.setItem("token", data.data.token)
+            console.log("login user", data.data.user);
+            console.log("login success");
+            localStorage.setItem("user", JSON.stringify(data.data.user))
 
-            resolve(data)
+            resolve(data.data.user)
 
-        }).catch((err)=>{
-            console.log('err',err);
+        }).catch((err) => {
+            console.log('err', err);
             reject(err)
         })
     })
 
 }
 
-export const createPost=(formdata)=>{
+export const createPost = (formdata) => {
+    console.log(">>>>>>>>>>>>>>>>>>>>",formdata);
     console.log(1);
-    return new Promise(async(resolve,reject)=>{
+    return new Promise(async (resolve, reject) => {
         console.log(2);
 
         console.log(formdata);
         const token = localStorage.getItem("token")
         console.log(3);
 
-        axios.post('http://localhost:4000/api/v1/user/addpost',formdata, { headers: { Authorization: token } }).then((data)=>{
+        axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token } }).then((data) => {
             console.log(4);
-    
+
             resolve(data.data.post)
 
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(5);
 
-            console.log('err',err);
+            console.log('err', err);
             reject(err)
         })
     })
@@ -116,21 +116,106 @@ export const createPost=(formdata)=>{
 }
 
 
-export const getAllpost=()=>{
+export const getAllpost = () => {
 
-    return new Promise(async(resolve,reject)=>{
-      
+    return new Promise(async (resolve, reject) => {
+
         const token = localStorage.getItem("token")
 
-        axios.get('http://localhost:4000/api/v1/user/getAllPost', { headers: { Authorization: token } }).then((data)=>{
-    
+        axios.get('http://localhost:4000/api/v1/user/getAllPost', { headers: { Authorization: token } }).then((data) => {
+
             resolve(data.data.posts)
 
-        }).catch((err)=>{
+        }).catch((err) => {
 
-            console.log('err',err);
+            console.log('err', err);
             reject(err)
         })
+    })
+
+}
+
+export const getProfileDetails = (userId) => {
+    console.log(userId);
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/getProfileDetalils', { userId }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+            resolve({user:data.data.user, posts:data.data.posts})
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+export const addAccountDetails = (userdata) => {
+    console.log(userdata.state,userdata.phone);
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/addAccountDetails', { userdata }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+            localStorage.setItem("user", JSON.stringify(data.data))
+
+
+            resolve(data.data.user)
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+export const search = (keyword) => {
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/search', { keyword }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+            resolve(data.data)
+            
+
+        }).catch((err) => {
+
+          
+        })
+    })
+
+}
+
+export const dofollow=({userId,currentuserId})=>{
+    console.log(userId,currentuserId);
+    return new Promise ((resolve,reject)=>{
+        
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/follow', {userId, currentuserId }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+            resolve(data.data)
+            
+
+        }).catch((err) => {
+            reject(err.data)
+ 
+          
+        })
+
     })
 
 }

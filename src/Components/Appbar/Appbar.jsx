@@ -4,15 +4,17 @@ import { AppBar, Toolbar, Typography, Menu, MenuItem, Avatar, ListItemIcon, Divi
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
-import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, AddBoxRounded } from '@mui/icons-material';
+import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, AddBoxRounded, Search } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
 import CreatePostModal from '../CreatePostModal/CreatePostModal'
 import { useDispatch } from 'react-redux'
-import {logoutAction} from "../../Redux/userSlice"
+import { logoutAction } from "../../Redux/userSlice"
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
+
 
 const useStyles = makeStyles({
-    
+
     logo: {
         color: "#007FFF",
         fontFamily: 'Montserrat, sans-serif',
@@ -29,8 +31,8 @@ const useStyles = makeStyles({
         backgroundColor: "#f1f1f1",
         padding: 0,
     },
-    mobileNavbar:{
-        display:'none'
+    mobileNavbar: {
+        display: 'none'
     },
     root: {
         background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
@@ -47,7 +49,7 @@ const useStyles = makeStyles({
 
 function Appbar() {
     const dispatch = useDispatch()
-    const history =useHistory()
+    const history = useHistory()
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [user, setUser] = useState("")
@@ -60,7 +62,7 @@ function Appbar() {
     };
     const classes = useStyles();
 
-    const handleLogout=(e)=>{
+    const handleLogout = (e) => {
         dispatch(logoutAction())
         history.push('/login')
     }
@@ -77,22 +79,30 @@ function Appbar() {
                             Social Media
                         </Typography>
                         <div className="navItems">
-                            <Button variant="text" className={classes.navItem,'navItem'} sx={classes.mobileNavbar} style={{}} >
+                            <Button variant="text" className={classes.navItem, 'navItem'} sx={classes.mobileNavbar} component={Link}
+                                to="/" >
                                 <HomeRounded color="primary" fontSize="medium" />
                             </Button>
-                            <Button variant="text" className={classes.navItem,'navItem'} >
+                            <Button variant="text" className={classes.navItem, 'navItem'} component={Link}
+                                to="/search" >
+                                <Search color="primary" size="medium" />
+                            </Button>
+                            <Button variant="text" className={classes.navItem, 'navItem'} >
                                 <NotificationsRounded color="primary" size="medium" />
                             </Button>
-                            <Button variant="text" className={classes.navItem,'navItem'}>
+                            <Button variant="text" className={classes.navItem, 'navItem'}>
                                 <ChatRounded color="primary" size="medium" />
                             </Button>
-                            <Button variant="text" className={classes.navItem,'navItem'} >
+                            
+                            <Button variant="text" className={classes.navItem, 'navItem'} >
                                 <PeopleAltRounded color="primary" size="medium" />
+                            </Button>
+                            <Button variant="text"className={classes.root} style={{ color: '#ffffff' }} component={Link} to="/createpost" >
+                                Create Post
                             </Button>
 
 
 
-                            <CreatePostModal className={classes.root} style={{ color: '#ffffff' }} ></CreatePostModal>
 
                             <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
                                 {
@@ -141,9 +151,11 @@ function Appbar() {
                         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                     >
-                        <MenuItem>
-                            <Avatar /> Profile
-                        </MenuItem>
+                        <Link to="/">
+                            <MenuItem>
+                                <Avatar /> Profile
+                            </MenuItem>
+                        </Link>
                         <MenuItem>
                             <Avatar /> My account
                         </MenuItem>
@@ -155,10 +167,12 @@ function Appbar() {
                             Add another account
                         </MenuItem>
                         <MenuItem>
-                            <ListItemIcon>
-                                <Settings fontSize="small" />
-                            </ListItemIcon>
-                            Settings
+                            <Link to="/settings">
+                                <ListItemIcon>
+                                    <Settings fontSize="small" />
+                                </ListItemIcon>
+                                Settings
+                            </Link>
                         </MenuItem>
                         <MenuItem onClick={handleLogout}>
                             <ListItemIcon>

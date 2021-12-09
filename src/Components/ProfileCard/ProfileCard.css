@@ -13,8 +13,8 @@
 }
 .ProfileCard span{
     margin: 0;
-    font-weight: lighter;
-    color: rgba(3, 3, 3, 0.466);
+    font-weight: normal;
+    color: rgb(3, 3, 3);
 }
 .ProfileCard .img{
     margin-right: 10px;

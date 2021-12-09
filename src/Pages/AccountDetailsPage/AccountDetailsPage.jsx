@@ -1,4 +1,5 @@
 import React from 'react'
+import AccountDetails from '../../Components/AccountDetails/AccountDetails'
 import Appbar from '../../Components/Appbar/Appbar'
 import BottomBar from '../../Components/BottomBar/BottomBar'
 import ProfileCard from '../../Components/ProfileCard/ProfileCard'
@@ -18,7 +19,7 @@ function AccountDetailsPage() {
                     <SidebarBanner/>
                 </div>
                 <div className="col-lg-6">
-
+                    <AccountDetails/>
 
                 </div>
                 <div className="col-lg-3">

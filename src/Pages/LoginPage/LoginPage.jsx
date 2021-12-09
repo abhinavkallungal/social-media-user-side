@@ -18,6 +18,7 @@ import { FacebookOutlined, Google } from '@mui/icons-material';
 import { login } from '../../Axios'
 import { useHistory } from 'react-router-dom'
 
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -34,6 +35,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+
   const history = useHistory()
   const [user, setUser] = React.useState({ email: null, password: "" })
   const [form, setForm] = React.useState({})
@@ -42,29 +44,29 @@ export default function SignIn() {
   const handleChange = (e) => {
 
 
-    if (e.target.name=== "email") {
+    if (e.target.name === "email") {
       console.log("emailtest");
       const trimEmail = e.target.value.trim()
 
-      
+
 
       if (trimEmail === "") {
         setErrors({ error: true, emailErr: "username or email or phone number is required " })
 
       } else if (new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(trimEmail)) {
-        const {password} =form
-        setForm({ password , email: trimEmail })
+        const { password } = form
+        setForm({ password, email: trimEmail })
         console.log("test2");
         setErrors({ error: false, emailErr: "" })
       }
       else if (new RegExp("^[A-Za-z]\\w{5,29}$").test(trimEmail)) {
-        const {password} =form
-        setForm({ password, usename: trimEmail })
+        const { password } = form
+        setForm({ password, username: trimEmail })
         setErrors({ error: false, emailErr: "" })
 
 
       } else if (new RegExp(/^([+]\d{2})?\d{10}$/).test(trimEmail)) {
-        const {password} =form
+        const { password } = form
         setForm({ password, phone: trimEmail })
         setErrors({ error: false, emailErr: "" })
 
@@ -72,7 +74,7 @@ export default function SignIn() {
         setErrors({ error: true, emailErr: "username or email or phone number is required " })
 
       }
-      
+
 
     }
     if (e.target.name === "password") {
@@ -91,7 +93,7 @@ export default function SignIn() {
 
 
 
-    
+
   }
 
 
@@ -110,7 +112,7 @@ export default function SignIn() {
       setErrors({ error: false, emailErr: "" })
     }
     else if (new RegExp("^[A-Za-z]\\w{5,29}$").test(trimEmail)) {
-      setForm({ ...form, usename: trimEmail })
+      setForm({ ...form, username: trimEmail })
       setErrors({ error: false, emailErr: "" })
 
 
@@ -135,20 +137,30 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (form.email === undefined && form.username === undefined && form.phone === undefined) {
 
-    console.log(form);
-    if (!errors.error) {
-      login(form).then((data) => {
-        history.push('/')
+      setErrors({ error: true, emailErr: "username or email or phone number is required " })
 
-      }).catch((err) => {
-        setErrors({ error: true, emailErr: err.message })
 
-      })
+    } else if (form.password === undefined) {
+      setErrors({ error: true, passwordErr: "password is required " })
 
     } else {
+      if (!errors.error) {
+        login(form).then(({ user }) => {
+          console.log("login data from server", user);
+          history.push('/settings')
+
+
+        }).catch((err) => {
+          setErrors({ error: true, emailErr: "invalid UserName Or Password" })
+
+        })
+
+      }
 
     }
+
 
   };
 
@@ -184,7 +196,7 @@ export default function SignIn() {
                 autoFocus
                 onChange={handleChange}
               />
-              <Typography variant="span" style={{ color: 'red' }}>fddfdsf</Typography>
+              <Typography variant="span" style={{ color: 'red' }}>{errors.error ? errors.emailErr : null}</Typography>
               <TextField
                 margin="normal"
                 required
@@ -197,6 +209,8 @@ export default function SignIn() {
                 onChange={handleChange}
 
               />
+              <Typography variant="span" style={{ color: 'red' }}>{errors.error ? errors.passwordErr : null}</Typography>
+
 
               <Button
                 type="submit"

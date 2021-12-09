@@ -59,7 +59,7 @@ export default function SignUp() {
                 error = { ...error, nameErr: true, nameErrMsg: "Name is required " }
                 setErr(error)
 
-            } else if (new RegExp("^[A-Za-z]\\w{5,29}$").test(trimName)) {
+            } else if (new RegExp("^[A-Za-z\\s]{5,29}$").test(trimName)) {
                 setUser({ ...user, name: trimName })
                 console.log("Name is correct ");
                 error = { ...error, nameErr: false, nameErrMsg: "" }
@@ -180,7 +180,7 @@ export default function SignUp() {
         console.log(user);
 
         if ((user.email !== "" || user.phone !== "") && user.username !== "" && user.name !== "" && user.password !== "") {
-                         
+                         console.log("test");
             doSignup(user).then(() => {
                 setOtpSend(true)
             }).catch((error) => {

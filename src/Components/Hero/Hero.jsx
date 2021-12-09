@@ -61,12 +61,12 @@ function Hero() {
         <div className="Hero">
             <Grid container>
 
-                <Grid item xs={12} md={2.5} className={classes.left} >
+                <Grid item xs={12} md={2.5} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }} className={classes.left} >
                     <ProfileCard />
                     <SideNav/>
                     <SidebarBanner/>
                 </Grid>
-                <Grid item xs={12} md={6.5} >
+                <Grid item xs={12} md={6.5}  className="mx-auto">
                    <HeroStorySection/>
                     <Addpost/> 
                     {
@@ -82,7 +82,7 @@ function Hero() {
                    
                     
                 </Grid>
-                <Grid item xs={12} md={3}  className={classes.right} >
+                <Grid item xs={12} md={3} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }} className={classes.right} >
                 
                     <RequestCard/>
                     <RequestCard/>

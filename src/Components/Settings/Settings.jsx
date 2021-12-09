@@ -1,5 +1,7 @@
 import { AccountBalance, AccountCircle, ConnectWithoutContact, Help, Home, VpnKey,Logout,Notifications } from '@mui/icons-material'
+import { Button } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom'
 import "./Settings.css"
 
 function Settings() {
@@ -13,7 +15,9 @@ function Settings() {
                     Genaral
                 </div>
                 <div className="item">
+                    <Link to="/AccountDetails">
                         <AccountBalance/>  Account Informations
+                    </Link>
                 </div>
                 <div className="item">
                    <Home/> Saved Address
