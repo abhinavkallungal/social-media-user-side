@@ -18,8 +18,8 @@ const config = {
     bucketName: 'socialmedia-posts',
     dirName: 'posts', /* optional */
     region: 'us-west-1',
-    accessKeyId: 'AKIAVVVY46DQ7X6LQLMZ',
-    secretAccessKey: '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'
+    accessKeyId: '',
+    secretAccessKey: ''
 }
 
 
