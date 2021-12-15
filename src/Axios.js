@@ -90,6 +90,17 @@ export const login = (formdata) => {
 
 }
 
+export const google=()=>{
+    
+    return new Promise (async(resolve,reject)=>{
+        axios.get("http://localhost:4000/auth/google").then(()=>{
+
+        }).catch(()=>{
+            
+        })
+    })
+}
+
 export const createPost = (formdata) => {
     console.log(">>>>>>>>>>>>>>>>>>>>",formdata);
     console.log(1);
@@ -145,7 +156,7 @@ export const getProfileDetails = (userId) => {
         axios.post('http://localhost:4000/api/v1/user/getProfileDetalils', { userId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
 
-            resolve({user:data.data.user, posts:data.data.posts})
+            resolve({user:data.data.user[0], posts:data.data.posts})
 
         }).catch((err) => {
 
@@ -179,17 +190,16 @@ export const addAccountDetails = (userdata) => {
 
 }
 
-export const search = (keyword) => {
+export const search = ({keyword,userId}) => {
 
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/search', { keyword }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
-            resolve(data.data)
-            
+        axios.post('http://localhost:4000/api/v1/user/search', { keyword,userId }, { headers: { Authorization: token } }).then((data) => {
 
+        resolve(data.data)
+            
         }).catch((err) => {
 
           

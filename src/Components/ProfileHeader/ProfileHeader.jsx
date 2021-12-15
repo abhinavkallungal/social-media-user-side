@@ -24,8 +24,6 @@ function ProfileHeader({ user }) {
             console.log(err);
 
         })
-
-
     }
     return (
         <div className="main">
@@ -37,10 +35,6 @@ function ProfileHeader({ user }) {
                             {
                                 data._id === user._id ? <IconButton className="profile-ChangeIcon" style={{ backgroundColor: "#ffffff50" }}>  <PhotoCamera />  </IconButton> : null
                             }
-
-
-
-
                             <img src="https://images.genius.com/2326b69829d58232a2521f09333da1b3.1000x1000x1.jpg" alt="" className="profile-img" />
                         </div>
 
@@ -62,7 +56,6 @@ function ProfileHeader({ user }) {
                                     {
                                         follow ? 'Unfollow' :'Follow'
                                     }
-
                                     </Button>
                                     <Button variant="outlined"> Message</Button>
                                 </div>

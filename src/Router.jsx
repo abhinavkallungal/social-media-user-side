@@ -9,7 +9,6 @@ import { loginAction } from "./Redux/userSlice"
 import ProfilePage from './Pages/ProfilePage/ProfilePage';
 import SettingsPage from './Pages/SettingsPage/SettingsPage';
 import AccountDetailsPage from './Pages/AccountDetailsPage/AccountDetailsPage';
-import TestPage from './Pages/TestPage/TestPage';
 import SearchPage from './Pages/SearchPage/SearchPage';
 import CreatePostPage from './Pages/CreatePostPage/CreatePostPage';
 
@@ -35,7 +34,7 @@ function Router() {
         console.log("router");
         const token = localStorage.getItem('token')
         if (token) {
-            dispatch(loginAction(user))
+            dispatch(loginAction(JSON.parse(localStorage.getItem('user'))))
             setToken(token)
 
             const decodedToken = jwtDecode(token)

@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -15,8 +14,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Card, IconButton } from '@mui/material';
 import { FacebookOutlined, Google } from '@mui/icons-material';
-import { login } from '../../Axios'
+import { google, login } from '../../Axios'
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { loginAction } from "../../Redux/userSlice"
 
 
 function Copyright(props) {
@@ -35,7 +36,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-
+  const dispatch=useDispatch()
   const history = useHistory()
   const [user, setUser] = React.useState({ email: null, password: "" })
   const [form, setForm] = React.useState({})
@@ -47,8 +48,6 @@ export default function SignIn() {
     if (e.target.name === "email") {
       console.log("emailtest");
       const trimEmail = e.target.value.trim()
-
-
 
       if (trimEmail === "") {
         setErrors({ error: true, emailErr: "username or email or phone number is required " })
@@ -89,10 +88,6 @@ export default function SignIn() {
         setErrors({ error: false, passwordErr: "" })
       }
     }
-
-
-
-
 
   }
 
@@ -147,9 +142,10 @@ export default function SignIn() {
 
     } else {
       if (!errors.error) {
-        login(form).then(({ user }) => {
+        login(form).then((user) => {
           console.log("login data from server", user);
-          history.push('/settings')
+          dispatch(loginAction(user))
+          history.push('/')
 
 
         }).catch((err) => {
@@ -163,6 +159,11 @@ export default function SignIn() {
 
 
   };
+
+  const logingoogle=()=>{
+    window.open("http://localhost:4000/auth/google","_self")
+
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -223,7 +224,7 @@ export default function SignIn() {
               <hr />
               <div className="d-flex justify-content-evenly">
 
-                <IconButton style={{ backgroundColor: "#1877F230", borderRadius: 10 }} size="medium">
+                <IconButton style={{ backgroundColor: "#1877F230", borderRadius: 10 }} size="medium" onClick={logingoogle}>
                   <FacebookOutlined style={{ color: "#1877F2", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
                 </IconButton>
 

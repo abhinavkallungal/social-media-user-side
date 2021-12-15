@@ -43,22 +43,22 @@
     display: flex;
     justify-content: center;
 }
+.Search .searchcard .searchbody{
+    display: flex;
+    width: 100%;
+}
 
 .Search .searchcard{
+    width: 100%;
     background-color: #fff;
     border-radius: 10px;
     display: flex;
-    border-bottom: 2px solid red;
-
-
+    align-items: center;
+    border-bottom: 2px solid #007fff;
 }
 .Search .searchcard:hover{
     cursor: pointer;
     background-color: #eee;
-    
-   
-
-
 }
 
 .Search .searchcard .img{
