@@ -70,11 +70,11 @@ function Hero() {
                    <HeroStorySection/>
                     <Addpost/> 
                     {
-                        post.post ? <ViewPostCard post={post.post}/> : null
+                        post.post ? <ViewPostCard key={1} post={post.post}/> : null
 
                     }
                     {
-                        posts.map((post)=>{
+                        posts.map((post,index)=>{
                             return <ViewPostCard post={post}/> 
 
                         })

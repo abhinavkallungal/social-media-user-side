@@ -21,7 +21,10 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 
 
-function ViewPostCard({ post }) {
+function ViewPostCard(props) {
+    
+    const{post}=props
+
     const file = post.files
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -38,7 +41,7 @@ function ViewPostCard({ post }) {
 
 
     return (
-        <div className='ViewPostCard'>
+        <div className='ViewPostCard' key={post._id}>
             <div className="postHeader">
                 <div className="profile">
                     <img src="https://source.unsplash.com/user/erondu/50x50" alt="" />

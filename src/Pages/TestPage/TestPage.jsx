@@ -1,68 +1,76 @@
-<<<<<<< HEAD
-=======
-import React, { useState } from 'react';
-import AWS from 'aws-sdk';
+import React, { useEffect, useState, useRef  } from 'react';
 
-function TestPage() {
-  const [selectedFiles, setSelectedFiles] = useState({})
-  const [uploadProg, setUploadProg] = useState([])
+const divStyle = {
+    color: 'blue',
+    height: '250px',
+    textAlign: 'center',
+    padding: '5px 10px',
+    background: '#eee',
+    marginTop: '15px'
+};
 
 
-   const handleFile = event => {
-      setSelectedFiles(event?.target?.files)
-      setUploadProg(new Array(Object.keys(event?.target?.files).length).fill(0))
-   }
+const containerStyle = {
+    maxWidth: '1280px',
+    margin: '0 auto',
+}
+const InfiniteScroll = () => {
+    const [postList, setPostList] = useState({
+        list: [1,2,3,4]
+    }); 
+    // tracking on which page we currently are
+    const [page, setPage] = useState(1);
+    // add loader refrence 
+    const loader = useRef(null);
 
-   const upload = event => {
-     Object.keys(selectedFiles).forEach((key, index) => {
-      console.log(key)
-      console.log(selectedFiles[key])
-      var params = {
-        Body: selectedFiles[key], 
-        Bucket: 'socialmedia-posts', 
-        Key: `exampleobject${index}`, 
-       };
+    useEffect(() => {
+         var options = {
+            root: null,
+            rootMargin: "20px",
+            threshold: 1.0
+         };
+        // initialize IntersectionObserver
+        // and attaching to Load More div
+         const observer = new IntersectionObserver(handleObserver, options);
+         if (loader.current) {
+            observer.observe(loader.current)
+         }
 
-       s3.putObject(params)
-        .on('httpUploadProgress', (progressEvent, response) => {
-          const newUploadProg = [...uploadProg]
-          const percent = parseInt(100*progressEvent.loaded / progressEvent.total)
-          newUploadProg[index] = percent
-          console.log(uploadProg)
-          console.log(newUploadProg)
-          console.log('______________')
-          setUploadProg(newUploadProg)
+    }, []);
+
+
+    useEffect(() => {
+        // here we simulate adding new posts to List
+        const newList = postList.list.concat([1,1,1,1]);
+        setPostList({
+            list: newList
         })
-        .send((err, data) => {
-          if (err) console.log(err, err.stack);
-          else     console.log(data);
-         })
-    })  
-   }
+    }, [page])
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src="" className="App-logo" alt="logo" />
-        <input type="file" name="file" onChange={handleFile} multiple/>
-        <button type="button" class="btn btn-success btn-block" onClick={upload}>Upload</button>
-        {uploadProg.map(percent => (<div style={{
-          margin: 5,
-          width: 100,
-          height: 10,
-          backgroundColor: 'green'
-        }}>
-          <div style={{
-            height: 8,
-            width: percent,
-            backgroundColor: 'yellow',
-          }}>
-          </div>
-        </div>))}
-      </header>
-    </div>
-  );
+    // here we handle what happens when user scrolls to Load More div
+   // in this case we just update page variable
+    const handleObserver = (entities) => {
+        const target = entities[0];
+        if (target.isIntersecting) {   
+            setPage((page) => page + 1)
+        }
+    }
+
+
+    return (<div className="container" style={containerStyle}>
+        <div className="post-list">
+            {
+                postList.list.map((post, index) => {
+                    return (<div key={index} className="post" style={divStyle}>
+                        <h2> {post } </h2>
+                    </div>)
+                })
+            }
+            <div className="loading" ref={loader}>
+                    <h2>Load More</h2>
+           </div>
+        </div>
+    </div>)
 }
 
-export default TestPage;
->>>>>>> 27e86aa726cc763f956b4dd755fa0fd080031df1
+export default InfiniteScroll;

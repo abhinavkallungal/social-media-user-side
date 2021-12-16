@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React,{useEffect,useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,7 +16,7 @@ import { Card, IconButton } from '@mui/material';
 import { FacebookOutlined, Google } from '@mui/icons-material';
 import { google, login } from '../../Axios'
 import { useHistory } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch ,useSelector} from 'react-redux'
 import { loginAction } from "../../Redux/userSlice"
 
 
@@ -37,10 +37,19 @@ const theme = createTheme();
 
 export default function SignIn() {
   const dispatch=useDispatch()
+
   const history = useHistory()
   const [user, setUser] = React.useState({ email: null, password: "" })
   const [form, setForm] = React.useState({})
   const [errors, setErrors] = React.useState({ error: false, emailErr: "", passwordErr: "" })
+  const [socket,setSoket]=useState(useSelector((state) =>  state.socket.socket))
+
+
+  console.log("loginsoket",socket);
+  
+
+
+
 
   const handleChange = (e) => {
 
@@ -145,6 +154,8 @@ export default function SignIn() {
         login(form).then((user) => {
           console.log("login data from server", user);
           dispatch(loginAction(user))
+          socket?.emit("login",{id:socket.id,userId:user._id})
+
           history.push('/')
 
 
