@@ -1,13 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button } from "@mui/material"
-import{doLike} from '../../Axios'
+import{doLike,doSave} from '../../Axios'
 import './ViewPostCard.css'
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import BookmarkAddRoundedIcon from '@mui/icons-material/BookmarkAddRounded';
+
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
-import { Pagination } from 'swiper'
+import SwiperCore, {Pagination} from 'swiper';
+
+// install Swiper modules
+
+
+
+// Import Swiper styles
+import 'swiper/swiper.min.css'
+import 'swiper/modules/pagination/pagination.min.css'
+import { useHistory } from 'react-router';
 
 import  moment from 'moment'
 
@@ -16,22 +26,38 @@ import userAvatar from '../../Assets/userAvathar.jpg'
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
-import { BookmarkAdd, BookmarkAddedOutlined, ChatBubble } from '@mui/icons-material';
+import { BookmarkAdd, BookmarkAddedOutlined, ChatBubble, Tune } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
+SwiperCore.use([Pagination]);
 
 
 
 
 function ViewPostCard(props) {
 
-    console.log(props);
     
     const{post,userId}=props
 
     const file = post.files
     let ProfilePhotos=post?.user?.ProfilePhotos;
+    const[likes,setlikes]=useState(post.likes.length)
+    const[liked,setliked]=useState(false)
+
+    useEffect(() => {
+        let doeslike = post.likes.findIndex((likes)=>{
+            return likes===userId
+        })
+        if(doeslike===-1){
+            setliked(false)
+        }else{
+            setliked(true)
+        }
+        
+    }, [])
+
+  
 
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -45,7 +71,19 @@ function ViewPostCard(props) {
     };
 
     const handleLike=()=>{
-        doLike({userId,postId:post._id})
+        doLike({userId,postId:post._id}).then((data)=>{
+            console.log(data);
+            setlikes(data.likes)
+            setliked(data.liked)
+        })
+
+    }
+
+    const handleSave=()=>{
+        doSave({userId,postId:post._id}).then(()=>{
+
+        })
+
     }
 
 
@@ -122,9 +160,7 @@ function ViewPostCard(props) {
                 {
                     file !== null ? (
                         <>
-                            <Swiper pagination={{
-                                "dynamicBullets": true
-                            }} className="mySwiper">
+                            <Swiper pagination={true} className="mySwiper">
 
                                 {
 
@@ -153,7 +189,7 @@ function ViewPostCard(props) {
             </div>
             <div className="engageCount">
                 <Button>
-                    <span>200 likes</span>
+                    <span>{likes} likes</span>
                 </Button>
                 <Button>
 
@@ -165,13 +201,13 @@ function ViewPostCard(props) {
 
 
                     
-                        <Checkbox  onClick={handleLike} size="large" {...label} icon={<FavoriteBorder size="large"  />} checkedIcon={<Favorite />} ></Checkbox>
+                        <Checkbox  onClick={handleLike} checked={liked} size="large" {...label} icon={<FavoriteBorder size="large"  />} checkedIcon={<Favorite />} ></Checkbox>
                         <Checkbox size="large" {...label} icon={<ChatBubbleOutlineRoundedIcon size="large"  />} checkedIcon={<ChatBubble />} ></Checkbox>
                 
                 
                 </div>
           
-                        <Checkbox size="large" {...label} icon={<BookmarkAddedOutlined  size="large"  />} checkedIcon={<BookmarkAdd />} ></Checkbox>
+                        <Checkbox onClick={handleSave} size="large" {...label} icon={<BookmarkAddedOutlined  size="large"  />} checkedIcon={<BookmarkAdd />} ></Checkbox>
 
 
             </div>

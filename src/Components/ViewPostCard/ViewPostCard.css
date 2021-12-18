@@ -17,10 +17,13 @@
     align-items: center;
     justify-content: space-between;
 }
+.ViewPostCard .postHeader .profile p{
+    margin-bottom: 0px;
+}
 .ViewPostCard .postHeader .profile .img{
   margin-right: 20px;
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
 }
 .ViewPostCard .postHeader .profile img{
    width: 100%;
@@ -72,4 +75,8 @@
  .ViewPostCard .postBottom .d-flex button{
     margin-right: 20px;
     height: 40px;
+}
+
+.ViewPostCard .mySwiper{
+    border: none;
 }

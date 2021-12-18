@@ -2,6 +2,7 @@ import React ,{useState}from 'react'
 import { Camera, PhotoCamera } from '@mui/icons-material'
 import { IconButton, Button } from '@mui/material'
 import AddProfilePhoto  from '../AddProfilePhoto/AddProfilePhoto'
+import AddCoverPhoto  from '../AddCoverPhoto/AddCoverPhoto'
 import userAvatar from '../../Assets/userAvathar.jpg'
 
 
@@ -17,7 +18,17 @@ function ProfileHeader({ user }) {
     const [follow, setFollow] = useState(false)
     const currentuser = (useSelector((state) => state.user.user))
     let data = currentuser
-    let ProfilePhotos=user?.ProfilePhotos;
+    let ProfilePhotos
+    let coverPhoto
+    if(data._id===user._id){
+
+         ProfilePhotos=data?.ProfilePhotos;
+         coverPhoto=data?.coverPhoto;
+    }else{
+         ProfilePhotos=user?.ProfilePhotos;
+         coverPhoto=user?.coverPhoto;
+
+    }
 
 
     const handlefollow = (userId, currentuserId) => {
@@ -46,11 +57,11 @@ function ProfileHeader({ user }) {
                     </div>
                     <div>
                         {
-                            data._id === user._id ? <IconButton className="cover-ChangeIcon" style={{ backgroundColor: "#ffffff50" }}>  <PhotoCamera />  </IconButton> : null
+                            data._id === user._id ? <IconButton className="cover-ChangeIcon" style={{ backgroundColor: "#ffffff50" }}>  <AddCoverPhoto />  </IconButton> : null
                         }
 
                     </div>
-                    <img src="https://images.unsplash.com/photo-1508247967583-7d982ea01526?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80" alt="" className="profile-cover" />
+                    <img src={coverPhoto ? coverPhoto :"https://images.unsplash.com/photo-1508247967583-7d982ea01526?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80" }alt="" className="profile-cover" />
                     <div className="profile-menu">
                         <div className=" m-3 ms-auto ">
                             {

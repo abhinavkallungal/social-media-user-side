@@ -12,7 +12,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import './CreatePost.css'
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
-import { Pagination } from 'swiper'
+import SwiperCore, {Pagination} from 'swiper';
+
+// install Swiper modules
 
 
 
@@ -20,6 +22,7 @@ import { Pagination } from 'swiper'
 import 'swiper/swiper.min.css'
 import 'swiper/modules/pagination/pagination.min.css'
 import { useHistory } from 'react-router';
+SwiperCore.use([Pagination]);
 
 
 const Input = styled('input')({
@@ -176,9 +179,7 @@ function CreatePost() {
                     {
                         Blobfiles.length > 1 ? (
                             <>
-                                <Swiper pagination={{
-                                    "dynamicBullets": true
-                                }} className="mySwiper">
+                                <Swiper pagination={true} className="mySwiper">
                                     
                                     {
                                         Blobfiles.map((item) => {

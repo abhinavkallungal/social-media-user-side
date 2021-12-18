@@ -15,6 +15,7 @@ import CreatePostModal from '../CreatePostModal/CreatePostModal';
 import { getAllpost } from '../../Axios';
 import AddProfilePhoto from '../AddProfilePhoto/AddProfilePhoto'
 import ImageInput from '../AddProfilePhoto/ImageInput'
+import FeedSkeleton from '../Skeletons/FeedSkeleton/FeedSkeleton';
 
 const useStyles = makeStyles({
     left: {
@@ -51,9 +52,12 @@ function Hero() {
     const user =(useSelector((state) =>  state.user.user))
     const post  = useSelector(state => state.newPost)
     const[posts,SetPosts]=useState([])
+    const[loding,SetLoding]=useState(false)
     useEffect(() => {
+        SetLoding(true)
         getAllpost().then((posts)=>{
             SetPosts(posts)
+            SetLoding(false)
         })
 
        
@@ -82,6 +86,10 @@ function Hero() {
 
                         })
                     }
+                    {
+                        loding? <FeedSkeleton/> :null
+                    }
+                   
                    
                     
                 </Grid>
@@ -89,7 +97,6 @@ function Hero() {
                 
                     <RequestCard/>
                     <RequestCard/>
-                    <AddProfilePhoto/>
                     
                 </Grid>
                 
