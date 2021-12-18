@@ -41,10 +41,10 @@ function Router() {
         console.log("routersoket",socket);
         setSocket(socket)
         socket.on("connect", () => {
-            console.log(socket.id); 
+
             if(user && socket) socket.emit("login",{id:socket.id,userId:user._id}) 
         });
-        socket.on("save",(msg)=>{
+        socket.on("likemsg",(msg)=>{
             alert(msg)
         })
         socket.emit("test",`test message ${socket.id}`)

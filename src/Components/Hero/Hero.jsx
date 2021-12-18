@@ -13,6 +13,8 @@ import HeroStorySection from '../HeroStorySection/HeroStorySection';
 import ViewPostCard from '../ViewPostCard/ViewPostCard';
 import CreatePostModal from '../CreatePostModal/CreatePostModal';
 import { getAllpost } from '../../Axios';
+import AddProfilePhoto from '../AddProfilePhoto/AddProfilePhoto'
+import ImageInput from '../AddProfilePhoto/ImageInput'
 
 const useStyles = makeStyles({
     left: {
@@ -46,6 +48,7 @@ const useStyles = makeStyles({
 
 function Hero() {
     const classes=useStyles()
+    const user =(useSelector((state) =>  state.user.user))
     const post  = useSelector(state => state.newPost)
     const[posts,SetPosts]=useState([])
     useEffect(() => {
@@ -70,12 +73,12 @@ function Hero() {
                    <HeroStorySection/>
                     <Addpost/> 
                     {
-                        post.post ? <ViewPostCard key={1} post={post.post}/> : null
+                        post.post ? <ViewPostCard key={1} post={post.post} userId={user._id}/> : null
 
                     }
                     {
                         posts.map((post,index)=>{
-                            return <ViewPostCard post={post}/> 
+                            return <ViewPostCard post={post} userId={user._id}/> 
 
                         })
                     }
@@ -86,6 +89,8 @@ function Hero() {
                 
                     <RequestCard/>
                     <RequestCard/>
+                    <AddProfilePhoto/>
+                    
                 </Grid>
                 
                 

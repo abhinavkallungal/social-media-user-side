@@ -17,10 +17,17 @@
     align-items: center;
     justify-content: space-between;
 }
-.ViewPostCard .postHeader .profile img{
-  border-radius: 10px;
+.ViewPostCard .postHeader .profile .img{
   margin-right: 20px;
+  width: 80px;
+  height: 80px;
 }
+.ViewPostCard .postHeader .profile img{
+   width: 100%;
+   height: 100%;
+   border-radius: 10px;
+
+  }
 .ViewPostCard .postHeader .profile span{
     font-weight: bold;
     font-size: 18px;

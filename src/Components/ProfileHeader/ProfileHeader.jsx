@@ -1,6 +1,8 @@
 import React ,{useState}from 'react'
 import { Camera, PhotoCamera } from '@mui/icons-material'
 import { IconButton, Button } from '@mui/material'
+import AddProfilePhoto  from '../AddProfilePhoto/AddProfilePhoto'
+import userAvatar from '../../Assets/userAvathar.jpg'
 
 
 import './ProfileHeader.css'
@@ -15,6 +17,8 @@ function ProfileHeader({ user }) {
     const [follow, setFollow] = useState(false)
     const currentuser = (useSelector((state) => state.user.user))
     let data = currentuser
+    let ProfilePhotos=user?.ProfilePhotos;
+
 
     const handlefollow = (userId, currentuserId) => {
         dofollow({ userId, currentuserId }).then((data) => {
@@ -33,9 +37,9 @@ function ProfileHeader({ user }) {
                     <div className="profile-avatar">
                         <div>
                             {
-                                data._id === user._id ? <IconButton className="profile-ChangeIcon" style={{ backgroundColor: "#ffffff50" }}>  <PhotoCamera />  </IconButton> : null
+                                data._id === user._id ? <IconButton className="profile-ChangeIcon" style={{ backgroundColor: "#ffffff50" }}> <AddProfilePhoto />  </IconButton> : null
                             }
-                            <img src="https://images.genius.com/2326b69829d58232a2521f09333da1b3.1000x1000x1.jpg" alt="" className="profile-img" />
+                            <img src={ProfilePhotos ? ProfilePhotos[ProfilePhotos.length -1] :userAvatar} alt="" className="profile-img" />
                         </div>
 
                         <div className="profile-name">{user.name}</div>

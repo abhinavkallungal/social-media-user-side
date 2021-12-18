@@ -229,3 +229,48 @@ export const dofollow=({userId,currentuserId})=>{
     })
 
 }
+
+
+    export const doLike=({postId,userId})=>{
+    console.log(userId,postId);
+    return new Promise ((resolve,reject)=>{
+    
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/postLike', {userId, postId }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+            resolve(data.data)
+            
+
+        }).catch((err) => {
+            reject(err.data)
+ 
+          
+        })
+
+    })
+
+}
+
+
+export const addProfilePhoto=({profilePhoto,currentuserId})=>{
+    return new Promise ((resolve,reject)=>{
+        
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/addProfilePhoto', {profilePhoto, currentuserId }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+            localStorage.setItem("user", JSON.stringify(data.data.user))
+
+            resolve(data.data.user)            
+
+        }).catch((err) => {
+            reject(err.data)
+ 
+          
+        })
+
+    })
+
+}

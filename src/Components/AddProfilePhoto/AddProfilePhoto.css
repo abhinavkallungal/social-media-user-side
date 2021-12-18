@@ -1,0 +1,22 @@
+
+.box .content{
+    width: 100%;
+    min-height: 200px;
+    border: 2px dashed black;
+}
+.box .content:hover{
+   cursor: pointer;
+}
+
+.box .content .img{
+    width: 150px;
+    height: auto;
+}
+
+.box .content .img img{
+    width: 100%;
+    height: auto;
+}
+.box .content  input{
+   display: none;
+}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button } from "@mui/material"
-
+import{doLike} from '../../Axios'
 import './ViewPostCard.css'
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
@@ -11,10 +11,13 @@ import { Pagination } from 'swiper'
 
 import  moment from 'moment'
 
+import userAvatar from '../../Assets/userAvathar.jpg'
+
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import { BookmarkAdd, BookmarkAddedOutlined, ChatBubble } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 
@@ -22,10 +25,14 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 
 function ViewPostCard(props) {
+
+    console.log(props);
     
-    const{post}=props
+    const{post,userId}=props
 
     const file = post.files
+    let ProfilePhotos=post?.user?.ProfilePhotos;
+
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -37,6 +44,10 @@ function ViewPostCard(props) {
         setAnchorEl(null);
     };
 
+    const handleLike=()=>{
+        doLike({userId,postId:post._id})
+    }
+
 
 
 
@@ -44,7 +55,10 @@ function ViewPostCard(props) {
         <div className='ViewPostCard' key={post._id}>
             <div className="postHeader">
                 <div className="profile">
-                    <img src="https://source.unsplash.com/user/erondu/50x50" alt="" />
+                    <div className="img">
+
+                    <img src={ProfilePhotos ? ProfilePhotos[ProfilePhotos.length -1] :userAvatar} alt="" />
+                    </div>
                     <div>
                         <span>{post.user.name}</span>
                         <p>{moment(post.postedDate).fromNow()}</p>
@@ -119,7 +133,7 @@ function ViewPostCard(props) {
                                         return (
                                             <SwiperSlide>
                                                 <div className="imgOne">
-                                                    <img className="mx-auto  " src={item} alt="" />
+                                                    <img className="mx-auto" src={item} alt="" />
 
                                                 </div></SwiperSlide>
 
@@ -151,7 +165,7 @@ function ViewPostCard(props) {
 
 
                     
-                        <Checkbox size="large" {...label} icon={<FavoriteBorder size="large"  />} checkedIcon={<Favorite />} ></Checkbox>
+                        <Checkbox  onClick={handleLike} size="large" {...label} icon={<FavoriteBorder size="large"  />} checkedIcon={<Favorite />} ></Checkbox>
                         <Checkbox size="large" {...label} icon={<ChatBubbleOutlineRoundedIcon size="large"  />} checkedIcon={<ChatBubble />} ></Checkbox>
                 
                 

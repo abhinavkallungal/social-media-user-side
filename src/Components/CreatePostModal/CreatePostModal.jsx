@@ -14,13 +14,7 @@ import { useHistory } from 'react-router-dom';
 
 
 
-const config = {
-    bucketName: 'socialmedia-posts',
-    dirName: 'posts', /* optional */
-    region: 'us-west-1',
-    accessKeyId: '',
-    secretAccessKey: ''
-}
+
 
 
 const style = {
@@ -28,11 +22,11 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 300,
+    width: 360,
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
-    borderRadius: '10px'
+    borderRadius: 10
 
 };
 
@@ -67,7 +61,7 @@ function CreatePostModal() {
         const file = URL.createObjectURL(e.target.files[0])
         setImage(file)
 
-        S3FileUpload.uploadFile(e.target.files[0], config).then((data) => {
+        S3FileUpload.uploadFile(e.target.files[0]).then((data) => {
             console.log(data);
             setPost({ ...post, files: data.location })
 
