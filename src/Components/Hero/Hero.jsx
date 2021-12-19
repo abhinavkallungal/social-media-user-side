@@ -57,6 +57,7 @@ function Hero() {
         SetLoding(true)
         getAllpost().then((posts)=>{
             SetPosts(posts)
+            console.log(posts);
             SetLoding(false)
         })
 

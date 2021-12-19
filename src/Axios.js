@@ -275,6 +275,48 @@ export const doSave=({postId,userId})=>{
 
 }
 
+export const doDeletePost=({postId,userId})=>{
+    return new Promise ((resolve,reject)=>{
+    
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/Deletepost', {userId, postId }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+            resolve(data.data)
+            
+
+        }).catch((err) => {
+            reject(err.data)
+ 
+          
+        })
+
+    })
+
+}
+
+export const doCommet=({postId,userId,comment})=>{
+    return new Promise ((resolve,reject)=>{
+    
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/comment', {userId, postId,comment }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data.data.comment);
+
+            resolve(data.data.comment)
+            
+
+        }).catch((err) => {
+            reject(err.data)
+ 
+          
+        })
+
+    })
+
+}
+
 export const addProfilePhoto=({profilePhoto,currentuserId})=>{
     return new Promise ((resolve,reject)=>{
         

@@ -1,4 +1,4 @@
-.ViewPostCard{
+.ViewPostCard {
     background-color: #fff;
     border-radius: 10px;
     padding: 20px 20px;
@@ -6,52 +6,51 @@
     margin-top: 20px;
 }
 
-.ViewPostCard .postHeader{
+.ViewPostCard .postHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.ViewPostCard .postHeader .profile{
+.ViewPostCard .postHeader .profile {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.ViewPostCard .postHeader .profile p{
+.ViewPostCard .postHeader .profile p {
     margin-bottom: 0px;
 }
-.ViewPostCard .postHeader .profile .img{
-  margin-right: 20px;
-  width: 50px;
-  height: 50px;
+.ViewPostCard .postHeader .profile .img {
+    margin-right: 20px;
+    width: 50px;
+    height: 50px;
 }
-.ViewPostCard .postHeader .profile img{
-   width: 100%;
-   height: 100%;
-   border-radius: 10px;
-
-  }
-.ViewPostCard .postHeader .profile span{
+.ViewPostCard .postHeader .profile img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.ViewPostCard .postHeader .profile span {
     font-weight: bold;
     font-size: 18px;
-  }
-.ViewPostCard .postContent{
-   width: 100%;
-   height: auto;
-   margin-top: 20px;
 }
-.ViewPostCard .postContent span{
-  font-size: 16px;
-  font-weight: bold;
-  color: gray;
- }
-.ViewPostCard .postContent img{
+.ViewPostCard .postContent {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+.ViewPostCard .postContent span {
+    font-size: 16px;
+    font-weight: bold;
+    color: gray;
+}
+.ViewPostCard .postContent img {
     margin-top: 10px;
     width: 100%;
     height: auto;
     border-radius: 10px;
- }
- .ViewPostCard .engageCount{
+}
+.ViewPostCard .engageCount {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -59,24 +58,104 @@
     padding: 10px 0px;
     border-bottom: 1px solid gray;
     color: rgb(160, 160, 160);
- }
- .ViewPostCard .postBottom {
+}
+.ViewPostCard .postBottom {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
- .ViewPostCard .postBottom .d-flex{
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
- }
- .ViewPostCard .postBottom .d-flex button{
+.ViewPostCard .postBottom .d-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ViewPostCard .postBottom .d-flex button {
     margin-right: 20px;
     height: 40px;
 }
 
-.ViewPostCard .mySwiper{
+.ViewPostCard .mySwiper {
     border: none;
 }
+.ViewPostCard .mySwiper .imgOne  {
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+
+.ViewPostCard .mySwiper .imgOne img {
+    height: 400px;
+    width: 100%;
+    object-fit: cover ;
+}
+.ViewPostCard .commentSection .commentInput {
+    background-color: #f0f1ff;
+    border-radius: 25px;
+    padding: 0px 0px 0px 10px ;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ViewPostCard .commentSection .commentInput input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 90%;
+}
+
+.ViewPostCard .commentSection .commentInput .sendcomment{
+    background-color: #007fff;
+}
+.ViewPostCard .commentSection .comment{
+display: flex;
+margin-top: 10px;
+}
+.ViewPostCard .commentSection .comment .profilePhoto{
+width: 40px;
+height: 40px;
+border-radius: 10px;
+background-color: turquoise;
+margin-right: 10px;
+object-fit: cover;
+}
+.ViewPostCard .commentSection .comment .profilePhoto img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    
+}
+
+.ViewPostCard .commentSection .comment .content{
+    min-width: 50%;
+    max-width: 80%;
+    background-color: #f0f1ff;
+    padding: 20px;
+    padding-top: 0;
+    border-radius: 10px;
+    word-wrap: break-word;
+    
+}
+.ViewPostCard .commentSection .comment .content .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ViewPostCard .commentSection .comment .content .header span{
+    color: grey;
+    font-weight: bold;
+}
+.ViewPostCard .commentSection .comment .content .header span.date{
+    font-size: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    .ViewPostCard .commentSection .comment .content{
+        width: 80%;
+       
+    }
+  }
+
+

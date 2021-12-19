@@ -1,12 +1,10 @@
 import React, { useState,useEffect } from 'react'
 import { Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button } from "@mui/material"
-import{doLike,doSave} from '../../Axios'
+import{doLike,doSave,doDeletePost, doCommet} from '../../Axios'
 import './ViewPostCard.css'
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
-import BookmarkAddRoundedIcon from '@mui/icons-material/BookmarkAddRounded';
-
+import {Input} from '@mui/material'
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import SwiperCore, {Pagination} from 'swiper';
 
@@ -26,8 +24,7 @@ import userAvatar from '../../Assets/userAvathar.jpg'
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
-import { BookmarkAdd, BookmarkAddedOutlined, ChatBubble, Tune } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import { BookmarkAdd, BookmarkAddedOutlined, ChatBubble, SendRounded, Tune } from '@mui/icons-material';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 SwiperCore.use([Pagination]);
@@ -42,9 +39,15 @@ function ViewPostCard(props) {
 
     const file = post.files
     let ProfilePhotos=post?.user?.ProfilePhotos;
-    const[likes,setlikes]=useState(post.likes.length)
+    const[likeCount,setlikeCount]=useState(post.likes?.length)
+    const[commentCount,setCommentCount]=useState(post.comments?.length)
     const[liked,setliked]=useState(false)
     const[saved,setSaved]=useState(false)
+    const[postOwner,setPostOwner]=useState(false)
+    const[deleted,setDeleted]=useState(false)
+    const[comment,setComment]=useState('')
+    const[Comments,setComments]=useState([])
+
 
     useEffect(() => {
         let doeslike = post?.likes?.findIndex((likes)=>{
@@ -63,8 +66,19 @@ function ViewPostCard(props) {
         }else{
             setSaved(true)
         }
+       
         
     }, [])
+
+    useEffect(() => {
+        
+    if(post?.userId === user?._id){
+        setPostOwner(true)
+    }else{
+        setPostOwner(false)
+    }
+    }, [])
+ 
 
   
 
@@ -81,7 +95,7 @@ function ViewPostCard(props) {
 
     const handleLike=()=>{
         doLike({userId:user._id,postId:post._id}).then((data)=>{
-            setlikes(data.likes)
+            setlikeCount(data.likes)
             setliked(data.liked)
         })
 
@@ -96,13 +110,32 @@ function ViewPostCard(props) {
 
     }
 
+    const handleDelete=()=>{
+        doDeletePost({userId:user._id,postId:post._id}).then((data)=>{
+            setDeleted(true)
+
+        })
+    }
+    const handleCommet=(e)=>{
+        setComment(e.target.value)
+    }
+    const handleAddComment=()=>{
+        doCommet({userId:user._id,postId:post._id,comment}).then((newcomment)=>{
+
+            setComments(newcomment)
+            setCommentCount(commentCount=>commentCount+1)
+            setComment("")
+        })
+
+    }
+
 
 
 
     return (
-        <div className='ViewPostCard' key={post._id}>
+        <div className='ViewPostCard' key={post._id} style={deleted ? {display:"none"}:null} >
             <div className="postHeader">
-                <div className="profile">
+                <div className="profile" >
                     <div className="img">
 
                     <img src={ProfilePhotos ? ProfilePhotos[ProfilePhotos.length -1] :userAvatar} alt="" />
@@ -150,18 +183,17 @@ function ViewPostCard(props) {
                     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
-
+                    {
+                        postOwner ? <MenuItem> Edit Post</MenuItem> :null
+                    }
+                      {
+                        postOwner ? <MenuItem onClick={handleDelete}> Delete Post</MenuItem> :null
+                    }
+                    
                     <MenuItem>
-                        Edit Post
-                    </MenuItem>
-                    <MenuItem>
-
                         Report Post
                     </MenuItem>
-                    <MenuItem >
-
-                        test
-                    </MenuItem>
+                   
                 </Menu>
 
             </div>
@@ -179,9 +211,9 @@ function ViewPostCard(props) {
                                         return (
                                             <SwiperSlide>
                                                 <div className="imgOne">
-                                                    <img className="mx-auto" src={item} alt="" />
-
-                                                </div></SwiperSlide>
+                                                    <img className="" src={item} alt="" />
+                                                </div>
+                                                </SwiperSlide>
 
                                         )
 
@@ -199,11 +231,11 @@ function ViewPostCard(props) {
             </div>
             <div className="engageCount">
                 <Button>
-                    <span>{likes} likes</span>
+                    <span>{likeCount} likes</span>
                 </Button>
                 <Button>
 
-                    <span>55 Comments</span>
+                    <span>{commentCount} Comments</span>
                 </Button>
             </div>
             <div className="postBottom">
@@ -220,6 +252,52 @@ function ViewPostCard(props) {
                         <Checkbox onClick={handleSave} checked={saved} size="large" {...label} icon={<BookmarkAddedOutlined  size="large"  />} checkedIcon={<BookmarkAdd />} ></Checkbox>
 
 
+            </div>
+            <div className="commentSection">
+                    <div className="commentInput">
+                      <input type="text" onChange={handleCommet} value={comment} placeholder="Add A Comment............" />
+                        <IconButton className='sendcomment' onClick={handleAddComment}>
+                            <SendRounded style={{color:'#fff'}}/>
+                        </IconButton>
+                    </div>
+                    <div className="comments">
+                        {
+                             Comments?.map((item)=>{
+                                 return(
+                                    <div className="comment" key='8'>
+                                    <div className="profilePhoto">
+                                        <img src={item.user.ProfilePhotos} alt="" />
+                                    </div>
+                                    <div className="content">
+                                        <div className="header">
+                                            <span className="me-4"> {item.user.name}</span>
+                                            <span className='date ms-4'>{moment(item.date).fromNow()}</span>
+                                        </div>
+                                        <h6 >
+
+                                        {item.comment}
+                                        </h6>
+                                    </div>
+                                </div>
+
+                                 )
+                                   
+
+                                 })   
+                                
+
+                            
+                        }
+                        
+                    
+                        
+                    </div>
+                    <div className="commentfotter mt-2 ">
+                        <Button>
+
+                        <span>View more</span>
+                        </Button>
+                    </div>
             </div>
 
         </div>

@@ -50,7 +50,7 @@ function ProfilePage() {
 
                         <div className="col-lg-7 btn order-lg-first ">
                         { 
-                            posts !==null ? posts.map((post)=>{return <ViewPostCard post={post}/>  }) :null
+                            posts !==null ? posts.map((post)=>{return <ViewPostCard post={post} user={user} />  }) :null
                          
                         }
                        
