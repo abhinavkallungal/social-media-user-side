@@ -260,6 +260,8 @@ export const doSave=({postId,userId})=>{
 
         axios.post('http://localhost:4000/api/v1/user/postSave', {userId, postId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
+            localStorage.setItem("user", JSON.stringify(data.data.user))
+
             resolve(data.data)
             
 

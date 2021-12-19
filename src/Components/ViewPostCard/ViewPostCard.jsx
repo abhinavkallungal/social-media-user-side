@@ -38,21 +38,30 @@ SwiperCore.use([Pagination]);
 function ViewPostCard(props) {
 
     
-    const{post,userId}=props
+    const{post,user}=props
 
     const file = post.files
     let ProfilePhotos=post?.user?.ProfilePhotos;
     const[likes,setlikes]=useState(post.likes.length)
     const[liked,setliked]=useState(false)
+    const[saved,setSaved]=useState(false)
 
     useEffect(() => {
-        let doeslike = post.likes.findIndex((likes)=>{
-            return likes===userId
+        let doeslike = post?.likes?.findIndex((likes)=>{
+            return likes===user._id
         })
         if(doeslike===-1){
             setliked(false)
         }else{
             setliked(true)
+        }
+        let doesSaved = user?.SavedPost?.findIndex((posts)=>{
+            return posts===post._id
+        })
+        if(doesSaved===-1 || doesSaved===undefined){
+            setSaved(false)
+        }else{
+            setSaved(true)
         }
         
     }, [])
@@ -71,8 +80,7 @@ function ViewPostCard(props) {
     };
 
     const handleLike=()=>{
-        doLike({userId,postId:post._id}).then((data)=>{
-            console.log(data);
+        doLike({userId:user._id,postId:post._id}).then((data)=>{
             setlikes(data.likes)
             setliked(data.liked)
         })
@@ -80,7 +88,9 @@ function ViewPostCard(props) {
     }
 
     const handleSave=()=>{
-        doSave({userId,postId:post._id}).then(()=>{
+        doSave({userId:user._id,postId:post._id}).then((data)=>{
+            
+            setSaved(data.saved)
 
         })
 
@@ -207,7 +217,7 @@ function ViewPostCard(props) {
                 
                 </div>
           
-                        <Checkbox onClick={handleSave} size="large" {...label} icon={<BookmarkAddedOutlined  size="large"  />} checkedIcon={<BookmarkAdd />} ></Checkbox>
+                        <Checkbox onClick={handleSave} checked={saved} size="large" {...label} icon={<BookmarkAddedOutlined  size="large"  />} checkedIcon={<BookmarkAdd />} ></Checkbox>
 
 
             </div>

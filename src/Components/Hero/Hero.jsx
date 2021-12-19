@@ -62,6 +62,7 @@ function Hero() {
 
        
     }, [])
+    console.log(user);
     
 
     return (
@@ -77,12 +78,12 @@ function Hero() {
                    <HeroStorySection/>
                     <Addpost/> 
                     {
-                        post.post ? <ViewPostCard key={1} post={post.post} userId={user._id}/> : null
+                        post.post ? <ViewPostCard key={1} post={post.post} user={user}/> : null
 
                     }
                     {
                         posts.map((post,index)=>{
-                            return <ViewPostCard post={post} userId={user._id}/> 
+                            return <ViewPostCard post={post} user={user}/> 
 
                         })
                     }
