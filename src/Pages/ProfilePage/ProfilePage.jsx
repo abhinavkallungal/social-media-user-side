@@ -11,6 +11,7 @@ import SidebarBanner from '../../Components/SidebarBanner/SidebarBanner'
 import SideNav from '../../Components/SideNav/SideNav'
 import ViewPostCard from '../../Components/ViewPostCard/ViewPostCard'
 import {getProfileDetails} from '../../Axios'
+import './ProfilePage'
 
 function ProfilePage() {
     let { userId } = useParams();
@@ -31,7 +32,7 @@ function ProfilePage() {
 
     
     return (
-        <div>
+        <div className="ProfilePage">
             <Appbar />
             <div className="row mt-5 me-0">
                 <div className="col-lg-3 p-2 pt-5   left">
@@ -48,7 +49,7 @@ function ProfilePage() {
                             <ProfilePostListcard/>
                         </div>
 
-                        <div className="col-lg-7 btn order-lg-first ">
+                        <div className="col-lg-7  order-lg-first ">
                         { 
                             posts !==null ? posts.map((post)=>{return <ViewPostCard post={post} user={user} />  }) :null
                          

@@ -4,6 +4,7 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 
 import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 
 function BottomBar() {
@@ -21,11 +22,15 @@ function BottomBar() {
             <BottomNavigationAction
                 label="Home"
                 value="Home"
+                component={Link}
+                to="/"
                 icon={<HomeRounded />}
             />
             <BottomNavigationAction
                 label="Notifications"
                 value="Notifications"
+                component={Link}
+                to="/notification"
                 icon={<NotificationsRounded />}
             />
             <BottomNavigationAction

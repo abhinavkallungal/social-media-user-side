@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react'
+import React, { useState } from 'react'
 import './AddProfilePhoto.css'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -6,7 +6,7 @@ import { Typography, IconButton } from '@mui/material/';
 import { CloseRounded } from "@mui/icons-material"
 import Modal from '@mui/material/Modal'
 import uploadSVG from '../../Assets/undraw_add_files.svg'
-import ReactCrop, { makeAspectCrop } from 'react-image-crop'
+import ReactCrop from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import S3FileUpload from 'react-s3'
 import {PhotoCamera} from '@mui/icons-material'

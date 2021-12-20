@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 
 function FeedSkeleton() {
     return (
-        <div class='FeedSkeleton p-5'>
+        <div className='FeedSkeleton p-5'>
 
        
         <Stack >

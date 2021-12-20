@@ -55,18 +55,18 @@ function Hero() {
         SetLoding(true)
         getAllpost().then((posts)=>{
             SetPosts(posts)
-            console.log(posts);
+         
             SetLoding(false)
         })
 
        
     }, [])
-    console.log(user);
+   
     
 
     return (
         <div className="Hero">
-            <Grid container>
+                <Grid container>
 
                 <Grid item xs={12} md={2.5} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }}  className={classes.left} >
                     <div style={{position:'sticky',top:'-150px'}}>

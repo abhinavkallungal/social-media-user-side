@@ -1,4 +1,4 @@
-import React ,{useState}from 'react'
+import React ,{useState,useEffect}from 'react'
 import { Camera, PhotoCamera } from '@mui/icons-material'
 import { IconButton, Button } from '@mui/material'
 import AddProfilePhoto  from '../AddProfilePhoto/AddProfilePhoto'
@@ -10,8 +10,6 @@ import './ProfileHeader.css'
 
 
 import { useSelector } from 'react-redux';
-
-import { Link } from 'react-router-dom'
 import { dofollow } from '../../Axios';
 
 function ProfileHeader({ user }) {
@@ -20,21 +18,36 @@ function ProfileHeader({ user }) {
     let data = currentuser
     let ProfilePhotos
     let coverPhoto
-    if(data._id===user._id){
 
-         ProfilePhotos=data?.ProfilePhotos;
-         coverPhoto=data?.coverPhoto;
-    }else{
-         ProfilePhotos=user?.ProfilePhotos;
-         coverPhoto=user?.coverPhoto;
+    useEffect(() => {
+        if(data._id===user._id){
 
-    }
+            ProfilePhotos=data?.ProfilePhotos;
+            coverPhoto=data?.coverPhoto;
+       }else{
+            ProfilePhotos=user?.ProfilePhotos;
+            coverPhoto=user?.coverPhoto;
+   
+       }
+   
+       let followingexist=data?.followings?.findIndex((item)=>{
+           return item==user._id
+       })
+       if(followingexist===-1){
+       }else{
+           setFollow(true)
+       }
+        
+        
+        
+    }, [])
+    
 
 
     const handlefollow = (userId, currentuserId) => {
+        setFollow(follow=> !follow)
         dofollow({ userId, currentuserId }).then((data) => {
             console.log(data);
-            setFollow(data.follow)
         }).catch((err) => {
             console.log(err);
 

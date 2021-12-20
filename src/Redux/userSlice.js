@@ -12,13 +12,11 @@ const userSlice = createSlice({
   },
   reducers: {
     loginAction: (state,action) => {
-      console.log(">>>>>>>>>>>>>action .payload",action.payload);
       state.user=({...action.payload})
 
     },
     logoutAction: state => {
       state.user = null
-      console.log("logout action");
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       window.location.reload()

@@ -1,0 +1,64 @@
+.Notification .card{
+    
+    border-radius: 10px;
+    
+}
+
+
+.Notification .Head{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    background-color: #007fff;
+    align-items: center;
+    border-radius: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.Notification .notifications{
+    padding: 20px;
+}
+.Notification .notifications .notification {
+    width: 100%;
+   display: flex;
+   align-items: flex-start;
+   border: .5px solid #007fff;
+   padding: 10px;
+   border-radius: 10px;
+   margin-top: 10px; 
+}
+.Notification .notifications .notification.read {
+ background-color: rgba(213, 213, 213, 0.733);
+}
+.Notification .notifications .notification  .content {
+    width: 100%;
+    
+}
+
+.Notification .notifications .notification  .content span.time{
+    width: auto ;
+    display: flex;
+    justify-content: end;
+    font-size: 14px;
+    font-weight: bold;
+
+}
+
+.Notification .notifications .notification img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 10px;
+    background-color: hotpink;
+    margin-right: 20px;
+}
+
+.Notification .notifications .notification .name{
+text-decoration: none;
+color: grey;
+font-weight: bold;
+}
+
+

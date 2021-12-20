@@ -4,7 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { useDispatch } from 'react-redux'
 import { loginAction } from "./Redux/userSlice"
 import {setSoketAction} from './Redux/socketSlice'
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 
 
 
@@ -18,6 +18,27 @@ import AccountDetailsPage from './Pages/AccountDetailsPage/AccountDetailsPage';
 import SearchPage from './Pages/SearchPage/SearchPage';
 import CreatePostPage from './Pages/CreatePostPage/CreatePostPage';
 import TestPage from './Pages/TestPage/TestPage'
+import NotificationPage from './Pages/NotificationPage/NotificationPage'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  
+ 
+
+
+
+
 
 
 
@@ -35,19 +56,27 @@ function Router() {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
     let[socket,setSocket]=useState(null)
 
+    
     useEffect(() => {
-        socket=io('http://localhost:4000', { transports: ['websocket', 'polling', 'flashsocket'] })
+        let socket=io('http://localhost:4000', { transports: ['websocket', 'polling', 'flashsocket'] })
         dispatch(setSoketAction(socket))
         console.log("routersoket",socket);
         setSocket(socket)
         socket.on("connect", () => {
-
-            if(user && socket) socket.emit("login",{id:socket.id,userId:user._id}) 
+            console.log("connect",socket.id);
+            if(user && socket) return socket.emit("login",{id:socket.id,userId:user._id}) 
         });
         socket.on("likemsg",(msg)=>{
             alert(msg)
         })
-        socket.emit("test",`test message ${socket.id}`)
+        socket.on("sendLikeNotification",(notification)=>{
+            Toast.fire({
+                title: `${notification.user.name} Liked Your Post`
+            })
+        })
+        socket.on("save",(msg)=>{
+        })
+
         
 
     }, [])
@@ -57,9 +86,6 @@ function Router() {
     
 
    
-    
-
-
     useEffect(() => {
         console.log("router");
         const token = localStorage.getItem('token')
@@ -69,23 +95,22 @@ function Router() {
 
             const decodedToken = jwtDecode(token)
             if (decodedToken.exp * 1000 < new Date().getTime()) logout();
-            console.log(decodedToken);
 
         }else{
             setToken(null)
 
         }
-        console.log("Adfadsfa");
 
     }, [location])
 
 
 
+
+
     const logout = () => {
-        console.log('logout');
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         setToken(null);
-        console.log("tokens",Token);
         history.push('/login')
     }
 
@@ -98,7 +123,6 @@ function Router() {
 
             </Route>
             <Route exact path="/login">
-                {console.log("login",Token)}
 
                 {Token ? <Redirect to="/" /> : <Loginpage />}
             </Route>
@@ -122,6 +146,9 @@ function Router() {
             </Route>
             <Route  path="/createpost">
                 {Token ? <CreatePostPage/> : <Redirect to="/login" />}
+            </Route>
+            <Route  path="/notification">
+                {Token ? <NotificationPage/> : <Redirect to="/login" />}
             </Route>
             <Route  path="/test">
                <TestPage/>

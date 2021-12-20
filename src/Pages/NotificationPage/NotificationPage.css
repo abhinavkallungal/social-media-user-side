@@ -1,0 +1,7 @@
+.NotificationPage{
+    margin-top: 70px;
+}
+
+.NotificationPage .left ,.NotificationPage .center,.NotificationPage .right{
+    padding: 20px;
+}

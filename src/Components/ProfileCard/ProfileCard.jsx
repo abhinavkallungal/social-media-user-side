@@ -13,7 +13,6 @@ const history=useHistory()
     const user =(useSelector((state) =>  state.user.user))
     let data =user
     let ProfilePhotos=data?.ProfilePhotos;
-    console.log(user);
   
 
     useEffect(() => {

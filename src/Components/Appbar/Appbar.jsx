@@ -4,9 +4,8 @@ import { AppBar, Toolbar, Typography, Menu, MenuItem, Avatar, ListItemIcon, Divi
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
-import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, AddBoxRounded, Search } from '@mui/icons-material';
+import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
-import CreatePostModal from '../CreatePostModal/CreatePostModal'
 import { useDispatch } from 'react-redux'
 import { logoutAction } from "../../Redux/userSlice"
 import { useHistory } from 'react-router';
@@ -87,7 +86,8 @@ function Appbar() {
                                 to="/search" >
                                 <Search color="primary" size="medium" />
                             </Button>
-                            <Button variant="text" className={classes.navItem, 'navItem'} >
+                            <Button variant="text" className={classes.navItem, 'navItem'} component={Link}
+                                to="/notification">
                                 <NotificationsRounded color="primary" size="medium" />
                             </Button>
                             <Button variant="text" className={classes.navItem, 'navItem'}>

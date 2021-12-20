@@ -381,3 +381,24 @@ export const DoAddCoverPhoto=({coverPhoto,currentuserId})=>{
     })
 
 }
+
+export const getAllNotifications=({userId})=>{
+    return new Promise ((resolve,reject)=>{
+        
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/getAllNotifications', {userId }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+            resolve(data.data.notifications)            
+
+        }).catch((err) => {
+            reject(err.data)
+ 
+          
+        })
+
+    })
+
+}

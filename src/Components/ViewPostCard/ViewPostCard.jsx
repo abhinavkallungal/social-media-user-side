@@ -4,10 +4,10 @@ import{doLike,doSave,doDeletePost, doCommet} from '../../Axios'
 import './ViewPostCard.css'
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
-import {Input} from '@mui/material'
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import SwiperCore, {Pagination} from 'swiper';
 import PostReportModal from '../PostReportModal/PostReportModal';
+
 
 // install Swiper modules
 
@@ -16,7 +16,6 @@ import PostReportModal from '../PostReportModal/PostReportModal';
 // Import Swiper styles
 import 'swiper/swiper.min.css'
 import 'swiper/modules/pagination/pagination.min.css'
-import { useHistory } from 'react-router';
 
 import  moment from 'moment'
 
@@ -26,6 +25,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import { BookmarkAdd, BookmarkAddedOutlined, ChatBubble, SendRounded, Tune } from '@mui/icons-material';
+import { useSelector } from 'react-redux';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 SwiperCore.use([Pagination]);
@@ -34,6 +34,8 @@ SwiperCore.use([Pagination]);
 
 
 function ViewPostCard(props) {
+
+    let socket =(useSelector((state)=>state.socket.socket))
 
     
     const{post,user}=props
@@ -96,6 +98,10 @@ function ViewPostCard(props) {
 
     const handleLike=()=>{
         doLike({userId:user._id,postId:post._id}).then((data)=>{
+            if(data.NotificationId){
+                
+                socket.emit("dolike",{NotificationId:data.NotificationId})
+            }
             setlikeCount(data.likes)
             setliked(data.liked)
         })
@@ -122,7 +128,6 @@ function ViewPostCard(props) {
     }
     const handleAddComment=()=>{
         doCommet({userId:user._id,postId:post._id,comment}).then((newcomment)=>{
-
             setComments(newcomment)
             setCommentCount(commentCount=>commentCount+1)
             setComment("")
