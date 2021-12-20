@@ -11,10 +11,8 @@ import { useSelector } from 'react-redux';
 
 import HeroStorySection from '../HeroStorySection/HeroStorySection';
 import ViewPostCard from '../ViewPostCard/ViewPostCard';
-import CreatePostModal from '../CreatePostModal/CreatePostModal';
 import { getAllpost } from '../../Axios';
-import AddProfilePhoto from '../AddProfilePhoto/AddProfilePhoto'
-import ImageInput from '../AddProfilePhoto/ImageInput'
+import PostReportModal from '../PostReportModal/PostReportModal'
 import FeedSkeleton from '../Skeletons/FeedSkeleton/FeedSkeleton';
 
 const useStyles = makeStyles({
@@ -70,10 +68,13 @@ function Hero() {
         <div className="Hero">
             <Grid container>
 
-                <Grid item xs={12} md={2.5} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }} className={classes.left} >
+                <Grid item xs={12} md={2.5} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }}  className={classes.left} >
+                    <div style={{position:'sticky',top:'-150px'}}>
+
                     <ProfileCard />
                     <SideNav/>
                     <SidebarBanner/>
+                    </div>
                 </Grid>
                 <Grid item xs={12} md={6.5}  className="mx-auto">
                    <HeroStorySection/>
@@ -89,16 +90,18 @@ function Hero() {
                         })
                     }
                     {
-                        loding? <FeedSkeleton/> :null
+                        loding? <div> <FeedSkeleton/> <FeedSkeleton/>  <FeedSkeleton/></div>  :null
                     }
                    
                    
                     
                 </Grid>
                 <Grid item xs={12} md={3} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }} className={classes.right} >
-                
+                <div style={{position:'sticky',top:'100px'}}>                
                     <RequestCard/>
                     <RequestCard/>
+                    <PostReportModal/>
+                </div>
                     
                 </Grid>
                 

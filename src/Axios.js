@@ -317,6 +317,27 @@ export const doCommet=({postId,userId,comment})=>{
 
 }
 
+export const doReport=({postId,userId,optoion,message})=>{
+    return new Promise ((resolve,reject)=>{
+    
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/report', {userId, postId,optoion,message }, { headers: { Authorization: token } }).then((data) => {
+        
+
+            resolve(data.data.comment)
+            
+
+        }).catch((err) => {
+            reject(err.data)
+ 
+          
+        })
+
+    })
+
+}
+
 export const addProfilePhoto=({profilePhoto,currentuserId})=>{
     return new Promise ((resolve,reject)=>{
         

@@ -7,6 +7,7 @@ import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineR
 import {Input} from '@mui/material'
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import SwiperCore, {Pagination} from 'swiper';
+import PostReportModal from '../PostReportModal/PostReportModal';
 
 // install Swiper modules
 
@@ -153,7 +154,6 @@ function ViewPostCard(props) {
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}
-                    onClick={handleClose}
                     PaperProps={{
                         elevation: 0,
                         sx: {
@@ -190,9 +190,10 @@ function ViewPostCard(props) {
                         postOwner ? <MenuItem onClick={handleDelete}> Delete Post</MenuItem> :null
                     }
                     
-                    <MenuItem>
+                    <PostReportModal userId={user?._id} postId={post?._id}>
+
                         Report Post
-                    </MenuItem>
+                    </PostReportModal>
                    
                 </Menu>
 
