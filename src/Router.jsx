@@ -21,6 +21,7 @@ import TestPage from './Pages/TestPage/TestPage'
 import NotificationPage from './Pages/NotificationPage/NotificationPage'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
+import SignUpPhone from './Pages/SignupPage/SignUpPhone';
 
 const Toast = Swal.mixin({
     toast: true,
@@ -128,6 +129,9 @@ function Router() {
             </Route>
 
             <Route exact path="/signup">
+                {Token ? <Redirect to="/" /> : <SignUpPhone />}
+            </Route>
+            <Route exact path="/emailSignup">
                 {Token ? <Redirect to="/" /> : <SignupPage />}
             </Route>
 

@@ -208,7 +208,7 @@ function SignupPage() {
 
                     <Card className='footer'>
                         <span>
-                            Have an account? <Link to='/login'>Log in</Link> 
+                            Have an account? <Link href='/login'>Log in</Link> 
                         </span>
                     </Card>
                 </Grid>

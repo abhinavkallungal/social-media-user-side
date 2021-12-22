@@ -6,7 +6,7 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
-import { useDispatch } from 'react-redux'
+import { useDispatch ,useSelector } from 'react-redux'
 import { logoutAction } from "../../Redux/userSlice"
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -60,6 +60,10 @@ function Appbar() {
         setAnchorEl(null);
     };
     const classes = useStyles();
+
+    let  currentUser =(useSelector((state) =>  state.user.user))
+     let data =currentUser
+    
 
     const handleLogout = (e) => {
         dispatch(logoutAction())
@@ -151,7 +155,7 @@ function Appbar() {
                         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                     >
-                        <Link to="/">
+                        <Link to={`/profile/${data._id}`}>
                             <MenuItem>
                                 <Avatar /> Profile
                             </MenuItem>

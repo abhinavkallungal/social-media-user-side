@@ -48,12 +48,14 @@ const useStyles = makeStyles({
 function Hero() {
     const classes=useStyles()
     const user =(useSelector((state) =>  state.user.user))
+    const data= user
     const post  = useSelector(state => state.newPost)
     const[posts,SetPosts]=useState([])
     const[loding,SetLoding]=useState(false)
     useEffect(() => {
         SetLoding(true)
-        getAllpost().then((posts)=>{
+        console.log(data);
+        getAllpost({userId:data?._id}).then((posts)=>{
             SetPosts(posts)
          
             SetLoding(false)

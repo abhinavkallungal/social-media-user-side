@@ -90,12 +90,22 @@ export const login = (formdata) => {
 
 }
 
-export const google=()=>{
+export const googleLogin=()=>{
     
     return new Promise (async(resolve,reject)=>{
-        axios.get("http://localhost:4000/auth/google").then(()=>{
+        axios.post("http://localhost:4000/api/v1/user/googleLogin").then((data)=>{
 
-        }).catch(()=>{
+            console.log("login data", data);
+            localStorage.setItem("token", data.data.token)
+            console.log("login user", data.data.user);
+            console.log("login success");
+            localStorage.setItem("user", JSON.stringify(data.data.user))
+
+            resolve(data.data.user)
+
+        }).catch((err)=>{
+            console.log('err', err);
+            reject(err)
             
         })
     })
@@ -128,12 +138,14 @@ export const createPost = (formdata) => {
 
 
 export const getAllpost = () => {
+   
 
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
         axios.get('http://localhost:4000/api/v1/user/getAllPost', { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
 
             resolve(data.data.posts)
 

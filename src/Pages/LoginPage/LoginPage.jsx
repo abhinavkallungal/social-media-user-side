@@ -1,4 +1,4 @@
-import  React,{useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,10 +14,13 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Card, IconButton } from '@mui/material';
 import { FacebookOutlined, Google } from '@mui/icons-material';
-import { google, login } from '../../Axios'
+import { google, googleLogin, login } from '../../Axios'
 import { useHistory } from 'react-router-dom'
-import { useDispatch ,useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { loginAction } from "../../Redux/userSlice"
+import { GoogleLogin } from 'react-google-login';
+
+
 
 
 function Copyright(props) {
@@ -36,17 +39,17 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch()
 
   const history = useHistory()
   const [user, setUser] = React.useState({ email: null, password: "" })
   const [form, setForm] = React.useState({})
   const [errors, setErrors] = React.useState({ error: false, emailErr: "", passwordErr: "" })
-  const [socket,setSoket]=useState(useSelector((state) =>  state.socket.socket))
+  const [socket, setSoket] = useState(useSelector((state) => state.socket.socket))
 
 
-  console.log("loginsoket",socket);
-  
+  console.log("loginsoket", socket);
+
 
 
 
@@ -154,7 +157,7 @@ export default function SignIn() {
         login(form).then((user) => {
           console.log("login data from server", user);
           dispatch(loginAction(user))
-          socket?.emit("login",{id:socket.id,userId:user._id})
+          socket?.emit("login", { id: socket.id, userId: user._id })
 
           history.push('/')
 
@@ -171,10 +174,24 @@ export default function SignIn() {
 
   };
 
-  const logingoogle=()=>{
-    window.open("http://localhost:4000/auth/google","_self")
+  const responseGoogle = (response) => {
+    console.log(response.su.ev);
+    const email = response.su.ev
+    googleLogin(email).then((user) => {
+      console.log("login data from server", user);
+      dispatch(loginAction(user))
+      socket?.emit("login", { id: socket.id, userId: user._id })
 
+      history.push('/')
+
+    }).catch((err) => {
+      setErrors({ error: true, emailErr: "invalid UserName Or Password" })
+
+
+    })
   }
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -235,25 +252,49 @@ export default function SignIn() {
               <hr />
               <div className="d-flex justify-content-evenly">
 
-                <IconButton style={{ backgroundColor: "#1877F230", borderRadius: 10 }} size="medium" onClick={logingoogle}>
+                <GoogleLogin
+                  clientId="840612483361-uh8355gngtkol7499l5gsnatkdn85s3g.apps.googleusercontent.com"
+                  buttonText="Login"
+                  render={renderProps => (
+
+                    <IconButton style={{ backgroundColor: "#F7010130", borderRadius: 10 }} size="medium" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                      <Google style={{ color: "#F70101", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
+                    </IconButton>
+                  )}
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+                  cookiePolicy={'single_host_origin'}
+                />
+
+                <IconButton style={{ backgroundColor: "#1877F230", borderRadius: 10 }} size="medium" >
                   <FacebookOutlined style={{ color: "#1877F2", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
                 </IconButton>
 
-                <IconButton style={{ backgroundColor: "#F7010130", borderRadius: 10 }} size="medium">
-                  <Google style={{ color: "#F70101", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
-                </IconButton>
+
+
+
               </div>
 
               <hr />
               <Grid container>
+                <GoogleLogin
+                  clientId="840612483361-uh8355gngtkol7499l5gsnatkdn85s3g.apps.googleusercontent.com"
+                  buttonText="Login"
+                  render={renderProps => (
+                    <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</button>
+                  )}
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+                  cookiePolicy={'single_host_origin'}
+                />
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link href="/signup" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                  <Link to='/signup' variant="body2">
+                    Don't have an account? Sign Up
                   </Link>
                 </Grid>
               </Grid>

@@ -10,12 +10,14 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { Card } from '@mui/material';
+import { Card, IconButton } from '@mui/material';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { doSignup, checkUserName, verifyEmailotp ,verifyMobileOtp } from '../../Axios'
+import { doSignup, checkUserName, verifyEmailotp, verifyMobileOtp } from '../../Axios'
 import OtpInput from 'react-otp-input';
-import {useHistory} from'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { MobileScreenShare, Phone } from '@mui/icons-material';
+
 
 
 
@@ -36,7 +38,7 @@ const theme = createTheme();
 
 export default function SignUp() {
 
-    const history =useHistory()
+    const history = useHistory()
 
     const [user, setUser] = useState({
         email: '',
@@ -44,11 +46,12 @@ export default function SignUp() {
         name: "",
         username: "",
         password: '',
-        otp: ''
+        otp: '',
+        usernameExist: ""
     })
     const [err, setErr] = useState({})
-    const [otpsend, setOtpSend] = useState(false)
-    let error = { error: false, nameErr: true, usernameErr: true, emailErr: true, passwordErr: true }
+    const [otpsend, setOtpSend] = useState(true)
+    let error = { error: false, nameErr: true, usernameErr: true, usernameExistErr: true, emailErr: true, passwordErr: true }
 
     const onChange = (e) => {
 
@@ -120,7 +123,7 @@ export default function SignUp() {
             }
         }
     };
-   
+
 
     const changeUsername = (e) => {
 
@@ -133,12 +136,12 @@ export default function SignUp() {
 
             setUser({ ...user, username: e.target.value });
             checkUserName({ username: e.target.value.trim() }).then((data) => {
-                error = { ...error, usernameErr: false, usernameErrMsg: '' }
+                error = { ...error, usernameExistErr: false, usernameExistMsg: '' }
                 setErr(error)
 
 
             }).catch((error) => {
-                error = { ...error, usernameErr: true, usernameErrMsg: 'username Already exist' }
+                error = { ...error, usernameExistErr: true, usernameExistMsg: 'username Already exist' }
                 setErr(error)
 
             })
@@ -180,7 +183,7 @@ export default function SignUp() {
         console.log(user);
 
         if ((user.email !== "" || user.phone !== "") && user.username !== "" && user.name !== "" && user.password !== "") {
-                         console.log("test");
+            console.log("test");
             doSignup(user).then(() => {
                 setOtpSend(true)
             }).catch((error) => {
@@ -190,40 +193,40 @@ export default function SignUp() {
             })
 
         }
-        
+
 
     };
 
-    
 
-    const changeOtp=(otp)=>{
-        setUser({...user,otp:otp})
+
+    const changeOtp = (otp) => {
+        setUser({ ...user, otp: otp })
         console.log(user);
     }
 
-    const verifyOtp =()=>{
-        if(user.email!==undefined,user.phone===undefined){
-            console.log("email verify",user.email,user.phone);
+    const verifyOtp = () => {
+        if (user.email !== undefined, user.phone === undefined) {
+            console.log("email verify", user.email, user.phone);
 
-                verifyEmailotp({email:user.email,otp:user.otp}).then((data)=>{
-                    console.log(">>>>>>>>>2",data.data.user);
-                    history.push('/')
-                }).catch((error)=>{
-                    console.log(">>>>>>>>>3");
-                })
-        
+            verifyEmailotp({ email: user.email, otp: user.otp }).then((data) => {
+                console.log(">>>>>>>>>2", data.data.user);
+                history.push('/')
+            }).catch((error) => {
+                console.log(">>>>>>>>>3");
+            })
+
 
         }
 
-        if(user.email===undefined,user.phone!==undefined){
+        if (user.email === undefined, user.phone !== undefined) {
 
-            console.log("mobile verify",user.email,user.phone);
+            console.log("mobile verify", user.email, user.phone);
 
-            verifyMobileOtp({phone:user.phone,otp:user.otp}).then((data)=>{
-                
+            verifyMobileOtp({ phone: user.phone, otp: user.otp }).then((data) => {
+
                 history.push('/')
-                
-            }).catch((error)=>{
+
+            }).catch((error) => {
 
                 console.log(error);
 
@@ -233,7 +236,7 @@ export default function SignUp() {
 
 
         }
-        
+
 
     }
 
@@ -255,19 +258,21 @@ export default function SignUp() {
                                     alignItems: 'center',
                                 }}
                             >
-                                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                                    <LockOutlinedIcon />
-                                </Avatar>
+                                
                                 <Typography component="h1" variant="h5">
                                     OTP VERIFICATION
                                 </Typography>
+                                <Grid container flexDirection='column' alignItems='center' className='mt-5'>
+                                <MobileScreenShare style={{fontSize:'50px'}} />
+                                <Typography>Enter the code we sent to 502-399-3121</Typography>
+                                </Grid>
                                 <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                                     <Grid container spacing={2}>
                                         <Grid item xs={12} sm={12}>
                                             <OtpInput
                                                 value={user.otp}
                                                 onChange={changeOtp}
-                                                type={Number}
+                                                type='number'
                                                 numInputs={4}
                                                 separator={<span>-</span>}
                                                 name="otp"
@@ -278,7 +283,7 @@ export default function SignUp() {
                                                     fontSize: "2rem",
                                                     borderRadius: 4,
                                                     border: "1px solid rgba(0,0,0,0.3)"
-                                                  }}
+                                                }}
                                             />
                                             {
                                                 err.nameErrMsg ? <Typography component='span' style={{ color: 'red' }}>{err.nameErrMsg}</Typography> : null
@@ -300,14 +305,22 @@ export default function SignUp() {
                                     >
                                         Verify OTP
                                     </Button>
+                                    
+                                    <Grid container flexDirection='column' alignItems='center' className='my-3'>
+                                        <Box>01:10</Box>
+                                        <Button>Resend OTP</Button>
+                                    </Grid>
                                     {
                                         err.message ? <Typography component='span' style={{ color: 'red' }}>{err.message}</Typography> : null
 
                                     }
                                     <Grid container justifyContent="flex-end">
                                         <Grid item>
-                                            <Link href="#" variant="body2">
+                                            <Link to='/login' variant="body2">
                                                 Already have an account? Sign in
+                                            </Link>
+                                            <Link to="/dshfa;">
+                                                jbhvjbkll
                                             </Link>
                                         </Grid>
                                     </Grid>
@@ -366,13 +379,16 @@ export default function SignUp() {
                                             {
                                                 err.usernameErr ? <Typography component='span' style={{ color: 'red' }}>{err.usernameErrMsg}</Typography> : null
                                             }
+                                            {
+                                                err.usernameExistErr ? <Typography component='span' style={{ color: 'red' }}>{err.usernameExistErr}</Typography> : null
+                                            }
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
                                                 required
                                                 fullWidth
                                                 id="email"
-                                                label="Email Id Or Phone Number"
+                                                label="Email Id"
                                                 name="email"
                                                 onChange={onChange}
 
@@ -416,9 +432,19 @@ export default function SignUp() {
                                         err.message ? <Typography component='span' style={{ color: 'red' }}>{err.message}</Typography> : null
 
                                     }
+
+
+                                    <Grid container justifyContent="center" flexDirection='column' alignItems="center">
+
+
+                                        <IconButton style={{ borderRadius: 10 }} size="medium" >
+                                            <Phone style={{ color: "#1976D2", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
+                                        </IconButton>
+                                        <Typography>Signup with Phone Number</Typography>
+                                    </Grid>
                                     <Grid container justifyContent="flex-end">
                                         <Grid item>
-                                            <Link href="#" variant="body2">
+                                            <Link href="" variant="body2">
                                                 Already have an account? Sign in
                                             </Link>
                                         </Grid>

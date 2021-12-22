@@ -20,15 +20,7 @@ function ProfileHeader({ user }) {
     let coverPhoto
 
     useEffect(() => {
-        if(data._id===user._id){
-
-            ProfilePhotos=data?.ProfilePhotos;
-            coverPhoto=data?.coverPhoto;
-       }else{
-            ProfilePhotos=user?.ProfilePhotos;
-            coverPhoto=user?.coverPhoto;
-   
-       }
+        
    
        let followingexist=data?.followings?.findIndex((item)=>{
            return item==user._id
@@ -41,6 +33,15 @@ function ProfileHeader({ user }) {
         
         
     }, [])
+
+    if(data._id===user._id){
+        ProfilePhotos=data?.ProfilePhotos;
+        coverPhoto=data?.coverPhoto;
+   }else{
+        ProfilePhotos=user?.ProfilePhotos;
+        coverPhoto=user?.coverPhoto;
+
+   }
     
 
 
