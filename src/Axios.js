@@ -90,10 +90,10 @@ export const login = (formdata) => {
 
 }
 
-export const googleLogin=()=>{
+export const googleLogin=({email})=>{
     
     return new Promise (async(resolve,reject)=>{
-        axios.post("http://localhost:4000/api/v1/user/googleLogin").then((data)=>{
+        axios.post("http://localhost:4000/api/v1/user/googleLogin",{email}).then((data)=>{
 
             console.log("login data", data);
             localStorage.setItem("token", data.data.token)
@@ -111,6 +111,45 @@ export const googleLogin=()=>{
     })
 }
 
+export const forgotPasswordRequest=(formData)=>{
+    
+    return new Promise (async(resolve,reject)=>{
+        axios.post("http://localhost:4000/api/v1/user/forgotPasswordRequest",formData).then((data)=>{
+
+            console.log("send data", data);
+       
+
+            resolve(data.data.user)
+
+        }).catch((err)=>{
+            console.log('err', err.response);
+            reject(err)
+            
+        })
+    })
+}
+
+export const forgotPasswordReset=(formData)=>{
+    console.log(formData);
+    
+    return new Promise (async(resolve,reject)=>{
+        axios.post("http://localhost:4000/api/v1/user/forgotPasswordReset",formData,).then((data)=>{
+
+            console.log("send data", data);
+       
+            
+            resolve(data.data.user)
+
+        }).catch((err)=>{
+            console.log('err', err.response.data);
+            reject(err)
+            
+        })
+    })
+}
+
+
+
 export const createPost = (formdata) => {
     console.log(">>>>>>>>>>>>>>>>>>>>",formdata);
     console.log(1);
@@ -121,7 +160,7 @@ export const createPost = (formdata) => {
         const token = localStorage.getItem("token")
         console.log(3);
 
-        axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token ,'Content-Type': 'multipart/form-data' } }).then((data) => {
             console.log(4);
 
             resolve(data.data.post)

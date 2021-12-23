@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import {Switch,Route,Redirect,useHistory,useLocation} from "react-router-dom";
+import { Switch, Route, Redirect, useHistory, useLocation } from "react-router-dom";
 import jwtDecode from 'jwt-decode';
 import { useDispatch } from 'react-redux'
 import { loginAction } from "./Redux/userSlice"
-import {setSoketAction} from './Redux/socketSlice'
+import { setSoketAction } from './Redux/socketSlice'
 import { io, Socket } from "socket.io-client";
 
 
@@ -22,6 +22,8 @@ import NotificationPage from './Pages/NotificationPage/NotificationPage'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import SignUpPhone from './Pages/SignupPage/SignUpPhone';
+import ForgotPassword from './Pages/ForgotPassword/ForgotPassword';
+import ForgotPasswordResat from './Pages/ForgotPassword/ForgotPasswordResat';
 
 const Toast = Swal.mixin({
     toast: true,
@@ -30,12 +32,12 @@ const Toast = Swal.mixin({
     timer: 3000,
     timerProgressBar: true,
     didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
-  })
-  
- 
+})
+
+
 
 
 
@@ -44,49 +46,49 @@ const Toast = Swal.mixin({
 
 
 function Router() {
-    
-    
+
+
     const history = useHistory()
     const location = useLocation()
     const dispatch = useDispatch()
-    
-    
-    
-    
+
+
+
+
     const [Token, setToken] = useState(localStorage.getItem('token'));
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-    let[socket,setSocket]=useState(null)
+    let [socket, setSocket] = useState(null)
 
-    
+
     useEffect(() => {
-        let socket=io('http://localhost:4000', { transports: ['websocket', 'polling', 'flashsocket'] })
+        let socket = io('http://localhost:4000', { transports: ['websocket', 'polling', 'flashsocket'] })
         dispatch(setSoketAction(socket))
-        console.log("routersoket",socket);
+        console.log("routersoket", socket);
         setSocket(socket)
         socket.on("connect", () => {
-            console.log("connect",socket.id);
-            if(user && socket) return socket.emit("login",{id:socket.id,userId:user._id}) 
+            console.log("connect", socket.id);
+            if (user && socket) return socket.emit("login", { id: socket.id, userId: user._id })
         });
-        socket.on("likemsg",(msg)=>{
+        socket.on("likemsg", (msg) => {
             alert(msg)
         })
-        socket.on("sendLikeNotification",(notification)=>{
+        socket.on("sendLikeNotification", (notification) => {
             Toast.fire({
                 title: `${notification.user.name} Liked Your Post`
             })
         })
-        socket.on("save",(msg)=>{
+        socket.on("save", (msg) => {
         })
 
-        
+
 
     }, [])
 
 
 
-    
 
-   
+
+
     useEffect(() => {
         console.log("router");
         const token = localStorage.getItem('token')
@@ -97,7 +99,7 @@ function Router() {
             const decodedToken = jwtDecode(token)
             if (decodedToken.exp * 1000 < new Date().getTime()) logout();
 
-        }else{
+        } else {
             setToken(null)
 
         }
@@ -118,7 +120,7 @@ function Router() {
     return (
         <Switch>
 
-           
+
             <Route exact path="/">
                 {Token ? <Feed /> : <Redirect to="/login" />}
 
@@ -134,28 +136,34 @@ function Router() {
             <Route exact path="/emailSignup">
                 {Token ? <Redirect to="/" /> : <SignupPage />}
             </Route>
+            <Route exact path="/forgotPassword">
+                {Token ? <Redirect to="/" /> : <ForgotPassword/>}
+            </Route>
 
-            <Route  path="/profile/:userId">
-               {Token ? <ProfilePage/> : <Redirect to="/login" />}
-           </Route>
+            <Route path="/profile/:userId">
+                {Token ? <ProfilePage /> : <Redirect to="/login" />}
+            </Route>
 
-            <Route  path="/settings">
-                {Token ? <SettingsPage/> : <Redirect to="/login" />}
+            <Route path="/settings">
+                {Token ? <SettingsPage /> : <Redirect to="/login" />}
             </Route>
-            <Route  path="/AccountDetails">
-                {Token ? <AccountDetailsPage/> : <Redirect to="/login" />}
+            <Route path="/AccountDetails">
+                {Token ? <AccountDetailsPage /> : <Redirect to="/login" />}
             </Route>
-            <Route  path="/search">
-                {Token ? <SearchPage/> : <Redirect to="/login" />}
+            <Route path="/search">
+                {Token ? <SearchPage /> : <Redirect to="/login" />}
             </Route>
-            <Route  path="/createpost">
-                {Token ? <CreatePostPage/> : <Redirect to="/login" />}
+            <Route path="/createpost">
+                {Token ? <CreatePostPage /> : <Redirect to="/login" />}
             </Route>
-            <Route  path="/notification">
-                {Token ? <NotificationPage/> : <Redirect to="/login" />}
+            <Route path="/notification">
+                {Token ? <NotificationPage /> : <Redirect to="/login" />}
             </Route>
-            <Route  path="/test">
-               <TestPage/>
+            <Route path="/test">
+                <TestPage />
+            </Route>
+            <Route path="/passwordReset">
+                <ForgotPasswordResat/>
             </Route>
 
 

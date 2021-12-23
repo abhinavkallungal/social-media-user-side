@@ -29,12 +29,8 @@ const Input = styled('input')({
     display: 'none'
 });
 
-const config = {
-    bucketName: process.env.REACT_APP_S3_BUCKET_NAME,
-    dirName: process.env.REACT_APP_S3_DIR_NAME, /* optional */
-    region: process.env.REACT_APP_REGION,
-    accessKeyId: process.env.REACT_APP_S3_ACCESS_KEY_ID,
-    secretAccessKey: process.env.REACT_APP_S3_SECRET_ACCESS_KEY
+const config={
+    
 }
 
 
@@ -45,12 +41,11 @@ function CreatePost() {
     const [length, setLength] = useState(0)
     const [Blobfiles, setBlobFiles] = useState([])
     const [orgfiles, setOrgFiles] = useState([])
-    const [formData, setFormData] = useState({})
     const [text, setText] = useState("")
     const [access, setAccess] = useState('PUBLIC')
     const [result, setResult] = useState([])
     const [error, setError] = useState("")
-
+    const formData =new FormData()
     let array = []
     const user = useSelector(state => state.user.user)
     const history=useHistory()
@@ -92,26 +87,26 @@ function CreatePost() {
         event.preventDefault();
         console.log(text, orgfiles.length);
 
+        formData.append("desc",text)
+        formData.append("Accessibility",access)
+        formData.append("userId",user._id)
+
 
         if (text === "" && orgfiles.length === 0) {
             setError("post is empty")
 
         } else if(orgfiles.length !== 0){
-            console.log("post with files    ");
+            console.log("post with files");
             setError("")
+            
 
             for (let i = 0; i < orgfiles.length; i++) {
-
-                handleUpload(orgfiles[i]);
-
+                formData.append('files',orgfiles[i])
             }
+     
+          
 
-
-
-        }else{
-            setError("")
-            console.log("only test");
-            createPost({ desc: text, Accessibility: access, userId: user._id}).then((data) => {
+            createPost( formData).then((data) => {
                 history.push('/')
 
             }).catch((err) => {
@@ -121,6 +116,24 @@ function CreatePost() {
                 }
                 setError(err.message)
             })
+
+
+
+        }else{
+            setError("")
+            console.log("only test");
+            createPost( formData).then((data) => {
+                history.push('/')
+
+            }).catch((err) => {
+                if (err.response.status == 403) {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+                }
+                setError(err.message)
+            })
+
+            
 
         }
 

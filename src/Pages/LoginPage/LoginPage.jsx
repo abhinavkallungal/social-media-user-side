@@ -3,8 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -19,6 +18,7 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAction } from "../../Redux/userSlice"
 import { GoogleLogin } from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 
 
 
@@ -176,8 +176,9 @@ export default function SignIn() {
 
   const responseGoogle = (response) => {
     console.log(response.su.ev);
+    
     const email = response.su.ev
-    googleLogin(email).then((user) => {
+    googleLogin({email}).then((user) => {
       console.log("login data from server", user);
       dispatch(loginAction(user))
       socket?.emit("login", { id: socket.id, userId: user._id })
@@ -189,6 +190,9 @@ export default function SignIn() {
 
 
     })
+  }
+  const responseFacebook = (response) => {
+    console.log(response);
   }
 
 
@@ -266,9 +270,20 @@ export default function SignIn() {
                   cookiePolicy={'single_host_origin'}
                 />
 
-                <IconButton style={{ backgroundColor: "#1877F230", borderRadius: 10 }} size="medium" >
-                  <FacebookOutlined style={{ color: "#1877F2", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
-                </IconButton>
+              
+
+                <FacebookLogin
+                  appId="4796539330410041"
+                  autoLoad={true}
+                  fields="name,email,picture"
+                  callback={responseFacebook}
+
+                  render={renderProps => (
+                    <IconButton style={{ backgroundColor: "#1877F230", borderRadius: 10 }} size="medium" onClick={renderProps.onClick} >
+                    <FacebookOutlined style={{ color: "#1877F2", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
+                  </IconButton>
+                  )}
+                  callback={responseFacebook} />,
 
 
 
@@ -277,16 +292,7 @@ export default function SignIn() {
 
               <hr />
               <Grid container>
-                <GoogleLogin
-                  clientId="840612483361-uh8355gngtkol7499l5gsnatkdn85s3g.apps.googleusercontent.com"
-                  buttonText="Login"
-                  render={renderProps => (
-                    <button onClick={renderProps.onClick} disabled={renderProps.disabled}>This is my custom Google button</button>
-                  )}
-                  onSuccess={responseGoogle}
-                  onFailure={responseGoogle}
-                  cookiePolicy={'single_host_origin'}
-                />
+                
                 <Grid item xs>
                   <Link href="/signup" variant="body2">
                     Forgot password?
