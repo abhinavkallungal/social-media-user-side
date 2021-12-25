@@ -3,7 +3,7 @@ import './BottomBar.css'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 
-import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded } from '@mui/icons-material';
+import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 
 
@@ -25,6 +25,13 @@ function BottomBar() {
                 component={Link}
                 to="/"
                 icon={<HomeRounded />}
+            />
+            <BottomNavigationAction
+                label="Search"
+                value="Search"
+                component={Link}
+                to="/search"
+                icon={<Search />}
             />
             <BottomNavigationAction
                 label="Notifications"

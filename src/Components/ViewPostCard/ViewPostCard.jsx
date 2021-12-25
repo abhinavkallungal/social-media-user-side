@@ -9,6 +9,7 @@ import SwiperCore, {Pagination} from 'swiper';
 import PostReportModal from '../PostReportModal/PostReportModal';
 
 
+
 // install Swiper modules
 
 
@@ -26,6 +27,8 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import { BookmarkAdd, BookmarkAddedOutlined, ChatBubble, SendRounded, Tune } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import ViewTages from './ViewTages';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 SwiperCore.use([Pagination]);
@@ -52,6 +55,8 @@ function ViewPostCard(props) {
     const[Comments,setComments]=useState([])
 
 
+
+
     useEffect(() => {
         let doeslike = post?.likes?.findIndex((likes)=>{
             return likes===user._id
@@ -70,7 +75,8 @@ function ViewPostCard(props) {
             setSaved(true)
         }
        
-        
+       
+    
     }, [])
 
     useEffect(() => {
@@ -118,6 +124,7 @@ function ViewPostCard(props) {
     }
 
     const handleDelete=()=>{
+        handleClose()
         doDeletePost({userId:user._id,postId:post._id}).then((data)=>{
             setDeleted(true)
 
@@ -144,15 +151,20 @@ function ViewPostCard(props) {
                 <div className="profile" >
                     <div className="img">
 
-                    <img src={ProfilePhotos ? ProfilePhotos[ProfilePhotos.length -1] :userAvatar} alt="" />
+                    <img src={ProfilePhotos ? ProfilePhotos :userAvatar} alt="" />
                     </div>
                     <div>
-                        <span>{post.user.name}</span>
+                        <span> <Link to={`/profile/${post.user._id}`} className="Link">{post?.user?.name}</Link> </span>
+                        {
+                            (post?.tag?.length >0 || post.location)  ? <span > is { post.tag.length >0 ? <span >with <span className="fw-bold"> <Link to={`/profile/${post.tag[0]._id}`} className="Link"> {post.tag[0].name}</Link></span></span>:null  } { post.tag.length >1 ? <span className="fw-bold">and <span>{post.tag.length-1}</span> others</span>:null  } {post.location ? <span>in <span className="fw-bold">{post.location}</span> </span> :null }</span>:null
+                        }
+
                         <p>{moment(post.postedDate).fromNow()}</p>
 
                     </div>
                 </div>
                 <IconButton size='medium' onClick={handleClick}> <MoreVertSharpIcon size='medium' /></IconButton>
+            
 
 
                 <Menu
@@ -305,6 +317,7 @@ function ViewPostCard(props) {
                         </Button>
                     </div>
             </div>
+            <ViewTages/>
 
         </div>
     )

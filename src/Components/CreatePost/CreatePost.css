@@ -31,6 +31,12 @@ text-align: center  ;
   background-color: #007fff;
   margin-right: 10px;
 }
+.CreatePost .content img {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  
+}
 .CreatePost .content textarea {
   width: 100%;
   border: none;
@@ -105,12 +111,33 @@ text-align: center  ;
 }
 
 .CreatePost .footer{
-  padding: 0 10px;
+  padding: 10 10px;
   margin-top: 30px;
 border-top: 1px solid grey;
 display: flex;
 justify-content: space-between;
+}
+
+.CreatePost .footer .buttons{
+
+display: flex;
 align-items: center;
+
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  .CreatePost .footer{
+    flex-direction: column;
+  }
+
+  .CreatePost .footer .buttons{
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+  
 }
 
 

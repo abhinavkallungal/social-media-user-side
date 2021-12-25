@@ -3,7 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
+
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -13,7 +13,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { doSignup, checkUserName, verifyEmailotp, verifyMobileOtp } from '../../Axios'
 import OtpInput from 'react-otp-input';
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { MobileScreenShare, Phone } from '@mui/icons-material';
 
 
@@ -317,8 +317,8 @@ export default function SignUp() {
                                             <Link to='/login' variant="body2">
                                                 Already have an account? Sign in
                                             </Link>
-                                            <Link to="/dshfa;">
-                                                jbhvjbkll
+                                            <Link to="/signup;">
+                                                Signup
                                             </Link>
                                         </Grid>
                                     </Grid>
@@ -442,7 +442,7 @@ export default function SignUp() {
                                     </Grid>
                                     <Grid container justifyContent="flex-end">
                                         <Grid item>
-                                            <Link href="" variant="body2">
+                                            <Link to='/login' variant="body2">
                                                 Already have an account? Sign in
                                             </Link>
                                         </Grid>

@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 
-import Link from '@mui/material/Link';
+import {Link} from 'react-router-dom'
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -257,7 +257,7 @@ export default function SignIn() {
               <div className="d-flex justify-content-evenly">
 
                 <GoogleLogin
-                  clientId="840612483361-uh8355gngtkol7499l5gsnatkdn85s3g.apps.googleusercontent.com"
+                  clientId="967826436699-lmpvmcre1r12tn050u52phkfs9aro8jv.apps.googleusercontent.com"
                   buttonText="Login"
                   render={renderProps => (
 
@@ -294,7 +294,7 @@ export default function SignIn() {
               <Grid container>
                 
                 <Grid item xs>
-                  <Link href="/signup" variant="body2">
+                  <Link to="/forgotpassword" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>

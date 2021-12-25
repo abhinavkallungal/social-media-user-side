@@ -62,7 +62,7 @@ function Hero() {
         })
 
        
-    }, [])
+    }, [user])
    
     
 
@@ -114,4 +114,4 @@ function Hero() {
     )
 }
 
-export default Hero
+export default Hero 

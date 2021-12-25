@@ -3,9 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -15,7 +13,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { doSignup, checkUserName, verifyEmailotp, verifyMobileOtp } from '../../Axios'
 import OtpInput from 'react-otp-input';
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { Mail } from '@mui/icons-material';
 
 
@@ -359,7 +357,7 @@ export default function SignUpPhone() {
                                     }
                                     <Grid container justifyContent="flex-end">
                                         <Grid item>
-                                            <Link href="#" variant="body2">
+                                            <Link to="/login" variant="body2">
                                                 Already have an account? Sign in
                                             </Link>
                                         </Grid>
@@ -484,7 +482,7 @@ export default function SignUpPhone() {
 
                                     <Grid container justifyContent="flex-end" className='mt-3'>
                                         <Grid item>
-                                            <Link href="#" variant="body2">
+                                            <Link to="/login" variant="body2">
                                                 Already have an account? Sign in
                                             </Link>
                                         </Grid>

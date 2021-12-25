@@ -81,7 +81,7 @@ function ProfileHeader({ user }) {
                             {
                                 data._id === user._id ? <Button variant="outlined"> Edit Profile</Button> : (<div>
 
-                                    <Button variant="contained" className="me-3" onClick={() => handlefollow(user._id, data._id)}> 
+                                    <Button variant="contained"  className="me-3 followbtn" onClick={() => handlefollow(user._id, data._id)}> 
                                     {
                                         follow ? 'Unfollow' :'Follow'
                                     }

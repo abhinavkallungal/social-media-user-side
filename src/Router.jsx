@@ -24,6 +24,7 @@ import withReactContent from 'sweetalert2-react-content'
 import SignUpPhone from './Pages/SignupPage/SignUpPhone';
 import ForgotPassword from './Pages/ForgotPassword/ForgotPassword';
 import ForgotPasswordResat from './Pages/ForgotPassword/ForgotPasswordResat';
+import AutoComplete from './Components/CreatePost/AutoComplete';
 
 const Toast = Swal.mixin({
     toast: true,
@@ -160,7 +161,7 @@ function Router() {
                 {Token ? <NotificationPage /> : <Redirect to="/login" />}
             </Route>
             <Route path="/test">
-                <TestPage />
+                <AutoComplete />
             </Route>
             <Route path="/passwordReset">
                 <ForgotPasswordResat/>

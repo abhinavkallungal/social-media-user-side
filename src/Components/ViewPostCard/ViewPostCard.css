@@ -38,6 +38,11 @@
     width: 100%;
     height: auto;
     margin-top: 20px;
+    word-wrap: break-word;
+}
+.ViewPostCard .Link{
+    text-decoration: none;
+    
 }
 .ViewPostCard .postContent span {
     font-size: 16px;

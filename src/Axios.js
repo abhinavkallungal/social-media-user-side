@@ -175,15 +175,37 @@ export const createPost = (formdata) => {
 
 }
 
+export const getFriendsForTag = ({userId}) => {
+    console.log(userId);
+    
+    return new Promise(async (resolve, reject) => {
+     
+        const token = localStorage.getItem("token")
 
-export const getAllpost = () => {
+
+        axios.post('http://localhost:4000/api/v1/user/getFriendsForTag', {userId}, { headers: { Authorization: token  } }).then((data) => {
+
+            resolve(data.data.friends)
+
+        }).catch((err) => {
+            console.log(5);
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+
+export const getAllpost = ({userId}) => {
    
-
+console.log(userId);
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.get('http://localhost:4000/api/v1/user/getAllPost', { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/getAllPost',{userId}, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
 
             resolve(data.data.posts)
