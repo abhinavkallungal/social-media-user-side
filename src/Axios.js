@@ -35,6 +35,20 @@ export const doSignup = (formdata) => {
 
 }
 
+export const emailOtpResend = ({email}) => {
+    console.log(email);
+    return new Promise(async (resolve, reject) => {
+        axios.post('http://localhost:4000/api/v1/user/reSendEmailOtp', {email}).then((data) => {
+
+            resolve(data)
+
+        }).catch((err) => {
+            reject(err)
+        })
+    })
+
+}
+
 export const verifyEmailotp = (fromdata) => {
     return new Promise(async (resolve, reject) => {
         axios.post('http://localhost:4000/api/v1/user/verifyEmailOtp', fromdata).then((data) => {
@@ -70,6 +84,11 @@ export const verifyMobileOtp = (fromdata) => {
     })
 
 }
+
+
+
+
+
 
 export const login = (formdata) => {
     return new Promise(async (resolve, reject) => {

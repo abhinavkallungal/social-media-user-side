@@ -14,8 +14,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { doSignup, checkUserName, verifyEmailotp, verifyMobileOtp } from '../../Axios'
 import OtpInput from 'react-otp-input';
 import { Link, useHistory } from 'react-router-dom'
-import { Mail } from '@mui/icons-material';
+import { Mail, MobileScreenShare } from '@mui/icons-material';
 import CircularProgress from '@mui/material/CircularProgress';
+
 
 
 
@@ -280,76 +281,86 @@ export default function SignUpPhone() {
                     otpsend ? (
                         <Card className="card py-5 px-4 mt-5 shadow">
 
-                            <CssBaseline />
-                            <Typography variant="h4" className="text-center fw-bold Typography " style={{ color: "#1877F2", fontFamily: 'Montserrat' }} >Social Media</Typography>
+                        <CssBaseline />
+                        <Typography variant="h4" className="text-center fw-bold Typography " style={{ color: "#1877F2", fontFamily: 'Montserrat' }} >Social Media</Typography>
 
-                            <Box
-                                sx={{
-                                    marginTop: 4,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                                    <LockOutlinedIcon />
-                                </Avatar>
-                                <Typography component="h1" variant="h5">
-                                    OTP VERIFICATION
-                                </Typography>
-                                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={12} sm={12}>
-                                            <OtpInput
-                                                value={user.otp}
-                                                onChange={changeOtp}
-                                                type={Number}
-                                                numInputs={4}
-                                                separator={<span>-</span>}
-                                                name="otp"
-                                                inputStyle={{
-                                                    width: "2.5rem",
-                                                    height: "2.5rem",
-                                                    margin: "0 1rem",
-                                                    fontSize: "2rem",
-                                                    borderRadius: 4,
-                                                    border: "1px solid rgba(0,0,0,0.3)"
-                                                }}
-                                            />
-                                            {
-                                                error.nameErrMsg ? <Typography component='span' style={{ color: 'red' }}>{error.nameErrMsg}</Typography> : null
-                                            }
-
-
-                                        </Grid>
-
+                        <Box
+                            sx={{
+                                marginTop: 4,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            
+                            <Typography component="h1" variant="h5">
+                                OTP VERIFICATION
+                            </Typography>
+                            <Grid container flexDirection='column' alignItems='center' className='mt-5'>
+                            <MobileScreenShare style={{fontSize:'50px'}} />
+                            <Typography>Enter the code we sent to 502-399-3121</Typography>
+                            </Grid>
+                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12} sm={12}>
+                                        <OtpInput
+                                            value={user.otp}
+                                            onChange={changeOtp}
+                                            type='number'
+                                            numInputs={4}
+                                            separator={<span>-</span>}
+                                            name="otp"
+                                            inputStyle={{
+                                                width: "2.5rem",
+                                                height: "2.5rem",
+                                                margin: "0 1rem",
+                                                fontSize: "2rem",
+                                                borderRadius: 4,
+                                                border: "1px solid rgba(0,0,0,0.3)"
+                                            }}
+                                        />
+                                        {
+                                            error.nameErrMsg ? <Typography component='span' style={{ color: 'red' }}>{error.nameErrMsg}</Typography> : null
+                                        }
 
 
                                     </Grid>
 
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="contained"
-                                        sx={{ mt: 3, mb: 2 }}
-                                        onClick={verifyOtp}
-                                    >
-                                        Verify OTP
-                                    </Button>
-                                    {
-                                        error.message ? <Typography component='span' style={{ color: 'red' }}>{error.message}</Typography> : null
 
-                                    }
-                                    <Grid container justifyContent="flex-end">
-                                        <Grid item>
-                                            <Link to="/login" variant="body2">
-                                                Already have an account? Sign in
-                                            </Link>
-                                        </Grid>
+
+                                </Grid>
+
+                                <Button
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    onClick={verifyOtp}
+                                >
+                                    Verify OTP
+                                </Button>
+                                
+                                <Grid container flexDirection='column' alignItems='center' className='my-3'>
+                                    <Box>01:10</Box>
+                                    <Button>Resend OTP</Button>
+                                </Grid>
+                                {
+                                    error.message ? <Typography component='span' style={{ color: 'red' }}>{error.message}</Typography> : null
+
+                                }
+                                <Grid container justifyContent="flex-end">
+                                    <Grid item>
+                                        <Link to='/login' variant="body2">
+                                            Already have an account? Sign in
+                                        </Link>
+                                        <Link to="/signup;">
+                                            Signup
+                                        </Link>
                                     </Grid>
-                                </Box>
+                                </Grid>
                             </Box>
-                        </Card>
+                        </Box>
+                    </Card>
                     ) : (
                         <Card className="card py-5 px-4 mt-5 shadow">
 
@@ -470,7 +481,7 @@ export default function SignUpPhone() {
                                     <Grid container justifyContent="center" flexDirection='column' alignItems="center">
 
 
-                                    <IconButton style={{  borderRadius: 10 }} size="medium">
+                                    <IconButton style={{  borderRadius: 10 }} size="medium" onClick={()=>history.push("/emailSignup")}>
                                         <Mail style={{ color: "#1976D2", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
                                     </IconButton>
                                     <Typography>Signup with Email</Typography>
