@@ -15,6 +15,8 @@ import { doSignup, checkUserName, verifyEmailotp, verifyMobileOtp } from '../../
 import OtpInput from 'react-otp-input';
 import { Link, useHistory } from 'react-router-dom'
 import { Mail } from '@mui/icons-material';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 
 
@@ -43,6 +45,7 @@ export default function SignUpPhone() {
         name: "",
         username: "",
         password: '',
+        usernameExist:true,
         otp: ''
     })
     const [error, setError] = useState({
@@ -50,155 +53,125 @@ export default function SignUpPhone() {
         name: "",
         username: "",
         password: '',
+        phone:"",   
         otp: ''
     })
     const [otpsend, setOtpSend] = useState(false)
+    const [submited, setSubmited] = useState(false)
+    
 
-    const onChange = (e) => {
 
-        if (e.target.name === "name") {
-            const trimName = e.target.value.trim()
-            if (trimName === "") {
-                let err = { ...error, name: 'name is requierd' }
-                setError(err)
-                console.log(error);
+    const handleNameValidtion =(e)=>{
+        const trimName = e.target.value.trim()
+        setUser({ ...user, name: trimName })
 
-            } else if (new RegExp("^[A-Za-z\\s]{5,29}$").test(trimName)) {
-                setUser({ ...user, name: trimName })
-                let err = { ...error, name: "" }
-                setError(err)
-            } else {
-                let err = { ...error, name: " Name containe mini 5 char or amx 29 char or name does't containe number or spesial char  " }
-                setError(err)
-                console.log(" Name containe mini 5 char or amx 29 char or name does't containe number or spesial char  ");
-                console.log(error);
-            }
+        if (trimName === "") {
+            let err = { ...error, name: 'name is requierd' }
+            setError(err)
+            console.log(error);
+
+        } else if (new RegExp("^[A-Za-z\\s]{4,29}$").test(trimName)) {
+            let err = { ...error, name: "" }
+            setError(err)
+        } else {
+            let err = { ...error, name:  "Name containe mini 5 char or amx 29 char or name does't containe number or spesial char  " }
+            setError(err)
         }
-        if (e.target.name === "phone") {
-            const trimEmail = e.target.value.trim()
 
-            if (trimEmail === "") {
-                setError({ ...error, email: "email or phone number is required " })
-                console.log("email or phone number is required");
-
-            } else if (new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(trimEmail)) {
-
-                setUser({ ...user, email: trimEmail, phone: "" })
-                setError({ ...error, email: "" })
-            } else if (new RegExp(/^([+]\d{2})?\d{10}$/).test(trimEmail)) {
-                setUser({ ...user, phone: trimEmail, email: "" })
-                setError({ ...error, email: "" })
-
-            } else {
-                setError({ ...error, email: "invalid format of email  or phone number" })
-
-            }
-
-
-        }
-        if (e.target.name === "password") {
-
-            const trimPassword = e.target.value.trim()
-
-            if (trimPassword === "") {
-
-                setError({ ...error, password: "password is required" })
-
-
-            } else {
-
-                setUser({ ...user, password: trimPassword })
-                setError({ ...error, password: "" })
-
-            }
-        }
-    };
-
-   const  validate = (name, value) => {
-        const { fields } = this.state;
-        switch (name) {
-          case "firstName":
-            if (!value || value.trim() === "") {
-              return "First name is Required";
-            } else {
-              return "";
-            }
-          case "email":
-            if (!value) {
-              return "Email is Required";
-            } else if (
-              !value.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)
-            ) {
-              return "Enter a valid email address";
-            } else {
-              return "";
-            }
-          case "mobile":
-            if (!value || value.trim() === "") {
-              return "Mobile number is Required";
-            } else if (!value.match(/^[6-9]\d{9}$/)) {
-              return "Enter a valid mobile number.";
-            } else {
-              return "";
-            }
-          case "password":
-            if (!value) {
-              return "Password is Required";
-            } else if (value.length < 8 || value.length > 15) {
-              return "Please fill at least 8 character";
-            } else if (!value.match(/[a-z]/g)) {
-              return "Please enter at least lower character.";
-            } else if (!value.match(/[A-Z]/g)) {
-              return "Please enter at least upper character.";
-            } else if (!value.match(/[0-9]/g)) {
-              return "Please enter at least one digit.";
-            } else {
-              return "";
-            }
-          case "confirmPassword":
-            if (!value) {
-              return "Confirm Password Required";
-            } else if (value !== fields.password) {
-              return "New Password and Confirm Password Must be Same";
-            } else {
-              return "";
-            }
-          default: {
-            return "";
-          }
-        }
-      };
-
-     const handleUserInput = e => {
-        setError({...error,[e.target.name]: validate(e.target.name, e.target.value)})
-        setUser({...user, [e.target.name]: e.target.value} );
-      };
-
-
-    const changeUsername = (e) => {
-
+    } 
+    const handleUsernameValidtion =(e)=>{
+     
         const trimUsername = e.target.value.trim()
+        setUser({ ...user, username: trimUsername })
         if (trimUsername === "") {
-            setError({ ...error, username: "username Required" })
-
-        } else if (new RegExp("^[A-Za-z]\\w{4,29}$").test(trimUsername)) {
-
-            setUser({ ...user, username: e.target.value });
-            checkUserName({ username: trimUsername }).then((data) => {
-                setError({ ...error, usernameExist: "" })
-                setUser({ ...user, username: trimUsername })
-            }).catch((error) => {
-                setError({ ...error, usernameExist: "username already exist" })
-
-            })
+            let err = { ...error, username: 'username is requierd' }
+            setError(err)
+        } else if (new RegExp("^[A-Za-z\\s]{4,29}$").test(trimUsername)) {
+           
+            setError({ ...error , username: "" })
+           
 
         } else {
-            setError({ ...error, username: "username containe mini 5 char or amx 29 char or name does't containe number or spesial char  " })
+            let err = { ...error, username: " Username containe mini 5 char or amx 29 char or name does't containe number or spesial char  " }
+            setError(err)        
+        }
 
+        
+    }
 
+    const checkUsernameExist=(e)=>{
+        if(error.username ==="" && user.username !==""){
+            setError({ ...error, usernameExist: "username  Checking....."  })
+            checkUserName({ username: user.username }).then((data) => {
+                if(data.data.usernameExist){
+
+                    setError({ ...error, usernameExist: "username already  exist"  })
+
+                    setUser({...user,usernameExist:true})
+                }else{
+                    setUser({...user,usernameExist:false})
+                    setError({ ...error, usernameExist: ""})
+
+                }
+              
+            }).catch((err) => {
+              
+    
+            })
+
+        }
+       
+
+    }
+    const handlePhoneValidtion =(e)=>{
+
+        const trimPhone = e.target.value.trim()
+        setUser({ ...user, phone: trimPhone })
+
+        if (trimPhone === "") {
+            let err = { ...error, phone: 'Phone Number is requierd' }
+            setError(err)
+            console.log(error);
+
+        } else if (new RegExp(/^([+]\d{2})?\d{10}$/).test(trimPhone)) {
+            let err = { ...error, phone: "" }
+            setError(err)
+        } 
+        else {
+            let err = { ...error, phone:  "Not  a valid Phone Number" }
+            setError(err)
         }
 
     }
+
+    const handlePasswordValidtion =(e)=>{
+        const trimPassword = e.target.value.trim()
+        setUser({ ...user, password: trimPassword })
+
+        if (trimPassword === "") {
+            let err = { ...error, password: 'password is requierd' }
+            setError(err)
+        } else if (new RegExp("^(?=.*[0-9])"
+        + "(?=.*[a-z])(?=.*[A-Z])"
+        + "(?=.*[@#$%^&+=])"
+        + "(?=\\S+$).{8,20}$").test(trimPassword)) {
+            let err = { ...error, password: "" }
+            setError(err)
+
+        
+        } else {
+            let err = { ...error, password: "Minimum 8 and maximum 20 characters, at least one uppercase letter, one lowercase letter, one number and one special character:" }
+            setError(err)        
+        }
+
+        
+    }
+
+
+
+
+
+   
 
 
 
@@ -206,41 +179,53 @@ export default function SignUpPhone() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (user.name === "") {
-            let err = { ...error, ["name"]: "Name is required " }
-            setError(err)
-
-
-        }
-        if (user.username === "") {
-            let err = { ...error, ["username"]: "Username is required" }
-            setError(err)
-
-        }
-        if (user.email === "" && user.phone === "") {
-            let err = { ...error, ["email"]: "email or phone number is required  Or Email is invalid format" }
-            setError(err)
-
-
-        }
-        if (user.password === "") {
-            let err = { ...error, ["password"]: "Password is required " }
-            setError(err)
-
-        }
-        console.log(user);
-
-
-        if (error.email === "" & error.usernameExist === "" && user.username === "" && user.name === "" && user.password === "") {
+        setSubmited(true)
+        
+        if(error.name ==="" && user.name !== "" && error.username ==="" && error.usernameExist ===""  && user.username !=="" &&   error.phone ==="" && user.phone!=="" && error.password ==="" && user.password !=="" ){
             console.log("test");
             doSignup(user).then(() => {
                 setOtpSend(true)
             }).catch((error) => {
                 console.log(error);
+                setSubmited(false)
 
             })
+        }else{
+            setSubmited(false)
+            const validate =(user)=>{
 
+                let err ={}
+
+                if (user.name === "") {
+                     err= { ...err, name: 'name is requierd' }
+        
+        
+                }
+                if (user.username === "") {
+                    err = { ...err, username: 'username is requierd' }
+                
+        
+                }
+                if (user.phone === "") {
+                    err = { ...err, phone: 'Phone Number is requierd' }
+        
+        
+                }
+                if (user.password === "") {
+                    err = { ...err, password: 'password is requierd' }
+                    
+                }
+                setError({...error,...err})
+
+            }
+            validate(user)
+
+             
+           
         }
+       
+
+
 
 
     };
@@ -370,7 +355,6 @@ export default function SignUpPhone() {
 
                             <CssBaseline />
                             <Typography variant="h4" className="text-center fw-bold Typography " style={{ color: "#1877F2", fontFamily: 'Montserrat' }} >Social Media</Typography>
-
                             <Box
                                 sx={{
                                     marginTop: 4,
@@ -389,14 +373,15 @@ export default function SignUpPhone() {
                                     <Grid container spacing={2}>
                                         <Grid item xs={12} sm={12}>
                                             <TextField
-                                                autoComplete="given-name"
+                                                autoComplete="off"
                                                 name="name"
                                                 required
                                                 fullWidth
                                                 id="firstName"
                                                 label="First Name"
                                                 autoFocus
-                                                onChange={onChange}
+                                                onChange={handleNameValidtion}
+                                                error={error.name}
                                             />
                                             {
                                                 error.name ? <Typography component='span' style={{ color: 'red' }}>{error.name}</Typography> : null
@@ -411,8 +396,10 @@ export default function SignUpPhone() {
                                                 id="Username"
                                                 label="Username"
                                                 name="username"
-                                                autoComplete="family-name"
-                                                onChange={changeUsername}
+                                                autoComplete="off"
+                                                onBlur={checkUsernameExist}
+                                                onChange={handleUsernameValidtion}
+                                                error={error.username ||error.usernameExist}
                                             />
                                             {
                                                 error.username ? <Typography component='span' style={{ color: 'red' }}>{error.username}</Typography> : null
@@ -423,12 +410,15 @@ export default function SignUpPhone() {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <TextField
+                                            autoComplete='off'
                                                 required
                                                 fullWidth
                                                 id="phone"
                                                 label="Phone Number"
+                                                type="tel"
                                                 name="phone"
-                                                onChange={onChange}
+                                                onChange={handlePhoneValidtion}
+                                                error={error.phone}
 
                                             />
                                             {
@@ -445,8 +435,10 @@ export default function SignUpPhone() {
                                                 label="Password"
                                                 type="password"
                                                 id="password"
-                                                autoComplete="new-password"
-                                                onChange={onChange}
+                                                autoComplete="off"
+                                                onChange={handlePasswordValidtion}
+                                                error={error.password}
+
 
                                             />
                                             {
@@ -463,8 +455,12 @@ export default function SignUpPhone() {
                                         fullWidth
                                         variant="contained"
                                         sx={{ mt: 3, mb: 2 }}
+                                        disabled={submited}
                                     >
-                                        Sign Up
+                                        {
+                                            submited ? <CircularProgress />  :"Sign Up"
+                                        }
+                                        
                                     </Button>
                                     {
                                         error.message ? <Typography component='span' style={{ color: 'red' }}>{error.message}</Typography> : null

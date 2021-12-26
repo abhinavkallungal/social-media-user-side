@@ -6,12 +6,14 @@ const baseURL = 'http://localhost:4000'
 
 
 export const checkUserName = (formdata) => {
+    console.log("checking");
     return new Promise(async (resolve, reject) => {
         await axios.post('http://localhost:4000/api/v1/user/checkUserName', formdata).then((data) => {
+            console.log(data);
             resolve(data)
 
         }).catch((err) => {
-
+console.log(err);
             reject({ usernameExist: true, message: "choose another one" })
         })
     })
