@@ -1,6 +1,6 @@
-import React,{useEffect,useState} from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import './Hero.css'
-import {Grid} from '@mui/material'
+import { Grid } from '@mui/material'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import { makeStyles } from '@mui/styles';
 import SideNav from '../SideNav/SideNav';
@@ -15,16 +15,18 @@ import { getAllpost } from '../../Axios';
 import PostReportModal from '../PostReportModal/PostReportModal'
 import FeedSkeleton from '../Skeletons/FeedSkeleton/FeedSkeleton';
 
+import PostScroll from './PostScroll'
+
 const useStyles = makeStyles({
     left: {
-       padding:'20px',
+        padding: '20px',
 
 
     },
     right: {
-        padding:'20px'
- 
-     },
+        padding: '20px'
+
+    },
     navItem: {
         maxWidth: '42px',
         maxHeight: '42px',
@@ -46,68 +48,78 @@ const useStyles = makeStyles({
 });
 
 function Hero() {
-    const classes=useStyles()
-    const user =(useSelector((state) =>  state.user.user))
-    const data= user
-    const post  = useSelector(state => state.newPost)
-    const[posts,SetPosts]=useState([])
-    const[loding,SetLoding]=useState(false)
-    useEffect(() => {
-        SetLoding(true)
-        console.log(data);
-        getAllpost({userId:data?._id}).then((posts)=>{
-            SetPosts(posts)
-         
-            SetLoding(false)
-        })
+    const classes = useStyles()
+    const user = (useSelector((state) => state.user.user))
+    const data = user
 
-       
-    }, [user])
-   
+
+    const [page, setPage] = useState(1)
+
+    const { posts, hasMore, loading, error } = PostScroll({page,userId:data._id})
+
+    const observer = useRef()
+    const lastPostRef = useCallback(node => {
+        if (loading) return
+        if (observer.current) observer.current.disconnect()
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && hasMore) {
+                setPage(prevPageNumber => prevPageNumber + 1)
+            }
+        })
+        if (node) observer.current.observe(node)
+    }, [loading, hasMore])
+
+
+
     
+
+
 
     return (
         <div className="Hero">
-                <Grid container>
+            <Grid container>
 
-                <Grid item xs={12} md={2.5} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }}  className={classes.left} >
-                    <div style={{position:'sticky',top:'-150px'}}>
+                <Grid item xs={12} md={2.5} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }} className={classes.left} >
+                    <div style={{ position: 'sticky', top: '-150px' }}>
 
-                    <ProfileCard />
-                    <SideNav/>
-                    <SidebarBanner/>
+                        <ProfileCard />
+                        <SideNav />
+                        <SidebarBanner />
                     </div>
                 </Grid>
-                <Grid item xs={12} md={6.5}  className="mx-auto">
-                   <HeroStorySection/>
-                    <Addpost/> 
-                    {
-                        post.post ? <ViewPostCard key={1} post={post.post} user={user}/> : null
+                <Grid item xs={12} md={6.5} className="mx-auto">
+                    <HeroStorySection />
+                    <Addpost />
 
-                    }
+                  
                     {
-                        posts.map((post,index)=>{
-                            return <ViewPostCard post={post} user={user}/> 
+                        loading ? <div> <FeedSkeleton /> <FeedSkeleton />  <FeedSkeleton /></div> : null
+                    }
 
-                        })
-                    }
-                    {
-                        loding? <div> <FeedSkeleton/> <FeedSkeleton/>  <FeedSkeleton/></div>  :null
-                    }
-                   
-                   
-                    
+                    {posts.map((post, index) => {
+                        if (posts.length === index + 1) {
+
+                            return <div ref={lastPostRef} key={index}><ViewPostCard post={post} user={user} /></div>
+                        } else {
+                            return <ViewPostCard post={post} user={user} /> 
+                        }
+                    })}
+                    <div>{loading && 'Loading...'}</div>
+                    <div>{error && 'Error'}</div>
+
+
+
                 </Grid>
                 <Grid item xs={12} md={3} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }} className={classes.right} >
-                <div style={{position:'sticky',top:'100px'}}>                
-                    <RequestCard/>
-                    <RequestCard/>
-                    <PostReportModal/>
-                </div>
-                    
+                    <div style={{ position: 'sticky', top: '100px' }}>
+                        <RequestCard />
+                        <RequestCard />
+                        <PostReportModal />
+                    </div>
+
                 </Grid>
-                
-                
+
+
 
             </Grid>
         </div>

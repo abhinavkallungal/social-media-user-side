@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button } from "@mui/material"
-import{doLike,doSave,doDeletePost, doCommet} from '../../Axios'
+import{doLike,doSave,doDeletePost, doCommet,getPostComment} from '../../Axios'
 import './ViewPostCard.css'
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
@@ -46,12 +46,13 @@ function ViewPostCard(props) {
     const file = post.files
     let ProfilePhotos=post?.user?.ProfilePhotos;
     const[likeCount,setlikeCount]=useState(post.likes?.length)
-    const[commentCount,setCommentCount]=useState(post.comments?.length)
     const[liked,setliked]=useState(false)
     const[saved,setSaved]=useState(false)
     const[postOwner,setPostOwner]=useState(false)
     const[deleted,setDeleted]=useState(false)
+    const[commentCount,setCommentCount]=useState(post.comments?.length)
     const[comment,setComment]=useState('')
+    const[ViewComment,setViewComment]=useState(false)
     const[Comments,setComments]=useState([])
 
 
@@ -134,11 +135,28 @@ function ViewPostCard(props) {
         setComment(e.target.value)
     }
     const handleAddComment=()=>{
-        doCommet({userId:user._id,postId:post._id,comment}).then((newcomment)=>{
-            setComments(newcomment)
-            setCommentCount(commentCount=>commentCount+1)
+        doCommet({userId:user._id,postId:post._id,comment}).then((comments)=>{
+            setComments(comments)
+            setViewComment(true)
+            setCommentCount(comments.length)
             setComment("")
         })
+
+    }
+    const handleViewComment =()=>{
+        if (ViewComment){
+
+            setViewComment(false)
+        } else{
+
+            
+            setViewComment(true)
+            getPostComment({postId:post._id}).then((comments)=>{
+                setComments(comments)
+            }).catch(()=>{
+                
+            })
+        }
 
     }
 
@@ -156,7 +174,7 @@ function ViewPostCard(props) {
                     <div>
                         <span> <Link to={`/profile/${post.user._id}`} className="Link">{post?.user?.name}</Link> </span>
                         {
-                            (post?.tag?.length >0 || post.location)  ? <span > is { post.tag.length >0 ? <span >with <span className="fw-bold"> <Link to={`/profile/${post.tag[0]._id}`} className="Link"> {post.tag[0].name}</Link></span></span>:null  } { post.tag.length >1 ? <span className="fw-bold">and <span>{post.tag.length-1}</span> others</span>:null  } {post.location ? <span>in <span className="fw-bold">{post.location}</span> </span> :null }</span>:null
+                            (post?.tag?.length >0 || post.location)  ? <span > is { post.tag.length >0 ? <span >with <span className="fw-bold"> <Link to={`/profile/${post.tag[0]._id}`} className="Link"> {post.tag[0].name}</Link></span></span>:null  } { post.tag.length >1 ? <span className="fw-bold">and     <ViewTages postId={post?._id}> <span> {post.tag.length-1}</span> others</ViewTages> </span>:null  } {post.location ? <span>in <span className="fw-bold">{post.location}</span> </span> :null }</span>:null
                         }
 
                         <p>{moment(post.postedDate).fromNow()}</p>
@@ -253,7 +271,7 @@ function ViewPostCard(props) {
                 </Button>
                 <Button>
 
-                    <span>{commentCount} Comments</span>
+                    <span onClick={handleViewComment}>{commentCount} Comments</span>
                 </Button>
             </div>
             <div className="postBottom">
@@ -262,7 +280,7 @@ function ViewPostCard(props) {
 
                     
                         <Checkbox  onClick={handleLike} checked={liked} size="large" {...label} icon={<FavoriteBorder size="large"  />} checkedIcon={<Favorite />} ></Checkbox>
-                        <Checkbox size="large" {...label} icon={<ChatBubbleOutlineRoundedIcon size="large"  />} checkedIcon={<ChatBubble />} ></Checkbox>
+                        <IconButton size="large" onClick={handleViewComment}><ChatBubbleOutlineRoundedIcon size="large"  /></IconButton>
                 
                 
                 </div>
@@ -278,11 +296,12 @@ function ViewPostCard(props) {
                             <SendRounded style={{color:'#fff'}}/>
                         </IconButton>
                     </div>
-                    <div className="comments">
+                    {
+                        ViewComment  ?   <div className="comments">
                         {
-                             Comments?.map((item)=>{
+                             Comments?.map((item,index)=>{
                                  return(
-                                    <div className="comment" key='8'>
+                                    <div className="comment" key={index}>
                                     <div className="profilePhoto">
                                         <img src={item.user.ProfilePhotos} alt="" />
                                     </div>
@@ -310,14 +329,12 @@ function ViewPostCard(props) {
                     
                         
                     </div>
-                    <div className="commentfotter mt-2 ">
-                        <Button>
-
-                        <span>View more</span>
-                        </Button>
-                    </div>
+                        :null
+                    }
+                   
+                 
             </div>
-            <ViewTages/>
+        
 
         </div>
     )

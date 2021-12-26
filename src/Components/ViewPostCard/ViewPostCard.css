@@ -42,7 +42,7 @@
 }
 .ViewPostCard .Link{
     text-decoration: none;
-    
+
 }
 .ViewPostCard .postContent span {
     font-size: 16px;
@@ -114,6 +114,11 @@
 .ViewPostCard .commentSection .commentInput .sendcomment{
     background-color: #007fff;
 }
+
+.ViewPostCard .commentSection .comments{
+    max-height: 400px;
+    overflow-y: scroll;
+}
 .ViewPostCard .commentSection .comment{
 display: flex;
 margin-top: 10px;
@@ -162,5 +167,55 @@ object-fit: cover;
        
     }
   }
+
+
+ .box .tags{
+    width: 100%;
+    max-height: 400px;
+    overflow-y: scroll;
+
+
+}
+ .box  .tag{
+   border: .5px solid grey;
+   border-radius: 20px;
+   display: flex;
+   align-items: center;
+   padding: 5px;
+   margin: 10px;
+}
+
+.box .tags .tag:hover{
+    cursor: pointer;
+    background-color: rgb(216, 216, 216);
+}
+
+.box .tag .img{
+    width: 50px;
+    height: 50px;
+    background-color: #007fff;
+    border-radius: 15px;
+    margin-right: 20px;
+   
+    
+
+ }
+
+ .box .tag .img img{
+    width: 50px;
+    height: 50px;
+    
+    border-radius: 15px;
+    
+    
+
+ }
+
+ .box .tag .name{
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+ }
+
 
 

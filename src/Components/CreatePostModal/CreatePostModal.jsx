@@ -6,7 +6,6 @@ import { Typography, IconButton } from '@mui/material';
 import { CloseRounded } from '@mui/icons-material';
 import Modal from '@mui/material/Modal';
 import { createPost } from '../../Axios'
-import S3FileUpload from 'react-s3'
 import { useSelector, useDispatch } from 'react-redux';
 import { setNewPostAction } from '../../Redux/newPostSlice'
 import { useHistory } from 'react-router-dom';

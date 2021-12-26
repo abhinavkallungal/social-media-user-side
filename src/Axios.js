@@ -90,10 +90,10 @@ export const login = (formdata) => {
 
 }
 
-export const googleLogin=({email})=>{
-    
-    return new Promise (async(resolve,reject)=>{
-        axios.post("http://localhost:4000/api/v1/user/googleLogin",{email}).then((data)=>{
+export const googleLogin = ({ email }) => {
+
+    return new Promise(async (resolve, reject) => {
+        axios.post("http://localhost:4000/api/v1/user/googleLogin", { email }).then((data) => {
 
             console.log("login data", data);
             localStorage.setItem("token", data.data.token)
@@ -103,47 +103,47 @@ export const googleLogin=({email})=>{
 
             resolve(data.data.user)
 
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log('err', err);
             reject(err)
-            
+
         })
     })
 }
 
-export const forgotPasswordRequest=(formData)=>{
-    
-    return new Promise (async(resolve,reject)=>{
-        axios.post("http://localhost:4000/api/v1/user/forgotPasswordRequest",formData).then((data)=>{
+export const forgotPasswordRequest = (formData) => {
+
+    return new Promise(async (resolve, reject) => {
+        axios.post("http://localhost:4000/api/v1/user/forgotPasswordRequest", formData).then((data) => {
 
             console.log("send data", data);
-       
+
 
             resolve(data.data.user)
 
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log('err', err.response);
             reject(err)
-            
+
         })
     })
 }
 
-export const forgotPasswordReset=(formData)=>{
+export const forgotPasswordReset = (formData) => {
     console.log(formData);
-    
-    return new Promise (async(resolve,reject)=>{
-        axios.post("http://localhost:4000/api/v1/user/forgotPasswordReset",formData,).then((data)=>{
+
+    return new Promise(async (resolve, reject) => {
+        axios.post("http://localhost:4000/api/v1/user/forgotPasswordReset", formData,).then((data) => {
 
             console.log("send data", data);
-       
-            
+
+
             resolve(data.data.user)
 
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log('err', err.response.data);
             reject(err)
-            
+
         })
     })
 }
@@ -151,7 +151,7 @@ export const forgotPasswordReset=(formData)=>{
 
 
 export const createPost = (formdata) => {
-    console.log(">>>>>>>>>>>>>>>>>>>>",formdata);
+    console.log(">>>>>>>>>>>>>>>>>>>>", formdata);
     console.log(1);
     return new Promise(async (resolve, reject) => {
         console.log(2);
@@ -160,7 +160,7 @@ export const createPost = (formdata) => {
         const token = localStorage.getItem("token")
         console.log(3);
 
-        axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token ,'Content-Type': 'multipart/form-data' } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
             console.log(4);
 
             resolve(data.data.post)
@@ -175,15 +175,15 @@ export const createPost = (formdata) => {
 
 }
 
-export const getFriendsForTag = ({userId}) => {
+export const getFriendsForTag = ({ userId }) => {
     console.log(userId);
-    
+
     return new Promise(async (resolve, reject) => {
-     
+
         const token = localStorage.getItem("token")
 
 
-        axios.post('http://localhost:4000/api/v1/user/getFriendsForTag', {userId}, { headers: { Authorization: token  } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/getFriendsForTag', { userId }, { headers: { Authorization: token } }).then((data) => {
 
             resolve(data.data.friends)
 
@@ -197,15 +197,38 @@ export const getFriendsForTag = ({userId}) => {
 
 }
 
+export const getTagsDetailes = ({ postId }) => {
+    console.log(postId);
 
-export const getAllpost = ({userId}) => {
-   
-console.log(userId);
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/getAllPost',{userId}, { headers: { Authorization: token } }).then((data) => {
+
+        axios.post('http://localhost:4000/api/v1/user/getTagsDetailes', { postId }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+            resolve(data.data.tagWith)
+
+        }).catch((err) => {
+            console.log(5);
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+
+
+export const getAllpost = ({ userId ,page }) => {
+
+    console.log(userId,page);
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/getAllPost', { userId,page }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
 
             resolve(data.data.posts)
@@ -229,7 +252,7 @@ export const getProfileDetails = (userId) => {
         axios.post('http://localhost:4000/api/v1/user/getProfileDetalils', { userId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
 
-            resolve({user:data.data.user[0], posts:data.data.posts})
+            resolve({ user: data.data.user[0], posts: data.data.posts })
 
         }).catch((err) => {
 
@@ -241,7 +264,7 @@ export const getProfileDetails = (userId) => {
 }
 
 export const addAccountDetails = (userdata) => {
-    console.log(userdata.state,userdata.phone);
+    console.log(userdata.state, userdata.phone);
 
     return new Promise(async (resolve, reject) => {
 
@@ -263,40 +286,40 @@ export const addAccountDetails = (userdata) => {
 
 }
 
-export const search = ({keyword,userId}) => {
+export const search = ({ keyword, userId }) => {
 
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/search', { keyword,userId }, { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/search', { keyword, userId }, { headers: { Authorization: token } }).then((data) => {
 
-        resolve(data.data)
-            
+            resolve(data.data)
+
         }).catch((err) => {
 
-          
+
         })
     })
 
 }
 
-export const dofollow=({userId,currentuserId})=>{
-    console.log(userId,currentuserId);
-    return new Promise ((resolve,reject)=>{
-        
+export const dofollow = ({ userId, currentuserId }) => {
+    console.log(userId, currentuserId);
+    return new Promise((resolve, reject) => {
+
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/follow', {userId, currentuserId }, { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/follow', { userId, currentuserId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
             resolve(data.data)
-            
+
 
         }).catch((err) => {
             reject(err.data)
- 
-          
+
+
         })
 
     })
@@ -304,21 +327,21 @@ export const dofollow=({userId,currentuserId})=>{
 }
 
 
-    export const doLike=({postId,userId})=>{
-    console.log(userId,postId);
-    return new Promise ((resolve,reject)=>{
-    
+export const doLike = ({ postId, userId }) => {
+    console.log(userId, postId);
+    return new Promise((resolve, reject) => {
+
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/postLike', {userId, postId }, { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/postLike', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
             resolve(data.data)
-            
+
 
         }).catch((err) => {
             reject(err.data)
- 
-          
+
+
         })
 
     })
@@ -326,152 +349,173 @@ export const dofollow=({userId,currentuserId})=>{
 }
 
 
-export const doSave=({postId,userId})=>{
-    return new Promise ((resolve,reject)=>{
-    
+export const doSave = ({ postId, userId }) => {
+    return new Promise((resolve, reject) => {
+
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/postSave', {userId, postId }, { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/postSave', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
             localStorage.setItem("user", JSON.stringify(data.data.user))
 
             resolve(data.data)
-            
+
 
         }).catch((err) => {
             reject(err.data)
- 
-          
+
+
         })
 
     })
 
 }
 
-export const doDeletePost=({postId,userId})=>{
-    return new Promise ((resolve,reject)=>{
-    
+export const doDeletePost = ({ postId, userId }) => {
+    return new Promise((resolve, reject) => {
+
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/Deletepost', {userId, postId }, { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/Deletepost', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
 
             resolve(data.data)
-            
+
 
         }).catch((err) => {
             reject(err.data)
- 
-          
+
+
         })
 
     })
 
 }
 
-export const doCommet=({postId,userId,comment})=>{
-    return new Promise ((resolve,reject)=>{
-    
+export const doCommet = ({ postId, userId, comment }) => {
+    return new Promise((resolve, reject) => {
+
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/comment', {userId, postId,comment }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data.data.comment);
+        axios.post('http://localhost:4000/api/v1/user/comment', { userId, postId, comment }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data.data.comments);
+
+            resolve(data.data.comments)
+
+
+        }).catch((err) => {
+            reject(err.data)
+
+
+        })
+
+    })
+
+}
+
+export const doReport = ({ postId, userId, optoion, message }) => {
+    return new Promise((resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/report', { userId, postId, optoion, message }, { headers: { Authorization: token } }).then((data) => {
+
 
             resolve(data.data.comment)
-            
+
 
         }).catch((err) => {
             reject(err.data)
- 
-          
+
+
         })
 
     })
 
 }
 
-export const doReport=({postId,userId,optoion,message})=>{
-    return new Promise ((resolve,reject)=>{
-    
-        const token = localStorage.getItem("token")
+export const addProfilePhoto = ({ profilePhoto, currentuserId }) => {
+    return new Promise((resolve, reject) => {
 
-        axios.post('http://localhost:4000/api/v1/user/report', {userId, postId,optoion,message }, { headers: { Authorization: token } }).then((data) => {
-        
-
-            resolve(data.data.comment)
-            
-
-        }).catch((err) => {
-            reject(err.data)
- 
-          
-        })
-
-    })
-
-}
-
-export const addProfilePhoto=({profilePhoto,currentuserId})=>{
-    return new Promise ((resolve,reject)=>{
-        
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/addProfilePhoto', {profilePhoto, currentuserId }, { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/addProfilePhoto', { profilePhoto, currentuserId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
             localStorage.setItem("user", JSON.stringify(data.data.user))
 
-            resolve(data.data.user)            
+            resolve(data.data.user)
 
         }).catch((err) => {
             reject(err.data)
- 
-          
+
+
         })
 
     })
 
 }
 
-export const DoAddCoverPhoto=({coverPhoto,currentuserId})=>{
-    return new Promise ((resolve,reject)=>{
-        
+export const DoAddCoverPhoto = ({ coverPhoto, currentuserId }) => {
+    return new Promise((resolve, reject) => {
+
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/addCoverPhoto', {coverPhoto, currentuserId }, { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/addCoverPhoto', { coverPhoto, currentuserId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
             localStorage.setItem("user", JSON.stringify(data.data.user))
 
-            resolve(data.data.user)            
+            resolve(data.data.user)
 
         }).catch((err) => {
             reject(err.data)
- 
-          
+
+
         })
 
     })
 
 }
 
-export const getAllNotifications=({userId})=>{
-    return new Promise ((resolve,reject)=>{
-        
+export const getAllNotifications = ({ userId }) => {
+    return new Promise((resolve, reject) => {
+
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/getAllNotifications', {userId }, { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/getAllNotifications', { userId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
 
-            resolve(data.data.notifications)            
+            resolve(data.data.notifications)
 
         }).catch((err) => {
             reject(err.data)
- 
-          
+
+
         })
 
+    })
+
+}
+
+
+export const getPostComment = ({ postId}) => {
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/getPostComments', { postId }, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+            resolve(data.data.comments)
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
     })
 
 }
