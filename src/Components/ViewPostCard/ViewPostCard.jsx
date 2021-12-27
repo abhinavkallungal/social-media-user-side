@@ -135,11 +135,18 @@ function ViewPostCard(props) {
         setComment(e.target.value)
     }
     const handleAddComment=()=>{
-        doCommet({userId:user._id,postId:post._id,comment}).then((comments)=>{
-            setComments(comments)
-            setViewComment(true)
-            setCommentCount(comments.length)
-            setComment("")
+        setComment("")
+        doCommet({userId:user._id,postId:post._id,comment}).then(({comments,NotificationId})=>{
+            if(comments){
+                setComments(comments)
+                setViewComment(true)
+                setCommentCount(comments?.length)
+            }
+            if(NotificationId){
+                
+                socket.emit("docomment",{NotificationId})
+            }
+           
         })
 
     }

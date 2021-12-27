@@ -43,7 +43,7 @@ export const emailOtpResend = ({email}) => {
             resolve(data)
 
         }).catch((err) => {
-            reject(err)
+            reject(err.response.data)
         })
     })
 
@@ -59,9 +59,21 @@ export const verifyEmailotp = (fromdata) => {
             resolve(data)
 
         }).catch((err) => {
-            console.log("otpverification err");
-            console.log('err', err);
-            reject(err)
+            reject(err.data)
+        })
+    })
+
+}
+
+export const phoneOtpResend = ({phone}) => {
+    console.log(phone);
+    return new Promise(async (resolve, reject) => {
+        axios.post('http://localhost:4000/api/v1/user/reSendEmailOtp', {phone}).then((data) => {
+
+            resolve(data)
+
+        }).catch((err) => {
+            reject(err.response.data)
         })
     })
 
@@ -414,6 +426,7 @@ export const doDeletePost = ({ postId, userId }) => {
 }
 
 export const doCommet = ({ postId, userId, comment }) => {
+    console.log( postId, userId, comment );
     return new Promise((resolve, reject) => {
 
         const token = localStorage.getItem("token")
@@ -421,7 +434,7 @@ export const doCommet = ({ postId, userId, comment }) => {
         axios.post('http://localhost:4000/api/v1/user/comment', { userId, postId, comment }, { headers: { Authorization: token } }).then((data) => {
             console.log(data.data.comments);
 
-            resolve(data.data.comments)
+            resolve({comments:data.data.comments,NotificationId:data.data.NotificationId})
 
 
         }).catch((err) => {

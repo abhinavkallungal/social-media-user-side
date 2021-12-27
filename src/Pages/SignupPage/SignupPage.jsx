@@ -56,7 +56,7 @@ export default function SignUpPhone() {
         email: "",
         otp: ''
     })
-    const [otpsend, setOtpSend] = useState(true)
+    const [otpsend, setOtpSend] = useState(false)
     const [reSendOtp, setReSendOtp] = useState(false)
     const [submited, setSubmited] = useState(false)
     const [timer, setTimer] = useState({ minute: "", seconds: "" })
@@ -254,7 +254,7 @@ export default function SignUpPhone() {
             console.log(">>>>>>>>>2", data.data.user);
             history.push('/')
         }).catch((error) => {
-            console.log(">>>>>>>>>3");
+           setError({...error,otp:"invalid Otp"})
         })
 
 
@@ -320,7 +320,7 @@ export default function SignUpPhone() {
                                                 }}
                                             />
                                             {
-                                                error.nameErrMsg ? <Typography component='span' style={{ color: 'red' }}>{error.nameErrMsg}</Typography> : null
+                                                error.otp ? <Typography component='span' style={{ color: 'red' ,textAlign:'center',width:"100%",marginTop:'20px' }}>{error.otp}</Typography> : null
                                             }
 
 

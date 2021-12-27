@@ -78,6 +78,13 @@ function Router() {
                 title: `${notification.user.name} Liked Your Post`
             })
         })
+
+        socket.on("sendCommentNotification", (notification) => {
+            alert()
+            Toast.fire({
+                title: `${notification.user.name} Commented Your Post`
+            })
+        })
         socket.on("save", (msg) => {
         })
 

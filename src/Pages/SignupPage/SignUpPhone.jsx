@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import { Card, IconButton } from '@mui/material';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { doSignup, checkUserName, verifyEmailotp, verifyMobileOtp } from '../../Axios'
+import { doSignup, checkUserName, verifyEmailotp, verifyMobileOtp ,phoneOtpResend } from '../../Axios'
 import OtpInput from 'react-otp-input';
 import { Link, useHistory } from 'react-router-dom'
 import { Mail, MobileScreenShare } from '@mui/icons-material';
@@ -42,7 +42,7 @@ export default function SignUpPhone() {
     const history = useHistory()
 
     const [user, setUser] = useState({
-        phone: "",
+        phone: "9633384749",
         name: "",
         username: "",
         password: '',
@@ -57,8 +57,30 @@ export default function SignUpPhone() {
         phone:"",   
         otp: ''
     })
-    const [otpsend, setOtpSend] = useState(false)
+    const [otpsend, setOtpSend] = useState(true)
+    const [reSendOtp, setReSendOtp] = useState(false)
     const [submited, setSubmited] = useState(false)
+    const [timer, setTimer] = useState({ minute: "", seconds: "" })
+
+
+    useEffect(() => {
+        let counter = 10
+        if (reSendOtp) {
+
+        } else {
+
+            var timers = setInterval(function () {
+                setTimer({ minute: Math.floor(counter / 60), seconds: Math.floor(counter % 60) })
+                counter--
+                if (counter === -1) {
+                    clearInterval(timers);
+                    setSubmited(true)
+                    setReSendOtp(true)
+                }
+
+            }, 1000);
+        }
+    }, [reSendOtp])
     
 
 
@@ -238,29 +260,33 @@ export default function SignUpPhone() {
         console.log(user);
     }
 
+    const handleResendOtp =()=>{
+        setSubmited(false)
+        phoneOtpResend({phone:user.phone}).then(()=>{
+            setReSendOtp(false)
+
+        }).catch(()=>{
+
+            setError({...error,otp:"invalid Otp"})
+
+
+        })
+
+    }
+
     const verifyOtp = () => {
-        if (user.email !== undefined, user.phone === undefined) {
-            console.log("email verify", user.email, user.phone);
+        setSubmited(true)
+        setOtpSend(true)
+      
 
-            verifyEmailotp({ email: user.email, otp: user.otp }).then((data) => {
-                console.log(">>>>>>>>>2", data.data.user);
-                history.push('/')
-            }).catch((error) => {
-                console.log(">>>>>>>>>3");
-            })
-
-
-        }
-
-        if (user.email === undefined, user.phone !== undefined) {
-
-            console.log("mobile verify", user.email, user.phone);
+     
 
             verifyMobileOtp({ phone: user.phone, otp: user.otp }).then((data) => {
 
                 history.push('/')
 
             }).catch((error) => {
+                setSubmited(false)
 
                 console.log(error);
 
@@ -269,7 +295,7 @@ export default function SignUpPhone() {
 
 
 
-        }
+        
 
 
     }
@@ -280,6 +306,7 @@ export default function SignUpPhone() {
                 {
                     otpsend ? (
                         <Card className="card py-5 px-4 mt-5 shadow">
+
 
                         <CssBaseline />
                         <Typography variant="h4" className="text-center fw-bold Typography " style={{ color: "#1877F2", fontFamily: 'Montserrat' }} >Social Media</Typography>
@@ -292,13 +319,13 @@ export default function SignUpPhone() {
                                 alignItems: 'center',
                             }}
                         >
-                            
+
                             <Typography component="h1" variant="h5">
                                 OTP VERIFICATION
                             </Typography>
                             <Grid container flexDirection='column' alignItems='center' className='mt-5'>
-                            <MobileScreenShare style={{fontSize:'50px'}} />
-                            <Typography>Enter the code we sent to 502-399-3121</Typography>
+                                <MobileScreenShare style={{ fontSize: '50px' }} />
+                                <Typography>Enter the code we sent to {user.phone}</Typography>
                             </Grid>
                             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                                 <Grid container spacing={2}>
@@ -320,7 +347,7 @@ export default function SignUpPhone() {
                                             }}
                                         />
                                         {
-                                            error.nameErrMsg ? <Typography component='span' style={{ color: 'red' }}>{error.nameErrMsg}</Typography> : null
+                                            error.otp ? <Typography component='span' style={{ color: 'red' ,textAlign:'center',width:"100%",marginTop:'20px' }}>{error.otp}</Typography> : null
                                         }
 
 
@@ -336,13 +363,15 @@ export default function SignUpPhone() {
                                     variant="contained"
                                     sx={{ mt: 3, mb: 2 }}
                                     onClick={verifyOtp}
+                                    disabled={submited }
                                 >
                                     Verify OTP
                                 </Button>
-                                
+
                                 <Grid container flexDirection='column' alignItems='center' className='my-3'>
-                                    <Box>01:10</Box>
-                                    <Button>Resend OTP</Button>
+                                    <Box>{timer.minute} : {timer.seconds}</Box>
+
+                                    <Button disabled={!reSendOtp} onClick={handleResendOtp}>Resend OTP</Button>
                                 </Grid>
                                 {
                                     error.message ? <Typography component='span' style={{ color: 'red' }}>{error.message}</Typography> : null

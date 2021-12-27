@@ -192,7 +192,19 @@ export default function SignIn() {
     })
   }
   const responseFacebook = (response) => {
-    console.log(response);
+    console.log(response.email);
+    googleLogin({email:response.email}).then((user) => {
+      console.log("login data from server", user);
+      dispatch(loginAction(user))
+      socket?.emit("login", { id: socket.id, userId: user._id })
+
+      history.push('/')
+
+    }).catch((err) => {
+      setErrors({ error: true, emailErr: "invalid UserName Or Password" })
+
+
+    })
   }
 
 
@@ -274,12 +286,12 @@ export default function SignIn() {
 
                 <FacebookLogin
                   appId="4796539330410041"
-                  autoLoad={true}
+                  autoLoad={false}
                   fields="name,email,picture"
                   callback={responseFacebook}
 
                   render={renderProps => (
-                    <IconButton style={{ backgroundColor: "#1877F230", borderRadius: 10 }} size="medium" onClick={renderProps.onClick} >
+                    <IconButton style={{ backgroundColor: "#1877F230", borderRadius: 10 }} size="medium" onClick={()=>renderProps.onClick} >
                     <FacebookOutlined style={{ color: "#1877F2", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
                   </IconButton>
                   )}
