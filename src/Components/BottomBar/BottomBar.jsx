@@ -3,9 +3,9 @@ import './BottomBar.css'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 
-import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search } from '@mui/icons-material';
+import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search ,Badge } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-
+import {useSelector} from 'react-redux'
 
 function BottomBar() {
 
@@ -14,6 +14,9 @@ function BottomBar() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    let notificationCound = (useSelector((state) => state.notificationCount.notificationCount))
+
 
     return (
         <div  className="BottomBar">
@@ -38,7 +41,7 @@ function BottomBar() {
                 value="Notifications"
                 component={Link}
                 to="/notification"
-                icon={<NotificationsRounded />}
+                icon={  <NotificationsRounded color="action" /> }
             />
             <BottomNavigationAction
                 label="Chat"

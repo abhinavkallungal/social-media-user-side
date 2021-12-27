@@ -9,6 +9,7 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import FeedIcon from '@mui/icons-material/Feed';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
+import { useSelector } from 'react-redux'
 
 const useStyle = makeStyles({
     Button: {
@@ -43,6 +44,8 @@ const useStyle = makeStyles({
 
 function SideNav() {
     const classes = useStyle()
+    let notificationCound = (useSelector((state) => state.notificationCount.notificationCount))
+
     return (
         <div className="SideNav">
             <div className="navItem">
@@ -60,11 +63,11 @@ function SideNav() {
                         <AccountBoxIcon className={classes.navIcons} />
                         <span>
 
-                        People
+                        Notifications
                         </span>
                     </div>
                     <div className={classes.badge} >
-                        3
+                    {notificationCound}
                     </div>
                 </Button>
             </div>

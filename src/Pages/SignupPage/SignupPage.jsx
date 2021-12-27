@@ -41,7 +41,7 @@ export default function SignUpPhone() {
     const history = useHistory()
 
     const [user, setUser] = useState({
-        email: "oneskyine@gmail.com",
+        email: "",
         name: "",
         username: "",
         password: '',
@@ -131,11 +131,11 @@ export default function SignUpPhone() {
                     setUser({ ...user, usernameExist: true })
                 } else {
                     setUser({ ...user, usernameExist: false })
-                    setError({ ...error, usernameExist: "" })
-
+                    
                 }
-
+                
             }).catch((err) => {
+                setError({ ...error, usernameExist: err.message })
 
 
             })
@@ -174,7 +174,7 @@ export default function SignUpPhone() {
             setError(err)
         } else if (new RegExp("^(?=.*[0-9])"
             + "(?=.*[a-z])(?=.*[A-Z])"
-            + "(?=.*[@#$%^&+=])"
+            + "(?=.*[@#$%^&+=!*])"
             + "(?=\\S+$).{8,20}$").test(trimPassword)) {
             let err = { ...error, password: "" }
             setError(err)

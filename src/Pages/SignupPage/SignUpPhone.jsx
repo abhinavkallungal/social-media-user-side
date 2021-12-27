@@ -42,7 +42,7 @@ export default function SignUpPhone() {
     const history = useHistory()
 
     const [user, setUser] = useState({
-        phone: "9633384749",
+        phone: "",
         name: "",
         username: "",
         password: '',
@@ -57,14 +57,14 @@ export default function SignUpPhone() {
         phone:"",   
         otp: ''
     })
-    const [otpsend, setOtpSend] = useState(true)
+    const [otpsend, setOtpSend] = useState(false)
     const [reSendOtp, setReSendOtp] = useState(false)
     const [submited, setSubmited] = useState(false)
     const [timer, setTimer] = useState({ minute: "", seconds: "" })
 
 
     useEffect(() => {
-        let counter = 10
+        let counter = 180
         if (reSendOtp) {
 
         } else {

@@ -182,7 +182,7 @@ function SignupPage() {
                                             id="outlined-required"
                                             label="Password"
                                             type="password"
-                                            defaultValue=""
+                                            defaultVal  ue=""
                                             name='password'
                                             onChange={onChange}
 

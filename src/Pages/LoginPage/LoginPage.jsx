@@ -13,10 +13,11 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Card, IconButton } from '@mui/material';
 import { FacebookOutlined, Google } from '@mui/icons-material';
-import { google, googleLogin, login } from '../../Axios'
+import {  thirdPartyLogin, login } from '../../Axios'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAction } from "../../Redux/userSlice"
+import { setNotificationCountAction } from "../../Redux/notificationCountSlice"
 import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 
@@ -154,10 +155,12 @@ export default function SignIn() {
 
     } else {
       if (!errors.error) {
-        login(form).then((user) => {
-          console.log("login data from server", user);
+        login(form).then((data) => {
+          console.log("login data from server", data);
           dispatch(loginAction(user))
-          socket?.emit("login", { id: socket.id, userId: user._id })
+          dispatch(setNotificationCountAction(data.unReadNotificationsCount))
+          
+          socket?.emit("login", { id: socket.id, userId: data.user._id })
 
           history.push('/')
 
@@ -178,10 +181,12 @@ export default function SignIn() {
     console.log(response.su.ev);
     
     const email = response.su.ev
-    googleLogin({email}).then((user) => {
-      console.log("login data from server", user);
-      dispatch(loginAction(user))
-      socket?.emit("login", { id: socket.id, userId: user._id })
+    thirdPartyLogin({email}).then((data) => {
+      console.log("login data from server", data.user);
+      dispatch(loginAction(data.user))
+      dispatch(setNotificationCountAction(data.unReadNotificationsCount))
+
+      socket?.emit("login", { id: socket.id, userId: data.user._id })
 
       history.push('/')
 
@@ -193,10 +198,11 @@ export default function SignIn() {
   }
   const responseFacebook = (response) => {
     console.log(response.email);
-    googleLogin({email:response.email}).then((user) => {
-      console.log("login data from server", user);
-      dispatch(loginAction(user))
-      socket?.emit("login", { id: socket.id, userId: user._id })
+    thirdPartyLogin({email:response.email}).then((data) => {
+      console.log("login data from server", data.user);
+      dispatch(loginAction(data.user))
+      dispatch(setNotificationCountAction(data.unReadNotificationsCount))
+      socket?.emit("login", { id: socket.id, userId: data.user._id })
 
       history.push('/')
 

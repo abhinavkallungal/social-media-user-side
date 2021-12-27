@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { useDispatch } from 'react-redux'
 import { loginAction } from "./Redux/userSlice"
 import { setSoketAction } from './Redux/socketSlice'
+import { setNotificationCountAction } from './Redux/notificationCountSlice'
 import { io, Socket } from "socket.io-client";
 
 
@@ -73,16 +74,18 @@ function Router() {
         socket.on("likemsg", (msg) => {
             alert(msg)
         })
-        socket.on("sendLikeNotification", (notification) => {
+        socket.on("sendLikeNotification", ({notifications ,unReadNotificationsCount}) => {
+            dispatch(setNotificationCountAction(unReadNotificationsCount))
+
             Toast.fire({
-                title: `${notification.user.name} Liked Your Post`
+                title: `${notifications.user.name} Liked Your Post`
             })
         })
 
-        socket.on("sendCommentNotification", (notification) => {
-            alert()
+        socket.on("sendCommentNotification", ({notifications ,unReadNotificationsCount}) => {
+            dispatch(setNotificationCountAction(unReadNotificationsCount))
             Toast.fire({
-                title: `${notification.user.name} Commented Your Post`
+                title: `${notifications.user.name} Commented Your Post`
             })
         })
         socket.on("save", (msg) => {

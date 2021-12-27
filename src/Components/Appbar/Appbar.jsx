@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './appbar.css'
-import { AppBar, Toolbar, Typography, Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button } from "@mui/material"
+import { AppBar, Toolbar, Typography, Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button, Badge } from "@mui/material"
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
-import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search } from '@mui/icons-material';
+import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search, NotificationsActiveRounded } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
-import { useDispatch ,useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { logoutAction } from "../../Redux/userSlice"
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+
 
 
 const useStyles = makeStyles({
@@ -61,9 +62,10 @@ function Appbar() {
     };
     const classes = useStyles();
 
-    let  currentUser =(useSelector((state) =>  state.user.user))
-     let data =currentUser
-    
+    let currentUser = (useSelector((state) => state.user.user))
+    let data = currentUser
+    let notificationCound = (useSelector((state) => state.notificationCount.notificationCount))
+  
 
     const handleLogout = (e) => {
         dispatch(logoutAction())
@@ -92,16 +94,18 @@ function Appbar() {
                             </Button>
                             <Button variant="text" className={classes.navItem, 'navItem'} component={Link}
                                 to="/notification">
-                                <NotificationsRounded color="primary" size="medium" />
+                                <Badge badgeContent={notificationCound} color="primary">
+                                    <NotificationsActiveRounded color="action" />
+                                </Badge>
                             </Button>
                             <Button variant="text" className={classes.navItem, 'navItem'}>
                                 <ChatRounded color="primary" size="medium" />
                             </Button>
-                            
+
                             <Button variant="text" className={classes.navItem, 'navItem'} >
                                 <PeopleAltRounded color="primary" size="medium" />
                             </Button>
-                            <Button variant="text"className={classes.root} style={{ color: '#ffffff' }} component={Link} to="/createpost" >
+                            <Button variant="text" className={classes.root} style={{ color: '#ffffff' }} component={Link} to="/createpost" >
                                 Create Post
                             </Button>
 

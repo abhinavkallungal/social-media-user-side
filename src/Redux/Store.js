@@ -7,6 +7,7 @@ import {
 import userReducer from './userSlice'
 import newPostReducer from './newPostSlice'
 import newSocketReducer from './socketSlice'
+import newNotificationCountReducer from './notificationCountSlice'
 
 // Augment middleware to consider Immutable.JS iterables serializable
 const isSerializable = (value) => Iterable.isIterable(value) || isPlain(value)
@@ -25,7 +26,8 @@ export default configureStore({
     reducer:{
         user:userReducer,
         newPost:newPostReducer,
-        socket:newSocketReducer
+        socket:newSocketReducer,
+        notificationCount:newNotificationCountReducer
     },
     middleware: [serializableMiddleware],
 })

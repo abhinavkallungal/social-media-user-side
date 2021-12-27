@@ -13,7 +13,7 @@ export const checkUserName = (formdata) => {
             resolve(data)
 
         }).catch((err) => {
-console.log(err);
+            console.log(err);
             reject({ usernameExist: true, message: "choose another one" })
         })
     })
@@ -35,10 +35,10 @@ export const doSignup = (formdata) => {
 
 }
 
-export const emailOtpResend = ({email}) => {
+export const emailOtpResend = ({ email }) => {
     console.log(email);
     return new Promise(async (resolve, reject) => {
-        axios.post('http://localhost:4000/api/v1/user/reSendEmailOtp', {email}).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/reSendEmailOtp', { email }).then((data) => {
 
             resolve(data)
 
@@ -65,10 +65,10 @@ export const verifyEmailotp = (fromdata) => {
 
 }
 
-export const phoneOtpResend = ({phone}) => {
+export const phoneOtpResend = ({ phone }) => {
     console.log(phone);
     return new Promise(async (resolve, reject) => {
-        axios.post('http://localhost:4000/api/v1/user/reSendEmailOtp', {phone}).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/reSendEmailOtp', { phone }).then((data) => {
 
             resolve(data)
 
@@ -113,7 +113,7 @@ export const login = (formdata) => {
             console.log("login success");
             localStorage.setItem("user", JSON.stringify(data.data.user))
 
-            resolve(data.data.user)
+            resolve(data.data)
 
         }).catch((err) => {
             console.log('err', err);
@@ -123,10 +123,10 @@ export const login = (formdata) => {
 
 }
 
-export const googleLogin = ({ email }) => {
+export const thirdPartyLogin = ({ email }) => {
 
     return new Promise(async (resolve, reject) => {
-        axios.post("http://localhost:4000/api/v1/user/googleLogin", { email }).then((data) => {
+        axios.post("http://localhost:4000/api/v1/user/thirdPartyLogin", { email }).then((data) => {
 
             console.log("login data", data);
             localStorage.setItem("token", data.data.token)
@@ -134,7 +134,7 @@ export const googleLogin = ({ email }) => {
             console.log("login success");
             localStorage.setItem("user", JSON.stringify(data.data.user))
 
-            resolve(data.data.user)
+            resolve(data.data)
 
         }).catch((err) => {
             console.log('err', err);
@@ -254,14 +254,14 @@ export const getTagsDetailes = ({ postId }) => {
 
 
 
-export const getAllpost = ({ userId ,page }) => {
+export const getAllpost = ({ userId, page }) => {
 
-    console.log(userId,page);
+    console.log(userId, page);
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/getAllPost', { userId,page }, { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/getAllPost', { userId, page }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
 
             resolve(data.data.posts)
@@ -318,6 +318,96 @@ export const addAccountDetails = (userdata) => {
     })
 
 }
+export const getTagedPost = ({userId}) => {
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+
+        axios.get(`http://localhost:4000/api/v1/user/getTagedPost/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+
+            resolve(data.data)
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+export const getSavedPosts = ({userId}) => {
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+
+        axios.get(`http://localhost:4000/api/v1/user/getSavedPosts/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+
+            resolve(data.data)
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+export const getFollowers = ({userId}) => {
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+
+        axios.get(`http://localhost:4000/api/v1/user/getFollowers/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+
+            resolve(data.data)
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+export const getFollowings = ({userId}) => {
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+
+        axios.get(`http://localhost:4000/api/v1/user/getFollowings/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+
+            resolve(data.data)
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+
+
 
 export const search = ({ keyword, userId }) => {
 
@@ -426,7 +516,7 @@ export const doDeletePost = ({ postId, userId }) => {
 }
 
 export const doCommet = ({ postId, userId, comment }) => {
-    console.log( postId, userId, comment );
+    console.log(postId, userId, comment);
     return new Promise((resolve, reject) => {
 
         const token = localStorage.getItem("token")
@@ -434,7 +524,7 @@ export const doCommet = ({ postId, userId, comment }) => {
         axios.post('http://localhost:4000/api/v1/user/comment', { userId, postId, comment }, { headers: { Authorization: token } }).then((data) => {
             console.log(data.data.comments);
 
-            resolve({comments:data.data.comments,NotificationId:data.data.NotificationId})
+            resolve({ comments: data.data.comments, NotificationId: data.data.NotificationId })
 
 
         }).catch((err) => {
@@ -534,7 +624,7 @@ export const getAllNotifications = ({ userId }) => {
 }
 
 
-export const getPostComment = ({ postId}) => {
+export const getPostComment = ({ postId }) => {
 
     return new Promise(async (resolve, reject) => {
 
