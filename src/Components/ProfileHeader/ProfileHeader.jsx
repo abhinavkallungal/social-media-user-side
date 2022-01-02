@@ -4,16 +4,18 @@ import { IconButton, Button } from '@mui/material'
 import AddProfilePhoto  from '../AddProfilePhoto/AddProfilePhoto'
 import AddCoverPhoto  from '../AddCoverPhoto/AddCoverPhoto'
 import userAvatar from '../../Assets/userAvathar.jpg'
-
-
-import './ProfileHeader.css'
-
-
 import { useSelector } from 'react-redux';
 import { dofollow } from '../../Axios';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import './ProfileHeader.css'
+
+const MySwal = withReactContent(Swal)
+
+
 
 function ProfileHeader({ user }) {
-    const [follow, setFollow] = useState(false)
+    const [follow, setFollow] = useState(null)
     const currentuser = (useSelector((state) => state.user.user))
     let data = currentuser
     let ProfilePhotos
@@ -23,16 +25,19 @@ function ProfileHeader({ user }) {
         
    
        let followingexist=data?.followings?.findIndex((item)=>{
+           console.log(item);
            return item==user._id
        })
+       console.log(followingexist);
        if(followingexist===-1){
-       }else{
+           setFollow(false)
+        }else{
            setFollow(true)
        }
         
         
         
-    }, [])
+    }, [user])
 
     if(data._id===user._id){
         ProfilePhotos=data?.ProfilePhotos;
@@ -46,13 +51,42 @@ function ProfileHeader({ user }) {
 
 
     const handlefollow = (userId, currentuserId) => {
-        setFollow(follow=> !follow)
-        dofollow({ userId, currentuserId }).then((data) => {
-            console.log(data);
-        }).catch((err) => {
-            console.log(err);
 
-        })
+        if(follow){
+            MySwal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to Unfollow this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Unfollow'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    setFollow(follow=> !follow)
+                    dofollow({ userId, currentuserId }).then((data) => {
+                        console.log(data);
+                    }).catch((err) => {
+                        console.log(err);
+            
+                    })
+                }
+              })
+
+        }else{
+            setFollow(follow=> !follow)
+            dofollow({ userId, currentuserId }).then((data) => {
+                console.log(data);
+            }).catch((err) => {
+                console.log(err);
+    
+            })
+            
+        }
+       
+
+
+       
     }
     return (
         <div className="main">

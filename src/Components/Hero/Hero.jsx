@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import React, { useState, useRef , useCallback } from 'react'
 import './Hero.css'
 import { Grid } from '@mui/material'
 import ProfileCard from '../ProfileCard/ProfileCard'
@@ -11,8 +11,6 @@ import { useSelector } from 'react-redux';
 
 import HeroStorySection from '../HeroStorySection/HeroStorySection';
 import ViewPostCard from '../ViewPostCard/ViewPostCard';
-import { getAllpost } from '../../Axios';
-import PostReportModal from '../PostReportModal/PostReportModal'
 import FeedSkeleton from '../Skeletons/FeedSkeleton/FeedSkeleton';
 
 import PostScroll from './PostScroll'
@@ -114,7 +112,6 @@ function Hero() {
                     <div style={{ position: 'sticky', top: '100px' }}>
                         <RequestCard />
                         <RequestCard />
-                        <PostReportModal />
                     </div>
 
                 </Grid>

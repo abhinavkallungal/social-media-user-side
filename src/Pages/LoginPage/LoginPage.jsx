@@ -71,7 +71,7 @@ export default function SignIn() {
         console.log("test2");
         setErrors({ error: false, emailErr: "" })
       }
-      else if (new RegExp("^[A-Za-z]\\w{5,29}$").test(trimEmail)) {
+      else if (new RegExp("^[A-Za-z]\\w{4,29}$").test(trimEmail)) {
         const { password } = form
         setForm({ password, username: trimEmail })
         setErrors({ error: false, emailErr: "" })
@@ -105,49 +105,12 @@ export default function SignIn() {
   }
 
 
-  const validattion = () => {
-    const { email, password } = user
-    const trimEmail = email.trim()
-    const trimPassword = password.trim()
-    console.log("test1");
-
-    if (trimEmail === "") {
-      setErrors({ error: true, emailErr: "username or email or phone number is required " })
-
-    } else if (new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(trimEmail)) {
-      setForm({ ...form, email: trimEmail })
-      console.log("test2");
-      setErrors({ error: false, emailErr: "" })
-    }
-    else if (new RegExp("^[A-Za-z]\\w{5,29}$").test(trimEmail)) {
-      setForm({ ...form, username: trimEmail })
-      setErrors({ error: false, emailErr: "" })
-
-
-    } else if (new RegExp(/^([+]\d{2})?\d{10}$/).test(trimEmail)) {
-      setForm({ ...form, phone: trimEmail })
-      setErrors({ error: false, emailErr: "" })
-
-    } else {
-      setErrors({ error: true, emailErr: "username or email or phone number is required " })
-
-    }
-
-    if (trimPassword === "") {
-      setErrors({ error: true, passwordErr: "password is required " })
-
-    } else {
-      setForm({ ...form, password: trimPassword })
-      setErrors({ error: false, passwordErr: "" })
-    }
-
-  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (form.email === undefined && form.username === undefined && form.phone === undefined) {
 
-      setErrors({ error: true, emailErr: "username or email or phone number is required " })
+      setErrors({ error: true, emailErr: "Invalied Detailes" })
 
 
     } else if (form.password === undefined) {
@@ -160,13 +123,12 @@ export default function SignIn() {
           dispatch(loginAction(user))
           dispatch(setNotificationCountAction(data.unReadNotificationsCount))
           
-          socket?.emit("login", { id: socket.id, userId: data.user._id })
 
           history.push('/')
 
 
         }).catch((err) => {
-          setErrors({ error: true, emailErr: "invalid UserName Or Password" })
+          setErrors({ error: true, emailErr: err?.response?.data?.message})
 
         })
 
@@ -191,7 +153,8 @@ export default function SignIn() {
       history.push('/')
 
     }).catch((err) => {
-      setErrors({ error: true, emailErr: "invalid UserName Or Password" })
+      setErrors({ error: true, emailErr: err?.response?.data?.message})
+
 
 
     })
@@ -207,7 +170,9 @@ export default function SignIn() {
       history.push('/')
 
     }).catch((err) => {
-      setErrors({ error: true, emailErr: "invalid UserName Or Password" })
+
+      setErrors({ error: true, emailErr: err.response.data.message})
+
 
 
     })

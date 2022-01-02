@@ -4,10 +4,12 @@ import {  Typography, TextField, Button, IconButton } from '@mui/material'
 import './AccountDetails.css'
 import { useSelector } from 'react-redux'
 import { addAccountDetails } from "../../Axios"
+import { useHistory } from 'react-router-dom'
+
 
 
 function AccountDetails() {
-
+const history =useHistory()
 
     const user = (useSelector((state) => state.user.user))
     //  let data = JSON.parse(user)
@@ -25,6 +27,11 @@ function AccountDetails() {
         addAccountDetails(userData).then((data) => {
             
         }).catch((error) => {
+            if (error.response.status == 403) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                history.push('/login')
+            }
 
         })
     }

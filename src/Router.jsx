@@ -5,8 +5,7 @@ import { useDispatch } from 'react-redux'
 import { loginAction } from "./Redux/userSlice"
 import { setSoketAction } from './Redux/socketSlice'
 import { setNotificationCountAction } from './Redux/notificationCountSlice'
-import { io, Socket } from "socket.io-client";
-
+import {socket} from './Utils/socket'
 
 
 
@@ -18,15 +17,14 @@ import SettingsPage from './Pages/SettingsPage/SettingsPage';
 import AccountDetailsPage from './Pages/AccountDetailsPage/AccountDetailsPage';
 import SearchPage from './Pages/SearchPage/SearchPage';
 import CreatePostPage from './Pages/CreatePostPage/CreatePostPage';
-import TestPage from './Pages/TestPage/TestPage'
 import NotificationPage from './Pages/NotificationPage/NotificationPage'
 import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
 import SignUpPhone from './Pages/SignupPage/SignUpPhone';
 import ForgotPassword from './Pages/ForgotPassword/ForgotPassword';
 import ForgotPasswordResat from './Pages/ForgotPassword/ForgotPasswordResat';
 import AutoComplete from './Components/CreatePost/AutoComplete';
-
+import ResetPasswordPage from './Pages/ResetPasswordPage/ResetPasswordPage';
+import MessangerPage from "./Pages/MessengerPage/MessengerPage"
 const Toast = Swal.mixin({
     toast: true,
     position: 'bottom-end',
@@ -58,19 +56,16 @@ function Router() {
 
 
     const [Token, setToken] = useState(localStorage.getItem('token'));
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-    let [socket, setSocket] = useState(null)
+    const user= JSON.parse(localStorage.getItem('user'))
 
 
     useEffect(() => {
-        let socket = io('http://localhost:4000', { transports: ['websocket', 'polling', 'flashsocket'] })
+        let user= JSON.parse(localStorage.getItem('user'))
         dispatch(setSoketAction(socket))
         console.log("routersoket", socket);
-        setSocket(socket)
-        socket.on("connect", () => {
-            console.log("connect", socket.id);
-            if (user && socket) return socket.emit("login", { id: socket.id, userId: user._id })
-        });
+
+        
+      
         socket.on("likemsg", (msg) => {
             alert(msg)
         })
@@ -93,7 +88,7 @@ function Router() {
 
 
 
-    }, [])
+    }, [user])
 
 
 
@@ -176,6 +171,13 @@ function Router() {
             <Route path="/passwordReset">
                 <ForgotPasswordResat/>
             </Route>
+            <Route path="/resetPasswords">
+                <ResetPasswordPage/>
+            </Route>
+            <Route path="/Messenger">
+                <MessangerPage/>
+            </Route>
+
 
 
         </Switch>

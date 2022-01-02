@@ -182,6 +182,27 @@ export const forgotPasswordReset = (formData) => {
 }
 
 
+export const resetPassword = (formData) => {
+    console.log(formData);
+
+    return new Promise(async (resolve, reject) => {
+        axios.post("http://localhost:4000/api/v1/user/resetPassword", formData,).then((data) => {
+
+            console.log("send data", data);
+
+
+            resolve(data.data.user)
+
+        }).catch((err) => {
+            console.log('err', err.response.data);
+            reject(err)
+
+        })
+    })
+}
+
+
+
 
 export const createPost = (formdata) => {
     console.log(">>>>>>>>>>>>>>>>>>>>", formdata);
@@ -193,7 +214,7 @@ export const createPost = (formdata) => {
         const token = localStorage.getItem("token")
         console.log(3);
 
-        axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
+        axios.post('https://abhinavsocialmedia.herokuapp.com/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
             console.log(4);
 
             resolve(data.data.post)
@@ -208,7 +229,7 @@ export const createPost = (formdata) => {
 
 }
 
-export const getFriendsForTag = ({ userId }) => {
+export const getFriends = ({ userId }) => {
     console.log(userId);
 
     return new Promise(async (resolve, reject) => {
@@ -216,7 +237,7 @@ export const getFriendsForTag = ({ userId }) => {
         const token = localStorage.getItem("token")
 
 
-        axios.post('http://localhost:4000/api/v1/user/getFriendsForTag', { userId }, { headers: { Authorization: token } }).then((data) => {
+        axios.get(`http://localhost:4000/api/v1/user/getFriends/${userId}`,  { headers: { Authorization: token } }).then((data) => {
 
             resolve(data.data.friends)
 
@@ -282,7 +303,7 @@ export const getProfileDetails = (userId) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/getProfileDetalils', { userId }, { headers: { Authorization: token } }).then((data) => {
+        axios.get(`http://localhost:4000/api/v1/user/getProfileDetails/${userId}`,  { headers: { Authorization: token } }).then((data) => {
             console.log(data);
 
             resolve({ user: data.data.user[0], posts: data.data.posts })
@@ -415,12 +436,12 @@ export const search = ({ keyword, userId }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/search', { keyword, userId }, { headers: { Authorization: token } }).then((data) => {
+        axios.get(`http://localhost:4000/api/v1/user/search/${userId}/${keyword}`,{ headers: { Authorization: token } }).then((data) => {
 
             resolve(data.data)
 
         }).catch((err) => {
-
+            reject(err)
 
         })
     })
@@ -440,7 +461,7 @@ export const dofollow = ({ userId, currentuserId }) => {
 
 
         }).catch((err) => {
-            reject(err.data)
+            reject(err)
 
 
         })
@@ -462,7 +483,7 @@ export const doLike = ({ postId, userId }) => {
 
 
         }).catch((err) => {
-            reject(err.data)
+            reject(err)
 
 
         })
@@ -485,7 +506,7 @@ export const doSave = ({ postId, userId }) => {
 
 
         }).catch((err) => {
-            reject(err.data)
+            reject(err)
 
 
         })
@@ -499,14 +520,14 @@ export const doDeletePost = ({ postId, userId }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/Deletepost', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/deletePost', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
 
             resolve(data.data)
 
 
         }).catch((err) => {
-            reject(err.data)
+            reject(err)
 
 
         })
@@ -528,7 +549,7 @@ export const doCommet = ({ postId, userId, comment }) => {
 
 
         }).catch((err) => {
-            reject(err.data)
+            reject(err)
 
 
         })
@@ -549,7 +570,7 @@ export const doReport = ({ postId, userId, optoion, message }) => {
 
 
         }).catch((err) => {
-            reject(err.data)
+            reject(err)
 
 
         })
@@ -571,7 +592,7 @@ export const addProfilePhoto = ({ profilePhoto, currentuserId }) => {
             resolve(data.data.user)
 
         }).catch((err) => {
-            reject(err.data)
+            reject(err)
 
 
         })
@@ -593,7 +614,7 @@ export const DoAddCoverPhoto = ({ coverPhoto, currentuserId }) => {
             resolve(data.data.user)
 
         }).catch((err) => {
-            reject(err.data)
+            reject(err)
 
 
         })
@@ -614,7 +635,7 @@ export const getAllNotifications = ({ userId }) => {
             resolve(data.data.notifications)
 
         }).catch((err) => {
-            reject(err.data)
+            reject(err)
 
 
         })
@@ -643,3 +664,53 @@ export const getPostComment = ({ postId }) => {
     })
 
 }
+
+export const getUserDetailes =({userId})=>{
+
+    console.log(userId);
+    
+    return new Promise(async (resolve,reject)=>{
+
+
+        const token = localStorage.getItem("token")
+
+        axios.get(`http://localhost:4000/api/v1/user/getUserDetailes/${userId}`,{headers:{Authorization:token}}).then((data)=>{
+
+
+        console.log(data);
+
+        resolve(data.data)
+
+        }).catch((error)=>{
+
+            reject(error.response)
+
+        })
+
+    })
+}
+
+export const sendmsg = ({message,sender,receiver}) => {
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/sendMessage', {message,sender,receiver}, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+            resolve(data)
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+
+
+
+

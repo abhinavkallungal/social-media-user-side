@@ -4,7 +4,9 @@ import { useAutocomplete } from '@mui/base/AutocompleteUnstyled';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
-import { getFriendsForTag } from "../../Axios"
+import { getFriends } from "../../Axios"
+import { useHistory } from 'react-router-dom';
+
 
 const Root = styled('div')(
   ({ theme }) => `
@@ -157,13 +159,20 @@ const Listbox = styled('ul')(
 export default function TagFriend({ userId, setTag }) {
 
   const [friends, setFriends] = useState([])
+  const history = useHistory()
 
   useEffect(() => {
     console.log(userId);
-    getFriendsForTag({ userId }).then((data) => {
+    getFriends({ userId }).then((data) => {
       console.log(data);
       setFriends(data)
 
+    }).catch((err) => {
+      if (err.response.status == 403) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        history.push('/login')
+      }
     })
 
   }, [])

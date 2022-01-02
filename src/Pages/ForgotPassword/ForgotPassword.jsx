@@ -54,8 +54,8 @@ export default function ForgotPassword() {
 
   const handleSubmit = () => {
 
-    if(form.email===undefined && form.phonne==undefined && form.username==undefined){
-      setErrors({ error: true, emailErr: "username or email or phone number is required " })
+    if(form.email===undefined && form.phone==undefined){
+      setErrors({ error: true, emailErr:  " email or phone number is required " })
 
     }else{
       setSubmited(true)
@@ -92,21 +92,14 @@ export default function ForgotPassword() {
 
         setErrors({ error: false, emailErr: "" })
       }
-      else if (new RegExp("^[A-Za-z]\\w{5,29}$").test(trimEmail)) {
-
-        setForm({  username: trimEmail })
-
-        setErrors({ error: false, emailErr: "" })
-  
-  
-      } else if (new RegExp(/^([+]\d{2})?\d{10}$/).test(trimEmail)) {
+       else if (new RegExp(/^([+]\d{2})?\d{10}$/).test(trimEmail)) {
 
         setForm({  phone: trimEmail })
 
         setErrors({ error: false, emailErr: "" })
   
       } else {
-        setErrors({ error: true, emailErr: " Not valid a  form " })
+        setErrors({ error: true, emailErr: " Not valid a  detailes " })
   
       }
   

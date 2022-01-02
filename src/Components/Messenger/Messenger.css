@@ -1,0 +1,204 @@
+.ChatBox{
+    width: 100%;
+    height:100vh;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: url('../../Assets/chatBackground.jpg');  
+}
+@media only screen and (max-width:600px){
+    .ChatBox{
+        
+        height:92vh;
+        
+    }
+    
+}
+
+
+.ChatBox .header,.ChatList .header{
+    height: 70px;
+    width: 100%;
+    padding: 10px;
+    background-color: #007fff;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ChatBox .header{
+    border-radius: 0 0 10px 0;
+  
+}
+
+.ChatList .header{
+    border-radius: 0 0  0 0px ;
+    border-right: 1px solid #fff;
+  
+}
+
+.ChatBox .header .detailes{
+    display: flex;
+    align-items: center;
+
+}
+.ChatBox .header .detailes .img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.ChatBox .header .detailes .img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.ChatBox .header .detailes .name{
+   color: #fff;
+   font-weight: bold;
+}
+
+.ChatBox .header .detailes .lastseen{
+    color: #fff;
+    font-weight: 400;
+ }
+ .ChatBox .sendMessage{
+     width: 100%;
+     height: 70px;
+     background-color: #f0f0f0;
+     border-radius: 10px;
+     display: flex;
+     align-items: center;
+ }
+
+ .ChatBox .viewMessage{
+     width: 100%;
+     height: 100%;
+     overflow-y: scroll;
+ }
+ .ChatBox .sendMessage input{
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    padding: 10px;
+}
+
+.ChatList{
+    width: 100%;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    max-height: 100vh;
+
+}
+
+.ChatList .header{
+    height: 70px;
+    width:100%;
+}
+.ChatList .header .logo {
+    color: #ffffff;
+    font-family: 'Montserrat, sans-serif';
+    font-size: 22;
+}
+
+.ChatList .search{
+    background-color: #007fff;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    padding: 0px 20px;
+}
+.ChatList .search input{
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    width: 100%;
+    height: 45px;
+    margin-right: 10px;
+}
+.ChatList .userList{
+    height: 84vh;
+    overflow-y: scroll;
+}
+
+
+.UserCard{
+    height: 80px;
+    border-bottom: .5px solid rgba(128, 128, 128, 0.301);
+    display: flex;
+    align-items: center ;
+    justify-content: space-between;
+    
+}
+.UserCard:hover{
+    cursor: pointer;
+    background-color: rgba(168, 165, 165, 0.281);
+}
+.UserCard .Profile{
+    display: flex;
+    align-items: center;
+}
+
+.UserCard .Profile .img {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.UserCard .Profile .img img{
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+}
+.UserCard .badge{
+    height: 25px;
+    width: 25px;
+    border-radius: 15px;
+    background-color: chartreuse;
+    color: #000;
+    font-weight: bold ;
+}
+
+.Message{    
+    display: flex;
+    
+}
+
+.Message .content{
+    margin: 10px;
+    padding: 10px;
+    max-width: 70%;
+    border-radius: 20px 20px 20px 0px;
+    background-color: #F7F4F8;
+    
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
+
+
+}
+
+.Message .content.own{
+ 
+    border-radius: 20px 20px 0px 20px;
+    background-color: #007fff;
+    color: #fff;
+    margin-left: auto;
+    border: 1px solid #fff;
+
+
+}
+
+.Message .content .time{
+    font-size: 12px;
+    margin-left: auto;
+}

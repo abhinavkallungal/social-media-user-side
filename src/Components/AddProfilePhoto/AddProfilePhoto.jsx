@@ -13,6 +13,8 @@ import {PhotoCamera} from '@mui/icons-material'
 import {addProfilePhoto} from '../../Axios'
 import { useSelector,useDispatch } from 'react-redux';
 import { loginAction } from "../../Redux/userSlice";
+import { useHistory } from 'react-router-dom';
+
 
 
 
@@ -48,6 +50,7 @@ const config = {
 function AddProfilePhoto() {
     const currentuser = (useSelector((state) => state.user.user))
     const dispatch=useDispatch()
+    const history =useHistory()
 
 
     const [open, setOpen] = React.useState(false);
@@ -158,6 +161,12 @@ function AddProfilePhoto() {
            addProfilePhoto({profilePhoto:data.location,currentuserId:currentuser._id}).then((user)=>{
             dispatch(loginAction(user))
 
+           }).catch((err)=>{
+            if (err.response.status == 403) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                history.push('/login')
+              }
            })
 
         }).catch((err) => {

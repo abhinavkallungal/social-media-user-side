@@ -486,7 +486,7 @@ export default function SignUpPhone() {
                                         <IconButton style={{ borderRadius: 10 }} size="medium" onClick={() => history.push("/signup")}>
                                             <Phone style={{ color: "#1976D2", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
                                         </IconButton>
-                                        <Typography>Signup with Email</Typography>
+                                        <Typography>Signup with Phone</Typography>
                                     </Grid>
 
                                     <Grid container justifyContent="flex-end" className='mt-3'>

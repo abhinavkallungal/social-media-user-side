@@ -168,6 +168,7 @@ function CreatePost() {
                 if (err.response.status == 403) {
                     localStorage.removeItem("token");
                     localStorage.removeItem("user");
+                    history.push('/login')
                 }
                 setError(err.message)
             })

@@ -27,7 +27,7 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import { BookmarkAdd, BookmarkAddedOutlined, ChatBubble, SendRounded, Tune } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import ViewTages from './ViewTages';
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -39,7 +39,7 @@ SwiperCore.use([Pagination]);
 function ViewPostCard(props) {
 
     let socket =(useSelector((state)=>state.socket.socket))
-
+    const history=useHistory()
     
     const{post,user}=props
 
@@ -111,6 +111,12 @@ function ViewPostCard(props) {
             }
             setlikeCount(data.likes)
             setliked(data.liked)
+        }).catch((err)=>{
+            if (err.response.status == 403) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                history.push('/login')
+              }
         })
 
     }
@@ -120,6 +126,12 @@ function ViewPostCard(props) {
             
             setSaved(data.saved)
 
+        }).catch((err)=>{
+            if (err.response.status == 403) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                history.push('/login')
+              }
         })
 
     }
@@ -129,6 +141,12 @@ function ViewPostCard(props) {
         doDeletePost({userId:user._id,postId:post._id}).then((data)=>{
             setDeleted(true)
 
+        }).catch((err)=>{
+            if (err.response.status == 403) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                history.push('/login')
+              }
         })
     }
     const handleCommet=(e)=>{
@@ -147,6 +165,12 @@ function ViewPostCard(props) {
                 socket.emit("docomment",{NotificationId})
             }
            
+        }).catch((err)=>{
+            if (err.response.status == 403) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                history.push('/login')
+              }
         })
 
     }
@@ -160,7 +184,12 @@ function ViewPostCard(props) {
             setViewComment(true)
             getPostComment({postId:post._id}).then((comments)=>{
                 setComments(comments)
-            }).catch(()=>{
+            }).catch((err)=>{
+                if (err.response.status == 403) {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+                    history.push('/login')
+                  }
                 
             })
         }
