@@ -27,3 +27,28 @@
     border-radius: 10px;
 
 }
+
+.ProfilePageAbout .heading{
+  color: #007fff;
+  font-weight: bold;
+
+}
+
+.ProfilePageAbout .Profile {
+  display: flex;
+  align-items: center;
+}
+
+.ProfilePageAbout .Profile .img {
+  margin-right: 50px;
+}
+
+
+
+.ProfilePageAbout .Profile .img img {
+width: 100px;
+height: 100px;
+border-radius: 10px;
+
+
+}

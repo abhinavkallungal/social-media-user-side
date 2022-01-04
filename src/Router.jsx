@@ -25,6 +25,7 @@ import ForgotPasswordResat from './Pages/ForgotPassword/ForgotPasswordResat';
 import AutoComplete from './Components/CreatePost/AutoComplete';
 import ResetPasswordPage from './Pages/ResetPasswordPage/ResetPasswordPage';
 import MessangerPage from "./Pages/MessengerPage/MessengerPage"
+import MessangerHome from '../src/Pages/MessengerPage/MessengerHomePage'
 const Toast = Swal.mixin({
     toast: true,
     position: 'bottom-end',
@@ -85,6 +86,16 @@ function Router() {
         })
         socket.on("save", (msg) => {
         })
+
+        socket.emit("getNotificationCound",{userId:user?._id})
+
+        socket.on('notificationCound',(notificationCound)=>{
+            console.log(notificationCound);
+            dispatch(setNotificationCountAction(notificationCound.notification))
+  
+        })
+
+      
 
 
 
@@ -174,7 +185,10 @@ function Router() {
             <Route path="/resetPasswords">
                 <ResetPasswordPage/>
             </Route>
-            <Route path="/Messenger">
+            <Route exact path="/Messenger">
+            <MessangerHome/>
+            </Route>
+            <Route  path="/Messenger/:userId">
                 <MessangerPage/>
             </Route>
 

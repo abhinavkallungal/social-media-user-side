@@ -3,15 +3,15 @@ import React from 'react'
 
 
 function Message(props) {
-    const { item } = props;
+    const { item ,currentUser} = props;
 
 
     return (
         <div className='Message'>
-            <div className={item.own ? 'content own' : 'content'}>
+            <div className={(item.sender ===currentUser) ? 'content own' : 'content'}>
 
                 <span>{item.message}</span>
-                <span className='time'>{moment(item.time).fromNow()}</span>
+                <span className='time'>{moment(item.createdAt).fromNow()}</span>
 
             </div>
 

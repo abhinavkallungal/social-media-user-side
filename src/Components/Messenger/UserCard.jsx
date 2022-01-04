@@ -1,10 +1,10 @@
 import React from 'react'
 import profilePhoto from '../../Assets/userAvathar.jpg'
 
-function UserCard({user,setSelectedChat}) {
+function UserCard({user,handleChatSelected}) {
 
     return (
-        <div className="UserCard" onClick={()=>setSelectedChat(user._id)}>
+        <div className="UserCard" onClick={()=>handleChatSelected(user._id)}>
             <div className="Profile">
                 <div className="img">
                     <img src={user.profilePhotos ? user.profilePhotos : profilePhoto} alt="" />

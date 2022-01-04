@@ -3,9 +3,23 @@ import './BottomBar.css'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 
-import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search ,Badge } from '@mui/icons-material';
+import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search, Badge } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
+
+
+
+
+const NotificationIcon = () => {
+
+    return (
+        <Badge badgeContent={0} color="primary">
+            <NotificationsRounded color="action" />
+        </Badge>
+    )
+
+}
+
 
 function BottomBar() {
 
@@ -19,37 +33,38 @@ function BottomBar() {
 
 
     return (
-        <div  className="BottomBar">
+        <div className="BottomBar">
 
-        <BottomNavigation sx={{ width: "100%", position: 'fixed', bottom: 0, left: 0, right: 0 }}  value={value} onChange={handleChange} >
-            <BottomNavigationAction
-                label="Home"
-                value="Home"
-                component={Link}
-                to="/"
-                icon={<HomeRounded />}
-            />
-            <BottomNavigationAction
-                label="Search"
-                value="Search"
-                component={Link}
-                to="/search"
-                icon={<Search />}
-            />
-            <BottomNavigationAction
-                label="Notifications"
-                value="Notifications"
-                component={Link}
-                to="/notification"
-                icon={  <NotificationsRounded color="action" /> }
-            />
-            <BottomNavigationAction
-                label="Chat"
-                value="Chat"
-                icon={<ChatRounded />}
-            />
-            <BottomNavigationAction label="Friends" value="Friends" icon={<PeopleAltRounded />} />
-        </BottomNavigation>
+            <BottomNavigation sx={{ width: "100%", position: 'fixed', bottom: 0, left: 0, right: 0 }} value={value} onChange={handleChange} >
+                <BottomNavigationAction
+                    label="Home"
+                    value="Home"
+                    component={Link}
+                    to="/"
+                    icon={<HomeRounded />}
+                />
+                <BottomNavigationAction
+                    label="Search"
+                    value="Search"
+                    component={Link}
+                    to="/search"
+                    icon={<Search />}
+                />
+                <BottomNavigationAction
+                    label="Notifications"
+                    value="Notifications"
+             
+                    icon={<NotificationIcon color="action" />}
+                />
+                <BottomNavigationAction
+                    label="Chat"
+                    value="Chat"
+                    component={Link} 
+                    to='/Messenger'
+                    icon={<ChatRounded />}
+                />
+                <BottomNavigationAction label="Friends" value="Friends" icon={<PeopleAltRounded />} />
+            </BottomNavigation>
         </div>
 
     );
@@ -58,6 +73,7 @@ function BottomBar() {
 }
 
 export default BottomBar
+
 
 
 

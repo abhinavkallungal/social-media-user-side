@@ -1,4 +1,4 @@
-import React ,{useRef,useEffect} from 'react'
+import React, { useRef, useEffect } from 'react'
 import './Messenger.css'
 import userAvathar from "../../Assets/userAvathar.jpg"
 import { IconButton, TextField } from '@mui/material'
@@ -16,83 +16,115 @@ import { ArrowBackRounded, AttachmentRounded, EmojiEmotionsRounded, MoreVertShar
 import { width } from '@mui/system';
 import Message from './Message';
 import { useState } from 'react';
-import {getUserDetailes, sendmsg } from "../../Axios"
+import { getMessages, getUserDetailes, sendmsg } from "../../Axios"
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
-
-
-const initialmessaeg=[
-    {
-        message:"dfasdfasdfasdfasdfmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmwwwwwwwwwwwwwwwwwwwwasd",
-        time:new Date(),
-        own:true
-    },
-    {
-        message:"dfasdfasdfasdfasdfasd",
-        time:new Date(),
-        own:false
-    },
-    {
-        message:"dfasdfasdfasdfasdfasd",
-        time:new Date(),
-        own:true
-    },
-    {
-        message:"dfasdfasdfasdfasdfmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmwwwwwwwwwwwwwwwwwwwwasd",
-        time:new Date(),
-        own:true
-    },
-    {
-        message:"dfasdfasdfasdfasdfasd",
-        time:new Date(),
-        own:false
-    },
-    {
-        message:"dfasdfasdfasdfasdfasd",
-        time:new Date(),
-        own:true
-    },
-    {
-        message:"dfasdfasdfasdfasdfasd",
-        time:new Date(),
-        own:true
-    },
-    {
-        message:"dfasdfasdfasdfasdfasd",
-        time:new Date(),
-        own:false
-    },
-    {
-        message:"dfasdfasdfasdfasdfasd",
-        time:new Date(),
-        own:true
-    },
-    {
-        message:"dfasdfasdfasdfasdfasd",
-        time:new Date(),
-        own:false
-    },
-]
-
-function ChatBox({selectdChat,currentUser}) {
+function ChatBox({ currentUser, selectedChat }) {
+    let socket = (useSelector((state) => state.socket.socket))
+    console.log(selectedChat);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
-    const scrollRef=useRef()
-    const [newMessage,setNewMessage]=useState('')
-    const [messages,setMessages]=useState(initialmessaeg)
-    const[user,setUser]=useState({})
+    const scrollRef = useRef()
+    const [newMessage, setNewMessage] = useState('')
+    const [messages, setMessages] = useState([])
+    const [user, setUser] = useState({})
+    const [chat, setChat] = useState("")
+    
+
 
     useEffect(() => {
-        getUserDetailes({userId:selectdChat}).then((data)=>{
+
+        setChat(selectedChat)
+    }, [selectedChat])
+
+
+
+
+      
+    useEffect(() => {
+        console.log(7);
+
+        socket?.on('doReceiveMessage',(message )=>{
+
+
+            let receivedMessage = message[0]
+            console.log(message);
+            console.log(receivedMessage?.sender ,receivedMessage.message, chat);
+    
+            if(receivedMessage?.sender === chat){
+                 console.log(9);
+                console.log("repeat");
+                setMessages(messages => [...messages, receivedMessage])
+    
+            }
+            else{
+
+                console.log(10);
+                console.log("else");
+            }
+    
+        }) 
+        console.log(11);
+       
+    }, [socket])
+
+
+    const addMessage = () => {
+        console.log(2);
+        if (newMessage.trim() === "") {
+            console.log(3);
+        } else {
+            console.log(4);
+
+            console.log("test Here");
+
+             setMessages(messages => [...messages, { message: newMessage, createdAt: new Date(), sender: currentUser }])
+
+             setNewMessage("")
+
+            socket?.emit('doSendMessage',{ message: newMessage, sender: currentUser, userId:chat })
+
+
+            console.log(5);
+
+
+        }
+
+    }
+
+  
+console.log(6);
+
+  
+    console.log(12);
+
+
+    useEffect(() => {
+        console.log(13);
+        getUserDetailes({ userId :chat }).then((data) => {
+            console.log(14);
             console.log(data.user);
             setUser(data.user[0])
+        }).catch(() => {
+            console.log(15);
+
         })
-    }, [selectdChat])
-    
-    
+        getMessages({ sender: currentUser, userId:chat }).then((messages) => {
+            console.log(messages);
+            console.log("Check here");
+            setMessages(messages)
+            console.log(16);
+        })
+    }, [chat])
+
+    console.log(17);
+
+
     useEffect(() => {
-   
-        scrollRef?.current?.scrollIntoView({behavior:'smooth'})
+        console.log(18);
+        scrollRef?.current?.scrollIntoView({ behavior: 'smooth' })
     }, [messages])
 
     const handleClick = (event) => {
@@ -102,21 +134,15 @@ function ChatBox({selectdChat,currentUser}) {
         setAnchorEl(null);
     };
 
+console.log("tests home");
+
+    console.log(19);
 
 
-    const addMessage =()=>{
 
-        sendmsg({message:newMessage,sender:currentUser,receiver:selectdChat}).then((data)=>{
 
-            console.log(data);
 
-        }).catch((error)=>{
-            console.log(error);
-        })
-        
-        setMessages(messages=> [...messages,{message:newMessage,date:new Date(),own:true}])
 
-    }
 
     return (
         <div className='ChatBox'>
@@ -129,7 +155,7 @@ function ChatBox({selectdChat,currentUser}) {
                         </IconButton>
                     </div>
                     <div className="img">
-                        <img src={user.ProfilePhotos ? user.ProfilePhotos    : userAvathar} alt="" />
+                        <img src={user.ProfilePhotos ? user.ProfilePhotos : userAvathar} alt="" />
                     </div>
                     <div>
                         <div className="name">
@@ -211,26 +237,26 @@ function ChatBox({selectdChat,currentUser}) {
             </div>
             <div className="viewMessage">
                 {
-                    messages.map((item,index)=>{
-                        return(
+                    messages?.map((item, index) => {
+                        return (
                             <div key={index} ref={scrollRef}>
-                                 <Message item={item} />
+                                <Message item={item} currentUser={currentUser} />
                             </div>
                         )
                     })
                 }
-                </div>
+            </div>
             <div className="sendMessage">
                 <IconButton>
-                    <EmojiEmotionsRounded style={{color:'#077fff'   }} />
+                    <EmojiEmotionsRounded style={{ color: '#077fff' }} />
                 </IconButton>
                 <IconButton>
                     <AttachmentRounded />
                 </IconButton>
-                <input type="text" className="input"  onChange={(e)=>setNewMessage(e.target.value)} />
+                <input type="text" className="input" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
 
-                <IconButton style={{background:'#007fff',marginLeft:"20px",marginRight:'20px'}} onClick={addMessage}>
-                    <SendRounded style={{color:"#fff" }} />
+                <IconButton style={{ background: '#007fff', marginLeft: "20px", marginRight: '20px' }} onClick={addMessage}>
+                    <SendRounded style={{ color: "#fff" }} />
                 </IconButton>
 
 

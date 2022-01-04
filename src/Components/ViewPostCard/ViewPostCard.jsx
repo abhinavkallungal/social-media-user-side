@@ -39,6 +39,7 @@ SwiperCore.use([Pagination]);
 function ViewPostCard(props) {
 
     let socket =(useSelector((state)=>state.socket.socket))
+    let currentUser =(useSelector((state)=>state.user.user))
     const history=useHistory()
     
     const{post,user}=props
@@ -60,14 +61,14 @@ function ViewPostCard(props) {
 
     useEffect(() => {
         let doeslike = post?.likes?.findIndex((likes)=>{
-            return likes===user._id
+            return likes===currentUser._id
         })
         if(doeslike===-1){
             setliked(false)
         }else{
             setliked(true)
         }
-        let doesSaved = user?.SavedPost?.findIndex((posts)=>{
+        let doesSaved = currentUser?.SavedPost?.findIndex((posts)=>{
             return posts===post._id
         })
         if(doesSaved===-1 || doesSaved===undefined){
@@ -82,7 +83,7 @@ function ViewPostCard(props) {
 
     useEffect(() => {
         
-    if(post?.userId === user?._id){
+    if(post?.userId === currentUser?._id){
         setPostOwner(true)
     }else{
         setPostOwner(false)
@@ -104,7 +105,7 @@ function ViewPostCard(props) {
     };
 
     const handleLike=()=>{
-        doLike({userId:user._id,postId:post._id}).then((data)=>{
+        doLike({userId:currentUser._id,postId:post._id}).then((data)=>{
             if(data.NotificationId){
                 
                 socket.emit("dolike",{NotificationId:data.NotificationId})
@@ -122,7 +123,7 @@ function ViewPostCard(props) {
     }
 
     const handleSave=()=>{
-        doSave({userId:user._id,postId:post._id}).then((data)=>{
+        doSave({userId:currentUser._id,postId:post._id}).then((data)=>{
             
             setSaved(data.saved)
 
@@ -138,7 +139,7 @@ function ViewPostCard(props) {
 
     const handleDelete=()=>{
         handleClose()
-        doDeletePost({userId:user._id,postId:post._id}).then((data)=>{
+        doDeletePost({userId:currentUser._id,postId:post._id}).then((data)=>{
             setDeleted(true)
 
         }).catch((err)=>{
@@ -154,7 +155,7 @@ function ViewPostCard(props) {
     }
     const handleAddComment=()=>{
         setComment("")
-        doCommet({userId:user._id,postId:post._id,comment}).then(({comments,NotificationId})=>{
+        doCommet({userId:currentUser._id,postId:post._id,comment}).then(({comments,NotificationId})=>{
             if(comments){
                 setComments(comments)
                 setViewComment(true)

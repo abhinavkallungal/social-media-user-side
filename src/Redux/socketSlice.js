@@ -9,6 +9,7 @@ const soketSlice = createSlice({
   },
   reducers: {
     setSoketAction: (state,action) => {
+
       state.socket=(action.payload)
 
     },

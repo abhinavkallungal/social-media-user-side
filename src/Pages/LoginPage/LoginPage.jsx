@@ -120,9 +120,10 @@ export default function SignIn() {
       if (!errors.error) {
         login(form).then((data) => {
           console.log("login data from server", data);
-          dispatch(loginAction(user))
+          socket?.emit("login", { id: socket.id, userId: data.user._id })
+          dispatch(loginAction(data.user))
           dispatch(setNotificationCountAction(data.unReadNotificationsCount))
-          
+
 
           history.push('/')
 
@@ -162,10 +163,10 @@ export default function SignIn() {
   const responseFacebook = (response) => {
     console.log(response.email);
     thirdPartyLogin({email:response.email}).then((data) => {
+      socket?.emit("login", { id: socket.id, userId: data.user._id })
       console.log("login data from server", data.user);
       dispatch(loginAction(data.user))
       dispatch(setNotificationCountAction(data.unReadNotificationsCount))
-      socket?.emit("login", { id: socket.id, userId: data.user._id })
 
       history.push('/')
 

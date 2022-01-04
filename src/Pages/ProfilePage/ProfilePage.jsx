@@ -21,6 +21,7 @@ import ProfilePageTagedPost from '../../Components/ProfilePageComponents/Profile
 import ProfilePageSavedPost from '../../Components/ProfilePageComponents/ProfilePageSavedPost'
 import ProfilePageViewFollowers from '../../Components/ProfilePageComponents/ProfilePageViewFollowers'
 import ProfilePageViewFollowings from '../../Components/ProfilePageComponents/ProfilePageViewFollowings'
+import ProfilePageAbout from '../../Components/ProfilePageComponents/ProfilePageAbout'
 
 function ProfilePage() {
     let { userId } = useParams();
@@ -63,7 +64,7 @@ function ProfilePage() {
                     <div className="row me-0">
                         <div className="col-lg-5 order-lg-last">
                             <ProfileIntroCard user={user} />
-                            <ProfilePostListcard />
+                            <ProfilePostListcard user={user} />
                         </div>
 
                         <div className="col-lg-7  order-lg-first ">
@@ -75,6 +76,7 @@ function ProfilePage() {
                                         <Tab label="Saved Posts" value="3" />
                                         <Tab label="Followers" value="4" />
                                         <Tab label="Followings" value="5" />
+                                        <Tab label="About" value="6" />
 
                                     </TabList>
                                 </Box>
@@ -90,8 +92,11 @@ function ProfilePage() {
                                 <TabPanel value="4">
                                     <ProfilePageViewFollowers user={user} />
                                 </TabPanel>
-                                <TabPanel value="4">
+                                <TabPanel value="5">
                                     <ProfilePageViewFollowings user={user} />
+                                </TabPanel>
+                                <TabPanel value="6">
+                                    <ProfilePageAbout user={user} />
                                 </TabPanel>
                             </TabContext>
 

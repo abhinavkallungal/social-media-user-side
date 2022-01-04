@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 });
 
 
-function ChatList({userId,setSelectedChat}) {
+function ChatList({userId,handleChatSelected}) {
     const classes = useStyles();
     const [friends,setFriends]=useState([])
     useEffect(() => {
@@ -60,7 +60,7 @@ function ChatList({userId,setSelectedChat}) {
             </div>
             <div className="userList">
                 {
-                    friends?.map((item)=> <UserCard user={item.user} setSelectedChat={setSelectedChat} />)
+                    friends?.map((item)=> <UserCard user={item.user} handleChatSelected={handleChatSelected} />)
                 }
            
             </div>

@@ -711,6 +711,26 @@ export const sendmsg = ({message,sender,receiver}) => {
 }
 
 
+export const getMessages = ({sender,userId}) => {
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/getmessages', {   sender,receiver:userId}, { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+            resolve(data.data.messages)
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
 
 
 

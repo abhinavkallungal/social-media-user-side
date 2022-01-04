@@ -98,7 +98,7 @@ function Appbar() {
                                     <NotificationsActiveRounded color="action" />
                                 </Badge>
                             </Button>
-                            <Button variant="text" className={classes.navItem, 'navItem'}>
+                            <Button variant="text" className={classes.navItem, 'navItem'} component={Link} to='/Messenger'>
                                 <ChatRounded color="primary" size="medium" />
                             </Button>
 

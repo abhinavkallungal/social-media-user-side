@@ -1,7 +1,7 @@
 import React from 'react'
 import "./ProfilePostListcard.css"
 
-function ProfilePostListcard() {
+function ProfilePostListcard(user) {
     return (
         <div className="ProfilePostListcard mt-3">
             <div className="card p-3 shadow">
@@ -11,24 +11,11 @@ function ProfilePostListcard() {
                 </div>
 
                 <div className="row mx-autp">
-                    <div className="img">
-                        <img src="" alt="" />
-                    </div>
-                    <div className="img ">
-                        <img src="" alt="" />
-                    </div>
-                    <div className="img">
-                        <img src="" alt="" />
-                    </div>
-                    <div className="img">
-                        <img src="" alt="" />
-                    </div>
-                    <div className="img">
-                        <img src="" alt="" />
-                    </div>
-                    <div className="img">
-                        <img src="" alt="" />
-                    </div>
+                    {
+                        user?.ProfilePhotos ? user?.ProfilePhotos.map((item,index)=> (index <6) &&<div className="img"><img src={item} alt="" /></div>) :null
+                    }
+   
+                   
                 </div>
 
             </div>
