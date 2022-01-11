@@ -214,7 +214,7 @@ export const createPost = (formdata) => {
         const token = localStorage.getItem("token")
         console.log(3);
 
-        axios.post('https://abhinavsocialmedia.herokuapp.com/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
+        axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
             console.log(4);
 
             resolve(data.data.post)
@@ -730,6 +730,79 @@ export const getMessages = ({sender,userId}) => {
     })
 
 }
+
+export const addStory = (formdata) => {
+    console.log(">>>>>>>>>>>>>>>>>>>>", formdata);
+    console.log(1);
+    return new Promise(async (resolve, reject) => {
+        console.log(2);
+
+        console.log(formdata);
+        const token = localStorage.getItem("token")
+        console.log(3);
+
+        axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
+            console.log(4);
+                console.log(data.data.story);
+            resolve(data.data.story)
+
+        }).catch((err) => {
+            console.log(5);
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+
+export const getALLStories = () => {
+    console.log(1);
+    return new Promise(async (resolve, reject) => {
+        console.log(2);
+
+        const token = localStorage.getItem("token")
+        console.log(3);
+
+        axios.get('http://localhost:4000/api/v1/user/getALLStories', { headers: { Authorization: token } }).then((data) => {
+            console.log(4);
+                console.log(data.data);
+            resolve(data.data)
+
+        }).catch((err) => {
+            console.log(5);
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+export const getStoriesSideBar = () => {
+    console.log(1);
+    return new Promise(async (resolve, reject) => {
+        console.log(2);
+
+        const token = localStorage.getItem("token")
+        console.log(3);
+
+        axios.get('http://localhost:4000/api/v1/user/getStoriesSideBar', { headers: { Authorization: token } }).then((data) => {
+            console.log(4);
+                console.log(data.data);
+            resolve(data.data)
+
+        }).catch((err) => {
+            console.log(5);
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
 
 
 

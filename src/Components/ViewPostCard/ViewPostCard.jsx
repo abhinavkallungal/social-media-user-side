@@ -1,11 +1,11 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button } from "@mui/material"
-import{doLike,doSave,doDeletePost, doCommet,getPostComment} from '../../Axios'
+import { doLike, doSave, doDeletePost, doCommet, getPostComment } from '../../Axios'
 import './ViewPostCard.css'
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded';
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
-import SwiperCore, {Pagination} from 'swiper';
+import SwiperCore, { Pagination } from 'swiper';
 import PostReportModal from '../PostReportModal/PostReportModal';
 
 
@@ -18,7 +18,7 @@ import PostReportModal from '../PostReportModal/PostReportModal';
 import 'swiper/swiper.min.css'
 import 'swiper/modules/pagination/pagination.min.css'
 
-import  moment from 'moment'
+import moment from 'moment'
 
 import userAvatar from '../../Assets/userAvathar.jpg'
 
@@ -38,60 +38,62 @@ SwiperCore.use([Pagination]);
 
 function ViewPostCard(props) {
 
-    let socket =(useSelector((state)=>state.socket.socket))
-    let currentUser =(useSelector((state)=>state.user.user))
-    const history=useHistory()
-    
-    const{post,user}=props
+    let socket = (useSelector((state) => state.socket.socket))
+    let currentUser = (useSelector((state) => state.user.user))
+    const history = useHistory()
+
+    const { post, user } = props
 
     const file = post.files
-    let ProfilePhotos=post?.user?.ProfilePhotos;
-    const[likeCount,setlikeCount]=useState(post.likes?.length)
-    const[liked,setliked]=useState(false)
-    const[saved,setSaved]=useState(false)
-    const[postOwner,setPostOwner]=useState(false)
-    const[deleted,setDeleted]=useState(false)
-    const[commentCount,setCommentCount]=useState(post.comments?.length)
-    const[comment,setComment]=useState('')
-    const[ViewComment,setViewComment]=useState(false)
-    const[Comments,setComments]=useState([])
+    const video = post?.video
+    console.log(post);
+    let ProfilePhotos = post?.user?.ProfilePhotos;
+    const [likeCount, setlikeCount] = useState(post.likes?.length)
+    const [liked, setliked] = useState(false)
+    const [saved, setSaved] = useState(false)
+    const [postOwner, setPostOwner] = useState(false)
+    const [deleted, setDeleted] = useState(false)
+    const [commentCount, setCommentCount] = useState(post.comments?.length)
+    const [comment, setComment] = useState('')
+    const [ViewComment, setViewComment] = useState(false)
+    const [Comments, setComments] = useState([])
 
 
 
 
     useEffect(() => {
-        let doeslike = post?.likes?.findIndex((likes)=>{
-            return likes===currentUser._id
+        let doeslike = post?.likes?.findIndex((likes) => {
+            return likes === currentUser._id
         })
-        if(doeslike===-1){
+        if (doeslike === -1) {
             setliked(false)
-        }else{
+        } else {
             setliked(true)
         }
-        let doesSaved = currentUser?.SavedPost?.findIndex((posts)=>{
-            return posts===post._id
+        let doesSaved = currentUser?.SavedPost?.findIndex((posts) => {
+            return posts === post._id
         })
-        if(doesSaved===-1 || doesSaved===undefined){
+        if (doesSaved === -1 || doesSaved === undefined) {
             setSaved(false)
-        }else{
+        } else {
             setSaved(true)
         }
-       
-       
-    
+
+
+
     }, [])
 
     useEffect(() => {
-        
-    if(post?.userId === currentUser?._id){
-        setPostOwner(true)
-    }else{
-        setPostOwner(false)
-    }
-    }, [])
- 
 
-  
+        if (post?.userId === currentUser?._id) {
+            setPostOwner(true)
+        } else {
+            setPostOwner(false)
+        }
+    }, [])
+
+
+
 
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -104,94 +106,94 @@ function ViewPostCard(props) {
         setAnchorEl(null);
     };
 
-    const handleLike=()=>{
-        doLike({userId:currentUser._id,postId:post._id}).then((data)=>{
-            if(data.NotificationId){
-                
-                socket.emit("dolike",{NotificationId:data.NotificationId})
+    const handleLike = () => {
+        doLike({ userId: currentUser._id, postId: post._id }).then((data) => {
+            if (data.NotificationId) {
+
+                socket.emit("dolike", { NotificationId: data.NotificationId })
             }
             setlikeCount(data.likes)
             setliked(data.liked)
-        }).catch((err)=>{
+        }).catch((err) => {
             if (err.response.status == 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 history.push('/login')
-              }
+            }
         })
 
     }
 
-    const handleSave=()=>{
-        doSave({userId:currentUser._id,postId:post._id}).then((data)=>{
-            
+    const handleSave = () => {
+        doSave({ userId: currentUser._id, postId: post._id }).then((data) => {
+
             setSaved(data.saved)
 
-        }).catch((err)=>{
+        }).catch((err) => {
             if (err.response.status == 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 history.push('/login')
-              }
+            }
         })
 
     }
 
-    const handleDelete=()=>{
+    const handleDelete = () => {
         handleClose()
-        doDeletePost({userId:currentUser._id,postId:post._id}).then((data)=>{
+        doDeletePost({ userId: currentUser._id, postId: post._id }).then((data) => {
             setDeleted(true)
 
-        }).catch((err)=>{
+        }).catch((err) => {
             if (err.response.status == 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 history.push('/login')
-              }
+            }
         })
     }
-    const handleCommet=(e)=>{
+    const handleCommet = (e) => {
         setComment(e.target.value)
     }
-    const handleAddComment=()=>{
+    const handleAddComment = () => {
         setComment("")
-        doCommet({userId:currentUser._id,postId:post._id,comment}).then(({comments,NotificationId})=>{
-            if(comments){
+        doCommet({ userId: currentUser._id, postId: post._id, comment }).then(({ comments, NotificationId }) => {
+            if (comments) {
                 setComments(comments)
                 setViewComment(true)
                 setCommentCount(comments?.length)
             }
-            if(NotificationId){
-                
-                socket.emit("docomment",{NotificationId})
+            if (NotificationId) {
+
+                socket.emit("docomment", { NotificationId })
             }
-           
-        }).catch((err)=>{
+
+        }).catch((err) => {
             if (err.response.status == 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 history.push('/login')
-              }
+            }
         })
 
     }
-    const handleViewComment =()=>{
-        if (ViewComment){
+    const handleViewComment = () => {
+        if (ViewComment) {
 
             setViewComment(false)
-        } else{
+        } else {
 
-            
+
             setViewComment(true)
-            getPostComment({postId:post._id}).then((comments)=>{
+            getPostComment({ postId: post._id }).then((comments) => {
                 setComments(comments)
-            }).catch((err)=>{
+            }).catch((err) => {
                 if (err.response.status == 403) {
                     localStorage.removeItem("token");
                     localStorage.removeItem("user");
                     history.push('/login')
-                  }
-                
+                }
+
             })
         }
 
@@ -201,17 +203,17 @@ function ViewPostCard(props) {
 
 
     return (
-        <div className='ViewPostCard' key={post._id} style={deleted ? {display:"none"}:null} >
+        <div className='ViewPostCard' key={post._id} style={deleted ? { display: "none" } : null} >
             <div className="postHeader">
                 <div className="profile" >
                     <div className="img">
 
-                    <img src={ProfilePhotos ? ProfilePhotos :userAvatar} alt="" />
+                        <img src={ProfilePhotos ? ProfilePhotos : userAvatar} alt="" />
                     </div>
                     <div>
                         <span> <Link to={`/profile/${post.user._id}`} className="Link">{post?.user?.name}</Link> </span>
                         {
-                            (post?.tag?.length >0 || post.location)  ? <span > is { post.tag.length >0 ? <span >with <span className="fw-bold"> <Link to={`/profile/${post.tag[0]._id}`} className="Link"> {post.tag[0].name}</Link></span></span>:null  } { post.tag.length >1 ? <span className="fw-bold">and     <ViewTages postId={post?._id}> <span> {post.tag.length-1}</span> others</ViewTages> </span>:null  } {post.location ? <span>in <span className="fw-bold">{post.location}</span> </span> :null }</span>:null
+                            (post?.tag?.length > 0 || post.location) ? <span > is {post.tag.length > 0 ? <span >with <span className="fw-bold"> <Link to={`/profile/${post.tag[0]._id}`} className="Link"> {post.tag[0].name}</Link></span></span> : null} {post.tag.length > 1 ? <span className="fw-bold">and     <ViewTages postId={post?._id}> <span> {post.tag.length - 1}</span> others</ViewTages> </span> : null} {post.location ? <span>in <span className="fw-bold">{post.location}</span> </span> : null}</span> : null
                         }
 
                         <p>{moment(post.postedDate).fromNow()}</p>
@@ -219,7 +221,7 @@ function ViewPostCard(props) {
                     </div>
                 </div>
                 <IconButton size='medium' onClick={handleClick}> <MoreVertSharpIcon size='medium' /></IconButton>
-            
+
 
 
                 <Menu
@@ -256,37 +258,53 @@ function ViewPostCard(props) {
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
                     {
-                        postOwner ? <MenuItem> Edit Post</MenuItem> :null
+                        postOwner ? <MenuItem> Edit Post</MenuItem> : null
                     }
-                      {
-                        postOwner ? <MenuItem onClick={handleDelete}> Delete Post</MenuItem> :null
+                    {
+                        postOwner ? <MenuItem onClick={handleDelete}> Delete Post</MenuItem> : null
                     }
-                    
+
                     <PostReportModal userId={user?._id} postId={post?._id}>
 
                         Report Post
                     </PostReportModal>
-                   
+
                 </Menu>
 
             </div>
             <div className="postContent">
                 <span>{post.desc}</span>
                 {
-                    file !== null ? (
+                    (file !== null || video !== null) ? (
                         <>
                             <Swiper pagination={true} className="mySwiper">
+                                {
+
+
+                                    video ? (
+                                        <SwiperSlide>
+                                            <video width="500" height="300" controls className="imgOne">
+                                                <source   src={video}  />
+                                                    This browser doesn't support video tag.
+                                            </video>
+                                        </SwiperSlide>
+
+                                    )
+
+                                        : null
+
+                                }
 
                                 {
 
 
-                                    file.map((item) => {
+                                    file?.map((item) => {
                                         return (
                                             <SwiperSlide>
                                                 <div className="imgOne">
                                                     <img className="" src={item} alt="" />
                                                 </div>
-                                                </SwiperSlide>
+                                            </SwiperSlide>
 
                                         )
 
@@ -315,63 +333,63 @@ function ViewPostCard(props) {
                 <div className="d-flex">
 
 
-                    
-                        <Checkbox  onClick={handleLike} checked={liked} size="large" {...label} icon={<FavoriteBorder size="large"  />} checkedIcon={<Favorite />} ></Checkbox>
-                        <IconButton size="large" onClick={handleViewComment}><ChatBubbleOutlineRoundedIcon size="large"  /></IconButton>
-                
-                
+
+                    <Checkbox onClick={handleLike} checked={liked} size="large" {...label} icon={<FavoriteBorder size="large" />} checkedIcon={<Favorite />} ></Checkbox>
+                    <IconButton size="large" onClick={handleViewComment}><ChatBubbleOutlineRoundedIcon size="large" /></IconButton>
+
+
                 </div>
-          
-                        <Checkbox onClick={handleSave} checked={saved} size="large" {...label} icon={<BookmarkAddedOutlined  size="large"  />} checkedIcon={<BookmarkAdd />} ></Checkbox>
+
+                <Checkbox onClick={handleSave} checked={saved} size="large" {...label} icon={<BookmarkAddedOutlined size="large" />} checkedIcon={<BookmarkAdd />} ></Checkbox>
 
 
             </div>
             <div className="commentSection">
-                    <div className="commentInput">
-                      <input type="text" onChange={handleCommet} value={comment} placeholder="Add A Comment............" />
-                        <IconButton className='sendcomment' onClick={handleAddComment}>
-                            <SendRounded style={{color:'#fff'}}/>
-                        </IconButton>
-                    </div>
-                    {
-                        ViewComment  ?   <div className="comments">
+                <div className="commentInput">
+                    <input type="text" onChange={handleCommet} value={comment} placeholder="Add A Comment............" />
+                    <IconButton className='sendcomment' onClick={handleAddComment}>
+                        <SendRounded style={{ color: '#fff' }} />
+                    </IconButton>
+                </div>
+                {
+                    ViewComment ? <div className="comments">
                         {
-                             Comments?.map((item,index)=>{
-                                 return(
+                            Comments?.map((item, index) => {
+                                return (
                                     <div className="comment" key={index}>
-                                    <div className="profilePhoto">
-                                        <img src={item.user.ProfilePhotos} alt="" />
-                                    </div>
-                                    <div className="content">
-                                        <div className="header">
-                                            <span className="me-4"> {item.user.name}</span>
-                                            <span className='date ms-4'>{moment(item.date).fromNow()}</span>
+                                        <div className="profilePhoto">
+                                            <img src={item.user.ProfilePhotos} alt="" />
                                         </div>
-                                        <h6 >
+                                        <div className="content">
+                                            <div className="header">
+                                                <span className="me-4"> {item.user.name}</span>
+                                                <span className='date ms-4'>{moment(item.date).fromNow()}</span>
+                                            </div>
+                                            <h6 >
 
-                                        {item.comment}
-                                        </h6>
+                                                {item.comment}
+                                            </h6>
+                                        </div>
                                     </div>
-                                </div>
 
-                                 )
-                                   
+                                )
 
-                                 })   
-                                
 
-                            
+                            })
+
+
+
                         }
-                        
-                    
-                        
+
+
+
                     </div>
-                        :null
-                    }
-                   
-                 
+                        : null
+                }
+
+
             </div>
-        
+
 
         </div>
     )

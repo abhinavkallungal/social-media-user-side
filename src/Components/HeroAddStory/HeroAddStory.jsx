@@ -2,11 +2,14 @@ import React from 'react'
 import './HeroAddStory.css'
 import {IconButton} from '@mui/material'
 import {AddBoxRounded} from '@mui/icons-material'
+import { useHistory } from 'react-router-dom'
+
 
 
 function HeroAddStory() {
+    let history =useHistory()
     return (
-        <div className='HeroAddStory'>
+        <div className='HeroAddStory' onClick={()=>history.push('/createStories')}>
             <div className="img">
                 <img src="https://source.unsplash.com/user/erondu/100x180" alt="" />
             </div>

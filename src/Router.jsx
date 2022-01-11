@@ -26,6 +26,9 @@ import AutoComplete from './Components/CreatePost/AutoComplete';
 import ResetPasswordPage from './Pages/ResetPasswordPage/ResetPasswordPage';
 import MessangerPage from "./Pages/MessengerPage/MessengerPage"
 import MessangerHome from '../src/Pages/MessengerPage/MessengerHomePage'
+import CreateStories from './Pages/StoriesPage/CreateStories';
+import ViewStories from './Components/Stories/ViewStories';
+import ViewStoriesPage from './Pages/StoriesPage/ViewStoriesPage';
 const Toast = Swal.mixin({
     toast: true,
     position: 'bottom-end',
@@ -191,6 +194,14 @@ function Router() {
             <Route  path="/Messenger/:userId">
                 <MessangerPage/>
             </Route>
+
+            <Route  path="/createStories">
+                <CreateStories/>
+            </Route>
+            <Route  path="/viewStories">
+                <ViewStoriesPage/>
+            </Route>
+
 
 
 

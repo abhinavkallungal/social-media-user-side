@@ -31,7 +31,6 @@ function ChatBox({ currentUser, selectedChat }) {
     const [messages, setMessages] = useState([])
     const [user, setUser] = useState({})
     const [chat, setChat] = useState("")
-    
 
 
     useEffect(() => {
@@ -47,13 +46,12 @@ function ChatBox({ currentUser, selectedChat }) {
         console.log(7);
 
         socket?.on('doReceiveMessage',(message )=>{
-
+          
 
             let receivedMessage = message[0]
-            console.log(message);
-            console.log(receivedMessage?.sender ,receivedMessage.message, chat);
+            console.log(receivedMessage?.sender ,receivedMessage.messages , selectedChat);
     
-            if(receivedMessage?.sender === chat){
+            if(receivedMessage?.sender === selectedChat){
                  console.log(9);
                 console.log("repeat");
                 setMessages(messages => [...messages, receivedMessage])
@@ -84,7 +82,7 @@ function ChatBox({ currentUser, selectedChat }) {
 
              setNewMessage("")
 
-            socket?.emit('doSendMessage',{ message: newMessage, sender: currentUser, userId:chat })
+            socket?.emit('doSendMessage',{ message: newMessage, sender: currentUser, receiver:chat })
 
 
             console.log(5);

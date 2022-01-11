@@ -5,6 +5,7 @@
     border-radius: 10px;
     position: relative;
     margin: 10px;
+    cursor: pointer;
 
 }
 .HeroAddStory .img{

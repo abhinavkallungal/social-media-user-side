@@ -43,10 +43,11 @@ function Search() {
                     <TextField
                         fullWidth
                         id="standard-bare"
-                        variant="filled"
+                        autoComplete='off'
+                        variant="standard"
                         placeholder="Search"
                         onChange={doSearch}
-                        style={{ borderBottom: "2px solid #ffffff", color: "red" }}
+                        style={{  color: "red" }}
                         InputProps={{
                             endAdornment: (
                                 <IconButton>
