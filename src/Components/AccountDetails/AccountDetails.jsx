@@ -3,7 +3,7 @@ import { ArrowBack } from '@mui/icons-material'
 import {  Typography, TextField, Button, IconButton } from '@mui/material'
 import './AccountDetails.css'
 import { useSelector } from 'react-redux'
-import { addAccountDetails } from "../../Axios"
+import { addAccountDetails  } from "../../Axios"
 import { useHistory } from 'react-router-dom'
 
 

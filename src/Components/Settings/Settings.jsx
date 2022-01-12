@@ -23,7 +23,9 @@ function Settings() {
                    <Home/> Saved Address
                 </div>
                 <div className="item">
+                    <Link to="/AddSocialAccount">
                    <ConnectWithoutContact/> Social Acount
+                    </Link>
                 </div>
                 <div className="subhead">
                     Account
@@ -32,13 +34,17 @@ function Settings() {
                         <AccountCircle/>  My Account 
                 </div>
                 <div className="item">
+                    <Link to='/resetPasswords'>
                    <VpnKey/> Password
+                    </Link>
                 </div>
                 <div className="subhead">
                       Others
                 </div>
                 <div className="item">
+                    <Link to='/notification'>
                         <Notifications/>  Notification 
+                    </Link>
                 </div>
                 <div className="item">
                    <Help/> Help

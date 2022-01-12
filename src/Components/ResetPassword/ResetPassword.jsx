@@ -1,4 +1,4 @@
-import React ,{useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowBack } from '@mui/icons-material'
 import { Typography, TextField, Button, IconButton } from '@mui/material'
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -7,58 +7,60 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import {resetPassword} from "../../Axios"
+import { resetPassword } from "../../Axios"
 import { useHistory } from 'react-router-dom'
 
 import "./ResetPassword.css"
 import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
+
 
 function ResetPassword() {
     const history = useHistory()
     const currentuser = (useSelector((state) => state.user.user))
     let data = currentuser
 
-  
 
-    const [values, setValues] =useState({
+
+    const [values, setValues] = useState({
         oldPassword: '',
         newPassword: '',
         confirmPassword: '',
-        userId:"",
+        userId: "",
         showoldPassword: false,
         showNewPassword: false,
         showConfirmPassword: false,
-      });
+    });
 
-      const [error,setError]=useState({
+    const [error, setError] = useState({
         oldPassword: '',
         NewPassword: '',
         ConfirmPassword: ''
-      })
+    })
 
 
-      useEffect(()=>{
+    useEffect(() => {
         setValues({ ...values, userId: data._id });
 
-    },[data])
+    }, [data])
 
-     
-      const handleChange = (prop) => (event) => {
-        setValues({ ...values, [prop]: event.target.value });
-      };
-    
-      const handleClickShowPassword = (prop) => {
+
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value.trim() });
+    };
+
+    const handleClickShowPassword = (prop) => {
         setValues({
-          ...values,
-          [prop]: !values.prop,
+            ...values,
+            [prop]: !values.prop,
         });
-      };
-    
-      const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-      };
+    };
 
-      
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+
 
 
 
@@ -66,6 +68,34 @@ function ResetPassword() {
 
 
     const onSubmit = () => {
+
+        if(values.newPassword !== values.confirmPassword){
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "password don't match",
+              })
+        }else{
+
+            
+            resetPassword(values).then((data) => {
+                Swal.fire(
+                    'Password Updated',
+                    'Your Password has been Updated.',
+                    'success'
+                  ).then(()=>{
+                      history.push('/settings')
+                  })
+            }).catch((message) => {
+                console.log(message);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: message,
+                  })
+            })
+        }
 
 
     }
@@ -84,7 +114,6 @@ function ResetPassword() {
                     Reset Password
                 </div>
 
-                <pre>{JSON.stringify(values)}</pre>
 
                 <div className="Details p-3">
                     <Typography variant='h4' color={"#007fff"} textAlign='center'>Reset Password</Typography>
@@ -102,7 +131,7 @@ function ResetPassword() {
                                             <InputAdornment position="end">
                                                 <IconButton
                                                     aria-label="toggle password visibility"
-                                                    onClick={()=>handleClickShowPassword('showoldPassword')}
+                                                    onClick={() => handleClickShowPassword('showoldPassword')}
                                                     onMouseDown={handleMouseDownPassword}
                                                     edge="end"
                                                 >
@@ -138,7 +167,7 @@ function ResetPassword() {
                                         }
                                         label="New Password"
                                     />
-                                <Typography>{error.NewPassword}</Typography>
+                                    <Typography>{error.NewPassword}</Typography>
 
                                 </FormControl>
 
@@ -169,7 +198,7 @@ function ResetPassword() {
                                 </FormControl>
 
                             </div>
-                           
+
 
 
                             <div className="saveButton">

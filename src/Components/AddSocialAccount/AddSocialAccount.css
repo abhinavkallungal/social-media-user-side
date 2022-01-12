@@ -1,0 +1,45 @@
+.AddSocialAccount .card{
+    
+    border-radius: 10px;
+    
+}
+
+.AddSocialAccount .card .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.AddSocialAccount .card .profile .img {
+    width: 150px;
+    height: 150px;
+    background-color: gray;  
+}
+.AddSocialAccount .card .profile .img img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.AddSocialAccount .Head{
+    width: 100%;
+    height: 70px;
+    display: flex;
+    background-color: #007fff;
+    align-items: center;
+    border-radius: 10px;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.AddSocialAccount .Details .col-lg-6,.col-lg-12{
+    margin-top: 20px;
+
+}
+.AddSocialAccount .Details .saveButton{
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

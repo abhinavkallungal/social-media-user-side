@@ -29,6 +29,7 @@ import MessangerHome from '../src/Pages/MessengerPage/MessengerHomePage'
 import CreateStories from './Pages/StoriesPage/CreateStories';
 import ViewStories from './Components/Stories/ViewStories';
 import ViewStoriesPage from './Pages/StoriesPage/ViewStoriesPage';
+import AddSocialAccountsPage from './Pages/AddSocialAccountsPage/AddSocialAccountsPage';
 const Toast = Swal.mixin({
     toast: true,
     position: 'bottom-end',
@@ -200,6 +201,9 @@ function Router() {
             </Route>
             <Route  path="/viewStories">
                 <ViewStoriesPage/>
+            </Route>
+            <Route  path="/AddSocialAccount">
+                <AddSocialAccountsPage/>
             </Route>
 
 

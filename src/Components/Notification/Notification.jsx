@@ -34,7 +34,7 @@ function Notification() {
 
     useEffect(() => {
         let  userId=userData._id
-        socket.emit('notificationSeen', userId)
+        socket?.emit('notificationSeen', userId)
         dispatch(setNotificationCountAction(null))
     }, [socket])
     return (

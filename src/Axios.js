@@ -194,8 +194,8 @@ export const resetPassword = (formData) => {
             resolve(data.data.user)
 
         }).catch((err) => {
-            console.log('err', err.response.data);
-            reject(err)
+            console.log('err', err.response.data.message);
+            reject(err.response.data.message)
 
         })
     })
@@ -339,6 +339,57 @@ export const addAccountDetails = (userdata) => {
     })
 
 }
+
+
+export const AddSocialAccounts = ({socialAccounts,userId}) => {
+
+    console.log(socialAccounts,userId);
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/AddSocialAccount',  {socialAccounts,userId} , { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+            localStorage.setItem("user", JSON.stringify(data.data))
+
+
+            resolve(data.data.user)
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+
+export const getSocialAccounts = (userId) => {
+
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+
+        axios.get(`http://localhost:4000/api/v1/user/getSocialAccounts/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+
+            resolve(data.data)
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+
+
 export const getTagedPost = ({userId}) => {
 
     return new Promise(async (resolve, reject) => {
@@ -443,6 +494,30 @@ export const search = ({ keyword, userId }) => {
         }).catch((err) => {
             reject(err)
 
+        })
+    })
+
+}
+
+export const getFollowRequest = ({userId}) => {
+    
+    console.log(userId);
+    return new Promise(async (resolve, reject) => {
+        console.log(2);
+
+        const token = localStorage.getItem("token")
+        console.log(3);
+
+        axios.get(`http://localhost:4000/api/v1/user/getFollowRequest/${userId}`, { headers: { Authorization: token } }).then((data) => {
+            console.log(4);
+                console.log(data.data);
+            resolve(data.data)
+
+        }).catch((err) => {
+            console.log(5);
+
+            console.log('err', err);
+            reject(err)
         })
     })
 

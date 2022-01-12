@@ -25,6 +25,7 @@ function ProfilePageViewFollowers({user}) {
                 <div className="row">
                     {
                         followers.map((follower)=>{
+                            console.log(follower);
                             return(
 
                                 <div className="col-md-6">

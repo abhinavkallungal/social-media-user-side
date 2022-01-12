@@ -14,6 +14,7 @@ import ViewPostCard from '../ViewPostCard/ViewPostCard';
 import FeedSkeleton from '../Skeletons/FeedSkeleton/FeedSkeleton';
 
 import PostScroll from './PostScroll'
+import RightSide from './RightSide';
 
 const useStyles = makeStyles({
     left: {
@@ -109,9 +110,9 @@ function Hero() {
 
                 </Grid>
                 <Grid item xs={12} md={3} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }} className={classes.right} >
-                    <div style={{ position: 'sticky', top: '100px' }}>
-                        <RequestCard />
-                        <RequestCard />
+                    <div style={{ position: 'sticky', bottom: '100vh' }}>
+                       <RightSide user={data}/>
+                       
                     </div>
 
                 </Grid>

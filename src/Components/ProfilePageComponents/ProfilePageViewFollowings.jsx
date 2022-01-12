@@ -10,7 +10,7 @@ function ProfilePageViewFollowings({ user }) {
 
     useEffect(() => {
         getFollowings({ userId: user._id }).then((data) => {
-            setFollowings(data.followers)
+            setFollowings( data.followings)
 
         }).catch(() => {
 
@@ -25,17 +25,20 @@ function ProfilePageViewFollowings({ user }) {
             <div className="row">
                 {
                     followings?.map((following) => {
+                        console.log(following)
+                        console.log(followings)
+
                         return (
 
                             <div className="col-md-6">
                                 <div className="card" onClick={() => history.push(`/profile/${following._id}`)}>
 
                                     <div className="img">
-                                        <img src={following.ProfilePhotos ? following.ProfilePhotos : null} alt="" />
+                                        <img src={following?.ProfilePhotos ? following?.ProfilePhotos : null} alt="" />
                                     </div>
                                     <div>
-                                        <span className="fw-bold">{following.name}</span>
-                                        <p>@{following.username}</p>
+                                        <span className="fw-bold">{following?.name}</span>
+                                        <p>@{following?.username}</p>
                                     </div>
 
                                 </div>

@@ -8,6 +8,9 @@ import SidebarBanner from '../../Components/SidebarBanner/SidebarBanner'
 import SideNav from '../../Components/SideNav/SideNav'
 import { Grid } from '@mui/material'
 import { makeStyles } from '@mui/styles';
+import RightSide from '../../Components/Hero/RightSide';
+import { useSelector } from 'react-redux'
+
 
 const useStyles = makeStyles({
     left: {
@@ -40,7 +43,8 @@ const useStyles = makeStyles({
 });
 function CreatePostPage() {
     const classes = useStyles()
-
+    const user = useSelector(state => state.user.user)
+    const data =user
     return (
         <div className="CreatePostPage">
             <Appbar />
@@ -62,8 +66,9 @@ function CreatePostPage() {
                 </Grid>
                 <Grid item xs={12} md={3} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }} className={classes.right} >
                     <div style={{ position: 'sticky', top: '100px' }}>
-                        <RequestCard />
-                        <RequestCard />
+                    <RightSide user={data}/>
+
+
                     </div>
 
                 </Grid>

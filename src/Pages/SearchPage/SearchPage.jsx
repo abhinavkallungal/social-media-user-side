@@ -9,7 +9,10 @@ import RequestCard from '../../Components/RequestCard/RequestCard'
 import Search from '../../Components/Search/Search'
 import SidebarBanner from '../../Components/SidebarBanner/SidebarBanner'
 import SideNav from '../../Components/SideNav/SideNav'
+
 import './SearchPage.css'
+import RightSide from '../../Components/Hero/RightSide';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
     left: {
@@ -43,6 +46,8 @@ const useStyles = makeStyles({
 
 function SearchPage() {
     const classes=useStyles()
+    const user = (useSelector((state) => state.user.user))
+    const data = user
 
     return (
         <div className="Searchpage">
@@ -66,8 +71,8 @@ function SearchPage() {
                 </Grid>
                 <Grid item xs={12} md={3} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }} className={classes.right} >
                     <div style={{ position: 'sticky', top: '100px' }}>
-                        <RequestCard />
-                        <RequestCard />
+                    <RightSide user={data}/>
+
                     </div>
 
                 </Grid>
