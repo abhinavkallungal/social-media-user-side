@@ -137,6 +137,22 @@ justify-content: center;
   
 }
 
+.ViewStories .BlackScreen .screen .Profile{
+    position: absolute;
+    top: 10px;
+    z-index: 200;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    font-weight: bold;
+}
+
+.ViewStories .BlackScreen .screen .Profile .img img{
+ width: 30px;
+ height: 30px;
+ border-radius: 10px;
+}
+
 
 .ViewStories .BlackScreen .screen img{
     width: 100%;
@@ -154,6 +170,8 @@ justify-content: center;
 
   
 }
+
+.v
 
 .ViewStories .BlackScreen .screen .ProgressBar{
     position: absolute;

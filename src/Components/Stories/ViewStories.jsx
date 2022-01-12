@@ -39,10 +39,9 @@ function ViewStories({stories}) {
 
                     <Swiper  navigation={true}  
                     onSlideChange={(swiper, current, total) => {
-                        console.log(myContainer.current.firstChild.tagName);
 
-                        if(myContainer.current.firstChild.tagName==="VIDEO"){
-                            setDuration(myContainer.current.firstChild.duration)
+                        if(myContainer?.current?.firstChild?.tagName==="VIDEO"){
+                            setDuration(myContainer?.current?.firstChild?.duration)
                             console.log(duration)
                         }
                     }}
@@ -57,7 +56,7 @@ function ViewStories({stories}) {
 
                         {
                             stories?.map((file,index) => {
-                                console.log(file);
+                                console.log(file.createdAt);
                                 let ext = file?.files?.split('.')
                                 let type = ext[ext.length - 1]
                                 return (
@@ -69,14 +68,27 @@ function ViewStories({stories}) {
                                             (type === 'jpeg' || type === 'jpg' || type === 'png') && <SwiperSlide key={index}   >
                                                
                                                 
-                                                <img src={file.files} alt="" className="imgOne" onClick={(e) => alert(e.target.duration)} /></SwiperSlide>
+                                                <img src={file.files} alt="" className="imgOne" onClick={(e) => alert(e.target.duration)} />
+                                                <div className="Profile">
+                                                    <div className="img">
+                                                        <img src={file?.user?.ProfilePhotos ? file?.user?.ProfilePhotos :null} style={{ width: '50px',height: '50px' ,marginRight:'20px',marginLeft:'20px'}} alt="" />
+                                                    </div>
+                                                    <div>
+                                                        <span>{file.user.name}</span>
+                                                    </div>
+                                                </div>
+                                                </SwiperSlide>
                                         }
                                         <div>dfsdfsdfad</div>
                                         {
 
                                             (type === 'mp4') && <SwiperSlide data-swiper-autoplay={duration*1000} ref={myContainer} key={index}>
                                        
-                                                <video autoPlay muted className="imgOne video"  onClick={(e) => alert(e.target.duration)} > <source src={file.files} />This browser doesn't support video tag.</video></SwiperSlide>
+                                                <video autoPlay muted className="imgOne video"  onClick={(e) => alert(e.target.duration)} > <source src={file.files} />This browser doesn't support video tag.</video>
+                                                <div>
+                                                    sdasd
+                                                </div>
+                                                </SwiperSlide>
                                         }
                                     </>
 
