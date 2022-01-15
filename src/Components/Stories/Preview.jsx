@@ -1,4 +1,4 @@
-import { Add } from '@mui/icons-material'
+import { Add, SaveAs } from '@mui/icons-material'
 import { Box, Button, Fab, IconButton, LinearProgress, SpeedDial, SpeedDialIcon, Typography } from '@mui/material'
 import zIndex from '@mui/material/styles/zIndex'
 import React from 'react'
@@ -44,7 +44,7 @@ function Preview({ files, submit, progress }) {
 
                 </div>
                 <Fab color="primary" aria-label="add" sx={{ position: 'absolute', bottom: 16, right: 16 }} onClick={submit} >
-                    <Add />
+                    <SaveAs />
                 </Fab>
 
 

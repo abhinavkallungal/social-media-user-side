@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './appbar.css'
-import { AppBar, Toolbar, Typography, Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button, Badge } from "@mui/material"
+import { AppBar, Toolbar, Typography, Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button, Badge  } from "@mui/material"
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
@@ -159,7 +159,7 @@ function Appbar() {
                         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                     >
-                        <Link to={`/profile/${data._id}`}>
+                        <Link to={`/profile/${data._id}`} component={Button}>
                             <MenuItem>
                                 <Avatar /> Profile
                             </MenuItem>
@@ -168,12 +168,7 @@ function Appbar() {
                             <Avatar /> My account
                         </MenuItem>
                         <Divider />
-                        <MenuItem>
-                            <ListItemIcon>
-                                <PersonAdd fontSize="small" />
-                            </ListItemIcon>
-                            Add another account
-                        </MenuItem>
+                       
                         <MenuItem>
                             <Link to="/settings">
                                 <ListItemIcon>

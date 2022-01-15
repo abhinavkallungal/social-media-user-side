@@ -59,7 +59,7 @@ function CreatePostPage() {
                         <SidebarBanner />
                     </div>
                 </Grid>
-                <Grid item xs={12} md={6.5} className="mx-auto mb-5">
+                <Grid item xs={12} md={6.5} className="mx-auto mb-5 mt-4">
                     <CreatePost />
 
 

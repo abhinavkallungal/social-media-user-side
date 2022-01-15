@@ -85,8 +85,13 @@ function ViewStories({stories}) {
                                             (type === 'mp4') && <SwiperSlide data-swiper-autoplay={duration*1000} ref={myContainer} key={index}>
                                        
                                                 <video autoPlay muted className="imgOne video"  onClick={(e) => alert(e.target.duration)} > <source src={file.files} />This browser doesn't support video tag.</video>
-                                                <div>
-                                                    sdasd
+                                                <div className="Profile">
+                                                    <div className="img">
+                                                        <img src={file?.user?.ProfilePhotos ? file?.user?.ProfilePhotos :null} style={{ width: '50px',height: '50px' ,marginRight:'20px',marginLeft:'20px'}} alt="" />
+                                                    </div>
+                                                    <div>
+                                                        <span>{file.user.name}</span>
+                                                    </div>
                                                 </div>
                                                 </SwiperSlide>
                                         }

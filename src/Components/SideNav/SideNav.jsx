@@ -2,14 +2,16 @@ import React from 'react'
 import './SideNav.css'
 import { Button } from '@mui/material'
 import { makeStyles } from '@mui/styles'
-import { color, textAlign } from '@mui/system'
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import FeedIcon from '@mui/icons-material/Feed';
-import PersonIcon from '@mui/icons-material/Person';
+import {Logout} from '@mui/icons-material/';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useSelector } from 'react-redux'
+import { Link  } from 'react-router-dom'
+
+import { useDispatch } from 'react-redux'
+import { logoutAction } from "../../Redux/userSlice"
+import { useHistory } from 'react-router';
 
 const useStyle = makeStyles({
     Button: {
@@ -44,12 +46,18 @@ const useStyle = makeStyles({
 
 function SideNav() {
     const classes = useStyle()
+    const dispatch=useDispatch()
+    let history =useHistory()
     let notificationCound = (useSelector((state) => state.notificationCount.notificationCount))
+    const handleLogout = (e) => {
+        dispatch(logoutAction())
+        history.push('/login')
+    }
 
     return (
         <div className="SideNav">
             <div className="navItem">
-                <Button variant="text" className={classes.Button} >
+                <Button variant="text" className={classes.Button} component={Link} to="/" >
                     <div className={classes.ButtonContent}>
                         <HomeRoundedIcon className={classes.navIcons} />
                         <span>Home</span>
@@ -58,7 +66,7 @@ function SideNav() {
                 </Button>
             </div>
             <div className="navItem">
-                <Button variant="text" className={classes.Button} >
+                <Button variant="text" className={classes.Button}  component={Link} to="/notification" >
                     <div className={classes.ButtonContent}>
                         <AccountBoxIcon className={classes.navIcons} />
                         <span>
@@ -71,46 +79,10 @@ function SideNav() {
                     </div>
                 </Button>
             </div>
+           
+         
             <div className="navItem">
-                <Button variant="text" className={classes.Button} >
-                    <div className={classes.ButtonContent}>
-                        <InsertPhotoIcon className={classes.navIcons} />
-                        <span>
-
-                        Photo
-                        </span>
-                    </div>
-                   
-                </Button>
-            </div>
-            <div className="navItem">
-                <Button variant="text" className={classes.Button} >
-                    <div className={classes.ButtonContent}>
-                        <FeedIcon className={classes.navIcons} />
-                        <span>
-
-                        Feed
-                        </span>
-                    </div>
-                   
-                </Button>
-            </div>
-            <div className="navItem">
-                <Button variant="text" className={classes.Button} >
-                    <div className={classes.ButtonContent}>
-                        <PersonIcon  className={classes.navIcons}/>
-                        <span>
-
-                        People
-                        </span>
-                    </div>
-                    <div className={classes.badge} >
-                        11
-                    </div>
-                </Button>
-            </div>
-            <div className="navItem">
-                <Button variant="text" className={classes.Button} >
+                <Button variant="text" className={classes.Button} component={Link} to="/settings"  >
                     <div className={classes.ButtonContent}>
                         <SettingsIcon  className={classes.navIcons}/>
                         <span>
@@ -119,6 +91,19 @@ function SideNav() {
                         </span>
                     </div>
                     
+                </Button>
+            </div>
+            <div className="navItem">
+                <Button variant="text" className={classes.Button} onClick={handleLogout}>
+                    <div className={classes.ButtonContent}>
+                        <Logout  className={classes.navIcons}/>
+                        
+                        <span>
+
+                        Logout
+                        </span>
+                    </div>
+                  
                 </Button>
             </div>
 

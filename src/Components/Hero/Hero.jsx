@@ -6,10 +6,10 @@ import { makeStyles } from '@mui/styles';
 import SideNav from '../SideNav/SideNav';
 import SidebarBanner from '../SidebarBanner/SidebarBanner';
 import RequestCard from '../RequestCard/RequestCard';
-import Addpost from '../AddPost/Addpost';
+import Addpost from './AddPost/Addpost';
 import { useSelector } from 'react-redux';
 
-import HeroStorySection from '../HeroStorySection/HeroStorySection';
+import HeroStorySection from '../Hero/HeroStorySection/HeroStorySection';
 import ViewPostCard from '../ViewPostCard/ViewPostCard';
 import FeedSkeleton from '../Skeletons/FeedSkeleton/FeedSkeleton';
 
@@ -88,7 +88,7 @@ function Hero() {
                 </Grid>
                 <Grid item xs={12} md={6.5} className="mx-auto">
                     <HeroStorySection />
-                    <Addpost />
+                    <Addpost user={data} />
 
                   
                     {

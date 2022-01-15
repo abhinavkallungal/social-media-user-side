@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { loginAction } from "./Redux/userSlice"
 import { setSoketAction } from './Redux/socketSlice'
 import { setNotificationCountAction } from './Redux/notificationCountSlice'
-import {socket} from './Utils/socket'
+import { socket } from './Utils/socket'
 
 
 
@@ -61,20 +61,20 @@ function Router() {
 
 
     const [Token, setToken] = useState(localStorage.getItem('token'));
-    const user= JSON.parse(localStorage.getItem('user'))
+    const user = JSON.parse(localStorage.getItem('user'))
 
 
     useEffect(() => {
-        let user= JSON.parse(localStorage.getItem('user'))
+        let user = JSON.parse(localStorage.getItem('user'))
         dispatch(setSoketAction(socket))
         console.log("routersoket", socket);
 
-        
-      
+
+
         socket.on("likemsg", (msg) => {
             alert(msg)
         })
-        socket.on("sendLikeNotification", ({notifications ,unReadNotificationsCount}) => {
+        socket.on("sendLikeNotification", ({ notifications, unReadNotificationsCount }) => {
             dispatch(setNotificationCountAction(unReadNotificationsCount))
 
             Toast.fire({
@@ -82,7 +82,7 @@ function Router() {
             })
         })
 
-        socket.on("sendCommentNotification", ({notifications ,unReadNotificationsCount}) => {
+        socket.on("sendCommentNotification", ({ notifications, unReadNotificationsCount }) => {
             dispatch(setNotificationCountAction(unReadNotificationsCount))
             Toast.fire({
                 title: `${notifications.user.name} Commented Your Post`
@@ -91,15 +91,15 @@ function Router() {
         socket.on("save", (msg) => {
         })
 
-        socket.emit("getNotificationCound",{userId:user?._id})
+        socket.emit("getNotificationCound", { userId: user?._id })
 
-        socket.on('notificationCound',(notificationCound)=>{
+        socket.on('notificationCound', (notificationCound) => {
             console.log(notificationCound);
             dispatch(setNotificationCountAction(notificationCound.notification))
-  
+
         })
 
-      
+
 
 
 
@@ -158,7 +158,7 @@ function Router() {
                 {Token ? <Redirect to="/" /> : <SignupPage />}
             </Route>
             <Route exact path="/forgotPassword">
-                {Token ? <Redirect to="/" /> : <ForgotPassword/>}
+                {Token ? <Redirect to="/" /> : <ForgotPassword />}
             </Route>
 
             <Route path="/profile/:userId">
@@ -181,29 +181,47 @@ function Router() {
                 {Token ? <NotificationPage /> : <Redirect to="/login" />}
             </Route>
             <Route path="/test">
-                <AutoComplete />
+                {Token ?  <AutoComplete /> : <Redirect to="/login" />}
+
+               
+
+               
             </Route>
             <Route path="/passwordReset">
-                <ForgotPasswordResat/>
+                {Token ? <ForgotPasswordResat /> : <Redirect to="/login" />}
+
+                
             </Route>
             <Route path="/resetPasswords">
-                <ResetPasswordPage/>
+                {Token ? <ResetPasswordPage /> : <Redirect to="/login" />}
+
+                
             </Route>
             <Route exact path="/Messenger">
-            <MessangerHome/>
+                {Token ?  <MessangerHome />: <Redirect to="/login" />}
+
+              
             </Route>
-            <Route  path="/Messenger/:userId">
-                <MessangerPage/>
+            <Route path="/Messenger/:userId">
+                {Token ? <MessangerPage /> : <Redirect to="/login" />}
+
+               
             </Route>
 
-            <Route  path="/createStories">
-                <CreateStories/>
+            <Route path="/createStories">
+                {Token ?  <CreateStories /> : <Redirect to="/login" />}
+
+               
             </Route>
-            <Route  path="/viewStories">
-                <ViewStoriesPage/>
+            <Route path="/viewStories">
+                {Token ?   <ViewStoriesPage />: <Redirect to="/login" />}
+
+              
             </Route>
-            <Route  path="/AddSocialAccount">
-                <AddSocialAccountsPage/>
+            <Route path="/AddSocialAccount">
+                {Token ?  <AddSocialAccountsPage /> : <Redirect to="/login" />}
+
+               
             </Route>
 
 

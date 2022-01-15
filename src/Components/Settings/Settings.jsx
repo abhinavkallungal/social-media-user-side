@@ -42,9 +42,9 @@ function Settings() {
                       Others
                 </div>
                 <div className="item">
-                    <Link to='/notification'>
+                    <Button to='/notification' component={Link}>
                         <Notifications/>  Notification 
-                    </Link>
+                    </Button>
                 </div>
                 <div className="item">
                    <Help/> Help
