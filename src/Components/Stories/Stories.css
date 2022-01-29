@@ -136,15 +136,20 @@ justify-content: center;
     justify-content: center;
   
 }
+.StoryContent{
+    position: relative;
+}
 
-.Profile{
+.StoryContent .Profile{
     position: absolute;
-    top: 10px;
+    top: 70px;
+    left: 50%;
+    transform: translate(-50%,-50%);
     z-index: 200;
     display: flex;
-    width: 100%;
     align-items: center;
     font-weight: bold;
+    color: #007fff;
 }
 
 .Profile .img img{

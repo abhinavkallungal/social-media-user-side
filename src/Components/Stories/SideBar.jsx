@@ -6,10 +6,16 @@ import { getStoriesSideBar } from '../../Axios'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import {setselectedStorySlice} from '../../Redux/selectedStorySlice'
+import userAvathar from '../../Assets/userAvathar.jpg'
 
 
 
 function SideBar() {
+
+    const dispatch =useDispatch()
+
 
     const state = useSelector(state => state.user.user)
     let user = state
@@ -29,7 +35,9 @@ function SideBar() {
         })
     }, [])
 
-    const viewStories=()=>{
+    const viewStories=(id)=>{
+        dispatch(setselectedStorySlice(id))
+
         history.push('/viewStories')
     }
 
@@ -50,7 +58,7 @@ function SideBar() {
             <div>
                 <div className="profile" onClick={viewStories}>
                     <div className="img">
-                        <img src={profilePhoto} alt="" />
+                        <img src={profilePhoto?profilePhoto:userAvathar} alt="" />
                     </div>
                     <div>
                         <span>{user?.name}</span>
@@ -64,12 +72,12 @@ function SideBar() {
                         console.log(item);
                         return(
 
-                            <div className="profile" onClick={viewStories}>
+                            <div className="profile" onClick={()=>viewStories(item._id)}>
                             <div className="img">
-                                <img src={item?.user?.ProfilePhotos} alt="" />
+                                <img src={item?.user?.ProfilePhotos ?item?.user?.ProfilePhotos :userAvathar} alt="" />
                             </div>
                             <div>
-                                <span>{item?.user?.name}</span>
+                                <span>{item?.user?.name}    </span>
                             </div>
                         </div>
                             )

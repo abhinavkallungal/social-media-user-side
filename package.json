@@ -26,6 +26,7 @@
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.2.2",
     "react-image-crop": "^9.0.5",
+    "react-insta-stories": "^2.3.0",
     "react-otp-input": "^2.4.0",
     "react-places-autocomplete": "^7.3.0",
     "react-redux": "^7.2.6",

@@ -20,6 +20,8 @@ import { loginAction } from "../../Redux/userSlice"
 import { setNotificationCountAction } from "../../Redux/notificationCountSlice"
 import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
+import { socket } from '../../Utils/socket'
+
 
 
 
@@ -46,7 +48,6 @@ export default function SignIn() {
   const [user, setUser] = React.useState({ email: null, password: "" })
   const [form, setForm] = React.useState({})
   const [errors, setErrors] = React.useState({ error: false, emailErr: "", passwordErr: "" })
-  const [socket, setSoket] = useState(useSelector((state) => state.socket.socket))
 
 
   console.log("loginsoket", socket);
@@ -119,6 +120,7 @@ export default function SignIn() {
     } else {
       if (!errors.error) {
         login(form).then((data) => {
+          alert("login",  socket.id, data.user._id )
           console.log("login data from server", data);
           socket?.emit("login", { id: socket.id, userId: data.user._id })
           dispatch(loginAction(data.user))
@@ -141,13 +143,15 @@ export default function SignIn() {
   };
 
   const responseGoogle = (response) => {
-    console.log(response.su.ev);
+    console.log(response.Du.tv);
     
-    const email = response.su.ev
+    const email = response.Du.tv
     thirdPartyLogin({email}).then((data) => {
       console.log("login data from server", data.user);
       dispatch(loginAction(data.user))
       dispatch(setNotificationCountAction(data.unReadNotificationsCount))
+
+      alert("login",  socket.id, data.user._id )
 
       socket?.emit("login", { id: socket.id, userId: data.user._id })
 
@@ -163,6 +167,7 @@ export default function SignIn() {
   const responseFacebook = (response) => {
     console.log(response.email);
     thirdPartyLogin({email:response.email}).then((data) => {
+      alert("login",  socket.id, data.user._id )
       socket?.emit("login", { id: socket.id, userId: data.user._id })
       console.log("login data from server", data.user);
       dispatch(loginAction(data.user))

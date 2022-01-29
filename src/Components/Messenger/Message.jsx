@@ -8,7 +8,7 @@ function Message(props) {
 
     return (
         <div className='Message'>
-            <div className={(item.sender ===currentUser) ? 'content own' : 'content'}>
+            <div className={(item?.sender ===currentUser) ? 'content own' : 'content'}>
 
                 <span>{item.message}</span>
                 <span className='time'>{moment(item.createdAt).fromNow()}</span>
@@ -17,7 +17,7 @@ function Message(props) {
 
 
         </div>
-
+ 
     )
 }
 

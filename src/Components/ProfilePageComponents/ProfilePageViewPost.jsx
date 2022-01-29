@@ -9,7 +9,7 @@ function ProfilePageViewPost({ posts,user }) {
     return (
         <div className='ProfilePageViewPost'>
             {
-                posts !== null ? posts.map((post) => { return <ViewPostCard post={post} user={user} /> }) : null
+                posts !== null ? posts.map((post,index) => { return <ViewPostCard post={post} user={user} key={index} /> }) : null
 
             }
 

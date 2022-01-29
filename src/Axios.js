@@ -2,7 +2,6 @@ import axios from 'axios';
 
 
 
-const baseURL = 'http://localhost:4000'
 
 
 export const checkUserName = (formdata) => {
@@ -208,11 +207,9 @@ export const createPost = (formdata) => {
     console.log(">>>>>>>>>>>>>>>>>>>>", formdata);
     console.log(1);
     return new Promise(async (resolve, reject) => {
-        console.log(2);
 
         console.log(formdata);
         const token = localStorage.getItem("token")
-        console.log(3);
 
         axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
             console.log(4);
@@ -220,7 +217,7 @@ export const createPost = (formdata) => {
             resolve(data.data.post)
 
         }).catch((err) => {
-            console.log(5);
+           
 
             console.log('err', err);
             reject(err)
@@ -242,7 +239,7 @@ export const getFriends = ({ userId }) => {
             resolve(data.data.friends)
 
         }).catch((err) => {
-            console.log(5);
+           
 
             console.log('err', err);
             reject(err)
@@ -264,7 +261,7 @@ export const getTagsDetailes = ({ postId }) => {
             resolve(data.data.tagWith)
 
         }).catch((err) => {
-            console.log(5);
+           
 
             console.log('err', err);
             reject(err)
@@ -292,6 +289,27 @@ export const getAllpost = ({ userId, page }) => {
             console.log('err', err);
             reject(err)
         })
+    })
+
+}
+
+export const getTrendingPost = () => {
+    return new Promise((resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.get('http://localhost:4000/api/v1/user/getTrendingPost', { headers: { Authorization: token } }).then((data) => {
+            console.log(data);
+
+            resolve(data.data)
+
+
+        }).catch((err) => {
+            reject(err)
+
+
+        })
+
     })
 
 }
@@ -501,22 +519,15 @@ export const search = ({ keyword, userId }) => {
 
 export const getFollowRequest = ({userId}) => {
     
-    console.log(userId);
     return new Promise(async (resolve, reject) => {
-        console.log(2);
 
         const token = localStorage.getItem("token")
-        console.log(3);
 
         axios.get(`http://localhost:4000/api/v1/user/getFollowRequest/${userId}`, { headers: { Authorization: token } }).then((data) => {
-            console.log(4);
-                console.log(data.data);
             resolve(data.data)
 
         }).catch((err) => {
-            console.log(5);
 
-            console.log('err', err);
             reject(err)
         })
     })
@@ -524,7 +535,6 @@ export const getFollowRequest = ({userId}) => {
 }
 
 export const dofollow = ({ userId, currentuserId }) => {
-    console.log(userId, currentuserId);
     return new Promise((resolve, reject) => {
 
 
@@ -595,7 +605,7 @@ export const doDeletePost = ({ postId, userId }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/deletePost', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
+        axios.delete('http://localhost:4000/api/v1/user/deletePost', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
             console.log(data);
 
             resolve(data.data)
@@ -810,11 +820,9 @@ export const addStory = (formdata) => {
     console.log(">>>>>>>>>>>>>>>>>>>>", formdata);
     console.log(1);
     return new Promise(async (resolve, reject) => {
-        console.log(2);
 
         console.log(formdata);
         const token = localStorage.getItem("token")
-        console.log(3);
 
         axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
             console.log(4);
@@ -822,7 +830,7 @@ export const addStory = (formdata) => {
             resolve(data.data.story)
 
         }).catch((err) => {
-            console.log(5);
+           
 
             console.log('err', err);
             reject(err)
@@ -835,10 +843,8 @@ export const addStory = (formdata) => {
 export const getALLStories = () => {
     console.log(1);
     return new Promise(async (resolve, reject) => {
-        console.log(2);
 
         const token = localStorage.getItem("token")
-        console.log(3);
 
         axios.get('http://localhost:4000/api/v1/user/getALLStories', { headers: { Authorization: token } }).then((data) => {
             console.log(4);
@@ -846,9 +852,27 @@ export const getALLStories = () => {
             resolve(data.data)
 
         }).catch((err) => {
-            console.log(5);
+           
 
             console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+
+export const getTrendingStories = () => {
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.get('http://localhost:4000/api/v1/user/getTrendingStories', { headers: { Authorization: token } }).then((data) => {
+                console.log(data.data);
+            resolve(data.data)
+
+        }).catch((err) => {
+
             reject(err)
         })
     })
@@ -858,10 +882,8 @@ export const getALLStories = () => {
 export const getStoriesSideBar = () => {
     console.log(1);
     return new Promise(async (resolve, reject) => {
-        console.log(2);
 
         const token = localStorage.getItem("token")
-        console.log(3);
 
         axios.get('http://localhost:4000/api/v1/user/getStoriesSideBar', { headers: { Authorization: token } }).then((data) => {
             console.log(4);
@@ -869,7 +891,46 @@ export const getStoriesSideBar = () => {
             resolve(data.data)
 
         }).catch((err) => {
-            console.log(5);
+           
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+
+export const viewSroty = ({storyId,ViewerId}) => {
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+
+        axios.post('http://localhost:4000/api/v1/user/viewSroty',{storyId,ViewerId}, { headers: { Authorization: token } }).then((data) => {
+                console.log(data.data);
+            resolve(data.data)
+
+        }).catch((err) => {
+
+            console.log('err', err);
+            reject(err)
+        })
+    })
+
+}
+
+export const getBanner = () => {
+    return new Promise(async (resolve, reject) => {
+
+        const token = localStorage.getItem("token")
+       
+
+        axios.get('http://localhost:4000/api/v1/user/getBanner', { headers: { Authorization: token } }).then((data) => {
+                console.log(data.data);
+            resolve(data.data)
+
+        }).catch((err) => {
+           
 
             console.log('err', err);
             reject(err)

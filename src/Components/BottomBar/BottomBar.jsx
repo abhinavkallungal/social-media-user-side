@@ -2,8 +2,9 @@ import React from 'react'
 import './BottomBar.css'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import Badge from '@mui/material/Badge';
 
-import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search, Badge } from '@mui/icons-material';
+import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 

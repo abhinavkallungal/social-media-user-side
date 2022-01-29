@@ -1,13 +1,16 @@
 import React, { useState, useRef } from 'react'
 import Box from '@mui/material/Box';
 import { Typography, IconButton, Button } from '@mui/material';
-import { ArrowBackIos, ArrowForwardIos, CloseRounded } from '@mui/icons-material';
+import { ArrowBackIos, ArrowForwardIos, CloseRounded, Whatshot } from '@mui/icons-material';
 import Modal from '@mui/material/Modal';
 import { useSelector } from 'react-redux';
 import './Stories.css'
 import LinearProgress from '@mui/material/LinearProgress';
 import { useEffect } from 'react';
-import { getALLStories } from '../../Axios';
+import { getALLStories, viewSroty } from '../../Axios';
+import Stories, { WithSeeMore } from 'react-insta-stories';
+import moment from 'moment'
+
 
 
 
@@ -47,68 +50,97 @@ const style = {
 
 
 
-function ViewStoryModal({ story }) {
+function ViewStoryModal({ story, stories }) {
+
 
     const [open, setOpen] = React.useState(false);
-    const [stories, setStories] = useState([])
     const ref = useRef()
     const user = useSelector(state => state.user.user)
-    const [currentItem, setCurrentItem] = useState(1)
-    const [percentage, setPercentage] = useState(100 / stories.length)
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const [timer, setTimer] = useState(0)
-    useEffect(() => {
 
-        getALLStories().then((data) => {
-            setStories(data.stories)
-        })
+    const [sto, setSto] = useState([])
+    const [currentStory,setCurrentStory]=useState({})
 
-    }, [])
+
+
 
 
     useEffect(() => {
-        const timer = setInterval(() => {
-
-            setTimer((oldProgress) => {
-                if (oldProgress > 99) {
+        if (open) {
 
 
-                    clearInterval(timer);
+
+            let index = stories.findIndex(checkID);
+
+            function checkID(item) {
+                return item._id == story._id;
+            }
+            console.log("stories", stories);
+            console.log("stories.slice", stories.slice(index, stories.length));
+
+
+            let setStoriesQueuedummy = stories.slice(index, stories.length)
+
+
+
+            let array = []
+            let s = setStoriesQueuedummy.filter((file, index) => {
+                console.log(file.createdAt);
+                let ext = file?.files?.file?.split('.')
+                let exttype = ext[ext.length - 1]
+
+
+                if (exttype === 'png' || exttype === 'jpes' || exttype === 'jpg') {
+
+                    console.log('image', file.files.file);
+                    array.push({ url: file.files.file })
+
+                    return ({ type: 'image', url: file.files.file, originalContent: file._id })
+                } else if (exttype === "mp4") {
+                    array.push({ type: 'video', url: file.files.file })
+                    return ({ type: 'video', url: file.files.file })
+
+                } else {
+                    alert()
                 }
-                return Math.min(oldProgress + 10, 100);
-            });
-        }, 500);
 
-        return () => {
-            setTimer(0)
-        };
-    }, [open, currentItem]);
 
-    const moveRight = () => {
-        if (currentItem === stories.length) {
-            setCurrentItem(1)
-            setPercentage(100 / stories.length)
-            setOpen(false);
-        } else {
-
-            setPercentage((100 / stories.length) * (currentItem + 1))
-            setCurrentItem(item => item + 1)
-            ref.current.style.transition = `all 0.3s ease-in`;
-            ref.current.style.transform = `translateX(-${percentage}%)`;
+            })
+            setSto(array)
         }
 
+    }, [open])
+
+
+    const storyViewed = (s, st) => {
+        console.log("st", st.url);
+
+        let viewdStory = stories.find((item) => {
+            console.log(item);
+            return item.files.file == st.url
+        })
+
+        setCurrentStory(viewdStory)
+        console.log("viewdStory",viewdStory);
+        
+        viewSroty({ storyId: viewdStory.files.id, ViewerId: user._id }).then((data) => {
+            console.log(data);
+        }).catch((err) => {
+            console.log(err);
+        })
+
+
+
+
+
+
+
 
     }
 
-    const StoryContent = {
-        width: `${stories.length * 100}%`,
-        transition: 'all 0.3s ease-in',
-        display: 'flex',
-        overflow: 'hidden',
-        zIndex: 1
 
-    }
 
 
 
@@ -118,12 +150,13 @@ function ViewStoryModal({ story }) {
         <div className='CreatePostModal ViewStoryModal'>
             <div className='HeroViewStory' onClick={handleOpen}>
                 <div className="img">
-                    <img src={"https://source.unsplash.com/user/erondu/100x180"} alt="" />
+                    <img src={story?.user?.ProfilePhotos ? story?.user?.ProfilePhotos : "https://source.unsplash.com/user/erondu/100x180"} alt="" />
                 </div>
                 <div className="content">
-                    <span>sad</span>
-                    <IconButton aria-label="fingerprint" style={{ color: "white" }}>
-                    </IconButton>
+                    <span>{story.user.name}</span>
+                    {
+                        story.trending ? <Whatshot style={{ color: "#007fff" }} /> : null
+                    }
                 </div>
 
             </div>
@@ -145,38 +178,36 @@ function ViewStoryModal({ story }) {
                         <div className="view" style={{ height: '100vh', width: '33vw', backgroundColor: "#dddddd", minWidth: "360px", overflow: 'hidden' }}>
 
                             {
-                                <div className="StoryContent d-flex h-100" style={StoryContent} ref={ref} >
+                                <div className="StoryContent d-flex flex-column h-100 align-items-center justify-content-center" ref={ref} >
+                                    <div style={{width:'100%'}}>
+                                        {
+                                            currentStory?  <div className="Profile">
+                                            <div className="img">
+                                                <img src={currentStory?.user?.ProfilePhotos ? currentStory?.user?.ProfilePhotos : "https://source.unsplash.com/user/erondu/100x180"} style={{ width: '50px', height: '50px', marginRight: '20px', marginLeft: '20px' }} alt="" />
+                                            </div>
+                                            <div>
+                                                <span>{currentStory?.user?.name}</span>
+                                                <p>{moment(currentStory?.createdAt).fromNow()}</p>
+                                            </div>
+                                        </div> :null
+                                        }
+
+                                      
+                                    </div>
 
                                     {
 
-                                        stories.map((file) => {
-                                            return (
-                                                <>
+                                        <Stories
 
-                                                    <div className="story" style={{ zIndex: 10 }}>
-                                                        <LinearProgress variant="determinate" value={timer} style={{ height: 10, borderRadius: 10, zIndex: 10 }} />
-                                                        <div style={{ position: 'relative', top: '50%', zIndex: 100 }} className="d-flex justify-content-between">
+                                            keyboardNavigation
+                                            defaultInterval={3000}
+                                            stories={sto}
+                                            onStoryStart={storyViewed}
+                                            onAllStoriesEnd={handleClose}
+                                            onStoryEnd={(s, st) => console.log("story ended", s, st)}
+                                        />
 
-                                                            <IconButton className='StoryButton' style={{ zIndex: 1000 }} ><ArrowBackIos /> </IconButton>
-                                                            <IconButton className='StoryButton' onClick={moveRight}><ArrowForwardIos /> </IconButton>
-                                                        </div>
-                                                        <div className="Profile">
-                                                            <div className="img">
-                                                                <img src={file?.user?.ProfilePhotos ? file?.user?.ProfilePhotos : null} style={{ width: '50px', height: '50px', marginRight: '20px', marginLeft: '20px' }} alt="" />
-                                                            </div>
-                                                            <div>
-                                                                <span>{file.user.name}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div className="d-flex  justify-content-center align-items-center"  style={{ height: '100vh', width: '33vw', backgroundColor: "#dddddd", minWidth: "360px", overflow: 'hidden' }}>
 
-                                                            <img src={file.files} alt="" className="" />
-                                                        </div>
-                                                    </div>
-                                                </>
-
-                                            )
-                                        })
                                     }
 
                                 </div>
@@ -193,5 +224,42 @@ function ViewStoryModal({ story }) {
         </div>
     )
 }
+
+
+
+
+const image = {
+    display: "block",
+    maxWidth: "100%",
+    borderRadius: 4
+};
+
+const contentStylestoryback = {
+    background: "black",
+    width: "100%",
+    padding: 20,
+    color: "white"
+};
+
+const code = {
+    background: "#eee",
+    padding: "5px 10px",
+    borderRadius: "4px",
+    color: "#333"
+};
+
+const contentStyle = {
+    background: "salmon",
+    width: "100%",
+    padding: 20,
+    color: "white"
+};
+
+const customSeeMore = {
+    textAlign: "center",
+    fontSize: 14,
+    bottom: 20,
+    position: "relative"
+};
 
 export default ViewStoryModal

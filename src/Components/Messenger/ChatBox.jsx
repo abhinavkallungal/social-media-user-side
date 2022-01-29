@@ -41,31 +41,31 @@ function ChatBox({ currentUser, selectedChat }) {
 
 
 
-      
+
     useEffect(() => {
         console.log(7);
 
-        socket?.on('doReceiveMessage',(message )=>{
-          
+        socket?.on('doReceiveMessage', (message) => {
+
 
             let receivedMessage = message[0]
-            console.log(receivedMessage?.sender ,receivedMessage.messages , selectedChat);
-    
-            if(receivedMessage?.sender === selectedChat){
-                 console.log(9);
+            console.log(receivedMessage?.sender, receivedMessage.messages, selectedChat);
+
+            if (receivedMessage?.sender === selectedChat) {
+                console.log(9);
                 console.log("repeat");
                 setMessages(messages => [...messages, receivedMessage])
-    
+
             }
-            else{
+            else {
 
                 console.log(10);
                 console.log("else");
             }
-    
-        }) 
+
+        })
         console.log(11);
-       
+
     }, [socket])
 
 
@@ -78,11 +78,11 @@ function ChatBox({ currentUser, selectedChat }) {
 
             console.log("test Here");
 
-             setMessages(messages => [...messages, { message: newMessage, createdAt: new Date(), sender: currentUser }])
+            setMessages(messages => [messages, { message: newMessage, createdAt: new Date(), sender: currentUser }])
 
-             setNewMessage("")
+            setNewMessage("")
 
-            socket?.emit('doSendMessage',{ message: newMessage, sender: currentUser, receiver:chat })
+            socket?.emit('doSendMessage', { message: newMessage, sender: currentUser, receiver: chat })
 
 
             console.log(5);
@@ -92,16 +92,15 @@ function ChatBox({ currentUser, selectedChat }) {
 
     }
 
-  
-console.log(6);
+    const handelInput = (e) => {
 
-  
-    console.log(12);
+    }
+
 
 
     useEffect(() => {
         console.log(13);
-        getUserDetailes({ userId :chat }).then((data) => {
+        getUserDetailes({ userId: chat }).then((data) => {
             console.log(14);
             console.log(data.user);
             setUser(data.user[0])
@@ -109,7 +108,7 @@ console.log(6);
             console.log(15);
 
         })
-        getMessages({ sender: currentUser, userId:chat }).then((messages) => {
+        getMessages({ sender: currentUser, userId: chat }).then((messages) => {
             console.log(messages);
             console.log("Check here");
             setMessages(messages)
@@ -132,9 +131,11 @@ console.log(6);
         setAnchorEl(null);
     };
 
-console.log("tests home");
-
-    console.log(19);
+    function enterKeyPressed(event) {
+        if (event.charCode == 13) {
+            addMessage()
+        } 
+     }
 
 
 
@@ -251,7 +252,7 @@ console.log("tests home");
                 <IconButton>
                     <AttachmentRounded />
                 </IconButton>
-                <input type="text" className="input" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
+                <input type="text" className="input" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} onKeyPress={enterKeyPressed} />
 
                 <IconButton style={{ background: '#007fff', marginLeft: "20px", marginRight: '20px' }} onClick={addMessage}>
                     <SendRounded style={{ color: "#fff" }} />

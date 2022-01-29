@@ -25,7 +25,7 @@ import userAvatar from '../../Assets/userAvathar.jpg'
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
-import { BookmarkAdd, BookmarkAddedOutlined, ChatBubble, SendRounded, Tune } from '@mui/icons-material';
+import { BookmarkAdd, BookmarkAddedOutlined, ChatBubble, SendRounded, Whatshot } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import ViewTages from './ViewTages';
@@ -46,7 +46,7 @@ function ViewPostCard(props) {
 
     const file = post.files
     const video = post?.video
-    console.log(post);
+
     let ProfilePhotos = post?.user?.ProfilePhotos;
     const [likeCount, setlikeCount] = useState(post.likes?.length)
     const [liked, setliked] = useState(false)
@@ -145,11 +145,7 @@ function ViewPostCard(props) {
             setDeleted(true)
 
         }).catch((err) => {
-            if (err.response.status == 403) {
-                localStorage.removeItem("token");
-                localStorage.removeItem("user");
-                history.push('/login')
-            }
+      
         })
     }
     const handleCommet = (e) => {
@@ -218,6 +214,11 @@ function ViewPostCard(props) {
 
                         <p>{moment(post.postedDate).fromNow()}</p>
 
+                    </div>
+                    <div>
+                        {
+                            post.trending? <Whatshot color='red' style={{color:'#007fff', fontSize:'36px',marginLeft:'20px'}} /> :null
+                        }
                     </div>
                 </div>
                 <IconButton size='medium' onClick={handleClick}> <MoreVertSharpIcon size='medium' /></IconButton>
@@ -298,9 +299,9 @@ function ViewPostCard(props) {
                                 {
 
 
-                                    file?.map((item) => {
+                                    file?.map((item,index) => {
                                         return (
-                                            <SwiperSlide>
+                                            <SwiperSlide key={index}>
                                                 <div className="imgOne">
                                                     <img className="" src={item} alt="" />
                                                 </div>

@@ -20,7 +20,7 @@ const useStyles = makeStyles({
    
 });
 
-
+ 
 function ChatList({userId,handleChatSelected}) {
     const classes = useStyles();
     const [friends,setFriends]=useState([])

@@ -1,4 +1,4 @@
-import React, { useState, useRef , useCallback } from 'react'
+import React, { useState, useRef, useCallback, useEffect } from 'react'
 import './Hero.css'
 import { Grid } from '@mui/material'
 import ProfileCard from '../ProfileCard/ProfileCard'
@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import HeroStorySection from '../Hero/HeroStorySection/HeroStorySection';
 import ViewPostCard from '../ViewPostCard/ViewPostCard';
 import FeedSkeleton from '../Skeletons/FeedSkeleton/FeedSkeleton';
+import { getTrendingPost } from '../../Axios'
 
 import PostScroll from './PostScroll'
 import RightSide from './RightSide';
@@ -54,7 +55,7 @@ function Hero() {
 
     const [page, setPage] = useState(1)
 
-    const { posts, hasMore, loading, error } = PostScroll({page,userId:data._id})
+    const { posts, hasMore, loading, error } = PostScroll({ page, userId: data._id })
 
     const observer = useRef()
     const lastPostRef = useCallback(node => {
@@ -68,18 +69,31 @@ function Hero() {
         if (node) observer.current.observe(node)
     }, [loading, hasMore])
 
+    const [trending, setTrending] = useState([])
+
+    useEffect(() => {
+        getTrendingPost().then((data) => {
+            setTrending(data)
+        }).catch((error) => {
+            console.log(error);
+
+        })
+    }, [])
 
 
-    
+
+
+
+
 
 
 
     return (
         <div className="Hero">
-            <Grid container>
+            <Grid container >
 
                 <Grid item xs={12} md={2.5} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }} className={classes.left} >
-                    <div style={{ position: 'sticky', top: '-150px' }}>
+                    <div style={{ position: 'sticky', top: '-30px' }}>
 
                         <ProfileCard />
                         <SideNav />
@@ -90,9 +104,12 @@ function Hero() {
                     <HeroStorySection />
                     <Addpost user={data} />
 
-                  
+
                     {
                         loading ? <div> <FeedSkeleton /> <FeedSkeleton />  <FeedSkeleton /></div> : null
+                    }
+                    {
+                        trending.map((post, index) =>  <div  key={index}><ViewPostCard post={post} user={user} key={index} /></div>)  
                     }
 
                     {posts.map((post, index) => {
@@ -100,7 +117,7 @@ function Hero() {
 
                             return <div ref={lastPostRef} key={index}><ViewPostCard post={post} user={user} /></div>
                         } else {
-                            return <ViewPostCard post={post} user={user} /> 
+                            return <ViewPostCard post={post} user={user} key={index} />
                         }
                     })}
                     <div>{loading && 'Loading...'}</div>
@@ -110,9 +127,9 @@ function Hero() {
 
                 </Grid>
                 <Grid item xs={12} md={3} sx={{ display: { xs: 'none', md: 'none', lg: 'block' } }} className={classes.right} >
-                    <div style={{ position: 'sticky', bottom: '100vh' }}>
-                       <RightSide user={data}/>
-                       
+                    <div style={{ position: 'sticky',  top: '110px' }}>
+                        <RightSide user={data} />
+
                     </div>
 
                 </Grid>

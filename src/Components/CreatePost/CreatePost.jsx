@@ -63,7 +63,7 @@ function CreatePost() {
     const [currentFileIndex, setCurrentFileIndex] = useState(null);
     const [lastUploadedFileIndex, setLastUploadedFileIndex] = useState(null);
     const [currentChunkIndex, setCurrentChunkIndex] = useState(null);
-    const [progress,setProgress] =useState(null)
+    const [progress, setProgress] = useState(null)
 
     const formData = new FormData()
     let array = []
@@ -140,7 +140,7 @@ function CreatePost() {
 
 
 
-        if (text === "" && orgfiles.length === 0 && video.length===0) {
+        if (text === "" && orgfiles.length === 0 && video.length === 0) {
             setError("post is empty")
             setsend(false)
 
@@ -310,7 +310,7 @@ function CreatePost() {
         video?.map((file, fileIndex) => {
             setProgress(0)
             if (file.finalFilename) {
-                setProgress(100) ;
+                setProgress(100);
             } else {
                 const uploading = fileIndex === currentFileIndex;
                 const chunks = Math.ceil(file.size / chunkSize);
@@ -321,10 +321,10 @@ function CreatePost() {
                 }
             }
         })
-      
+
     }, [currentChunkIndex])
 
-   
+
 
 
 
@@ -339,11 +339,11 @@ function CreatePost() {
                     <Typography className="Typography" >Create Post</Typography>
                 </div>
                 <div>
-                    
-                {
-                        progress >1 ?<Box sx={{ width: '100%' ,marginTop:'25px' }}>
-                        <LinearProgress variant="buffer" value={progress}  />
-                    </Box> :null
+
+                    {
+                        progress > 1 ? <Box sx={{ width: '100%', marginTop: '25px' }}>
+                            <LinearProgress variant="buffer" value={progress} />
+                        </Box> : null
                     }
                 </div>
                 <div className="content">
@@ -376,7 +376,7 @@ function CreatePost() {
 
                 <div className="imagePreview">
                     {
-                        Blobfiles.length > 1 || video.length > 0 ? (
+                        Blobfiles.length || video.length > 0 ? (
                             <>
                                 <Swiper pagination={true} className="mySwiper">
 
@@ -409,22 +409,12 @@ function CreatePost() {
                             </>
                         ) : null
                     }
-                    {
-                        Blobfiles.length === 1 ? (
-                            <div className="imgOne">
-                                <img className="mx-auto  " src={Blobfiles[0]} alt="" />
-
-                            </div>
-
-                        ) : null
-
-                    }
-
+                    
 
 
 
                 </div>
-                
+
 
                 <div className="addtoPost">
                     <Typography>Add to Your Post</Typography>
