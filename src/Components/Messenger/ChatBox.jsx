@@ -7,23 +7,22 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import { ArrowBackRounded, AttachmentRounded, EmojiEmotionsRounded, MoreVertSharp, Pin, SendRounded } from '@mui/icons-material';
-import { width } from '@mui/system';
+import { ArrowBackRounded, AttachmentRounded, EmojiEmotionsRounded, LocalFireDepartment, MoreVertSharp, Pin, SendRounded } from '@mui/icons-material';
 import Message from './Message';
 import { useState } from 'react';
-import { getMessages, getUserDetailes, sendmsg } from "../../Axios"
-import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { getMessages, getUserDetailes, resetPassword } from "../../Axios"
+import socket from '../../Utils/socket'
+
+
+
 
 
 function ChatBox({ currentUser, selectedChat }) {
-    let socket = (useSelector((state) => state.socket.socket))
-    console.log(selectedChat);
+
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const scrollRef = useRef()
@@ -33,109 +32,155 @@ function ChatBox({ currentUser, selectedChat }) {
     const [chat, setChat] = useState("")
 
 
+
+
     useEffect(() => {
 
         setChat(selectedChat)
+        alert(selectedChat)
     }, [selectedChat])
 
 
 
+    useEffect(() => {
+
+
+        if (chat && currentUser) {
+            getUserDetailes({ userId: chat }).then((data) => {
+
+                setUser(data.user[0])
+            }).catch(() => {
+
+
+            })
+
+
+            getMessages({ sender: currentUser, userId: chat }).then((messages) => {
+
+                setMessages(messages)
+
+            })
+
+
+
+            
+        }
+
+
+    }, [chat, currentUser])
 
 
     useEffect(() => {
-        console.log(7);
-
+        let messageArray = []
         socket?.on('doReceiveMessage', (message) => {
 
 
             let receivedMessage = message[0]
-            console.log(receivedMessage?.sender, receivedMessage.messages, selectedChat);
 
-            if (receivedMessage?.sender === selectedChat) {
-                console.log(9);
-                console.log("repeat");
-                setMessages(messages => [...messages, receivedMessage])
+
+            messageArray.push(message[0])
+
+          
+
+
+
+            if (messageArray.length !== 0) {
+
+
+
+
+
+
+
+              
+                if (messageArray[messageArray.length - 1].sender === selectedChat) {
+
+
+
+
+                    setMessages(messages => [...messages, receivedMessage])
+
+                }
+                else {
+
+
+                }
 
             }
-            else {
 
-                console.log(10);
-                console.log("else");
-            }
 
         })
-        console.log(11);
-
-    }, [socket])
-
-
-    const addMessage = () => {
-        console.log(2);
-        if (newMessage.trim() === "") {
-            console.log(3);
-        } else {
-            console.log(4);
-
-            console.log("test Here");
-
-            setMessages(messages => [messages, { message: newMessage, createdAt: new Date(), sender: currentUser }])
-
-            setNewMessage("")
-
-            socket?.emit('doSendMessage', { message: newMessage, sender: currentUser, receiver: chat })
-
-
-            console.log(5);
-
-
-        }
-
-    }
-
-    const handelInput = (e) => {
-
-    }
-
-
+    
+      return () => {
+        socket.off('doReceiveMessage')
+      };
+    }, [chat]);
+    
 
     useEffect(() => {
-        console.log(13);
-        getUserDetailes({ userId: chat }).then((data) => {
-            console.log(14);
-            console.log(data.user);
-            setUser(data.user[0])
-        }).catch(() => {
-            console.log(15);
 
-        })
-        getMessages({ sender: currentUser, userId: chat }).then((messages) => {
-            console.log(messages);
-            console.log("Check here");
-            setMessages(messages)
-            console.log(16);
-        })
-    }, [chat])
-
-    console.log(17);
-
-
-    useEffect(() => {
-        console.log(18);
         scrollRef?.current?.scrollIntoView({ behavior: 'smooth' })
     }, [messages])
 
     const handleClick = (event) => {
+        console.log(14);
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
+        console.log(15);
         setAnchorEl(null);
     };
 
     function enterKeyPressed(event) {
         if (event.charCode == 13) {
             addMessage()
-        } 
-     }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const addMessage = () => {
+        console.log(8);
+
+        if (newMessage.trim() === "") {
+
+            console.log(9);
+        } else {
+            console.log(10);
+
+
+
+
+            setMessages(messages => [...messages, { message: newMessage, createdAt: new Date(), sender: currentUser }])
+
+
+            socket.emit('doSendMessage', { message: newMessage, sender: currentUser, receiver: chat })
+            setNewMessage("")
+
+
+
+
+        }
+
+    }
+
+
+
+
+
+
 
 
 

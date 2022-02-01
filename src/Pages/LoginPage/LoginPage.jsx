@@ -20,7 +20,8 @@ import { loginAction } from "../../Redux/userSlice"
 import { setNotificationCountAction } from "../../Redux/notificationCountSlice"
 import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
-import { socket } from '../../Utils/socket'
+import socket  from '../../Utils/socket'
+console.log("socket",socket);
 
 
 
@@ -50,7 +51,6 @@ export default function SignIn() {
   const [errors, setErrors] = React.useState({ error: false, emailErr: "", passwordErr: "" })
 
 
-  console.log("loginsoket", socket);
 
 
 
@@ -120,9 +120,9 @@ export default function SignIn() {
     } else {
       if (!errors.error) {
         login(form).then((data) => {
-          alert("login",  socket.id, data.user._id )
-          console.log("login data from server", data);
-          socket?.emit("login", { id: socket.id, userId: data.user._id })
+          
+        
+          socket.emit("login", { id: socket.id, userId: data.user._id })
           dispatch(loginAction(data.user))
           dispatch(setNotificationCountAction(data.unReadNotificationsCount))
 
@@ -151,7 +151,6 @@ export default function SignIn() {
       dispatch(loginAction(data.user))
       dispatch(setNotificationCountAction(data.unReadNotificationsCount))
 
-      alert("login",  socket.id, data.user._id )
 
       socket?.emit("login", { id: socket.id, userId: data.user._id })
 
@@ -167,7 +166,6 @@ export default function SignIn() {
   const responseFacebook = (response) => {
     console.log(response.email);
     thirdPartyLogin({email:response.email}).then((data) => {
-      alert("login",  socket.id, data.user._id )
       socket?.emit("login", { id: socket.id, userId: data.user._id })
       console.log("login data from server", data.user);
       dispatch(loginAction(data.user))

@@ -20,8 +20,10 @@ function  MessengerPage() {
     const[selectedChat,setSelectedChat]=useState('')
    const user =data
 
+   
+   
     const handleChatSelected =(userId)=>{
-            setSelectedChat(userId)
+        
             history.push(`/Messenger/${userId}`)
 
     }

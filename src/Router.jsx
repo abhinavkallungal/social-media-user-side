@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { loginAction } from "./Redux/userSlice"
 import { setSoketAction } from './Redux/socketSlice'
 import { setNotificationCountAction } from './Redux/notificationCountSlice'
-import { socket } from './Utils/socket'
+import socket  from './Utils/socket'
 
 
 
@@ -65,7 +65,7 @@ function Router() {
 
     useEffect(() => {
         let user = JSON.parse(localStorage.getItem('user'))
-        dispatch(setSoketAction(socket))
+        //dispatch(setSoketAction(socket))
         console.log("routersoket", socket);
 
 

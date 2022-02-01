@@ -7,6 +7,8 @@ import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineR
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import SwiperCore, { Pagination } from 'swiper';
 import PostReportModal from '../PostReportModal/PostReportModal';
+import socket  from '../../Utils/socket'
+
 
 
 
@@ -38,7 +40,6 @@ SwiperCore.use([Pagination]);
 
 function ViewPostCard(props) {
 
-    let socket = (useSelector((state) => state.socket.socket))
     let currentUser = (useSelector((state) => state.user.user))
     const history = useHistory()
 
@@ -115,7 +116,8 @@ function ViewPostCard(props) {
             setlikeCount(data.likes)
             setliked(data.liked)
         }).catch((err) => {
-            if (err.response.status == 403) {
+            console.log(err);
+            if (err?.response?.status == 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 history.push('/login')

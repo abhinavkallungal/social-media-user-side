@@ -35,7 +35,8 @@ function CreateStories() {
 
     }
 
-    const submit =()=>{
+    const submit =(e)=>{
+        e.preventDefault()
         if (files.length > 0) {
             if (currentFileIndex === null) {
                 setCurrentFileIndex(
