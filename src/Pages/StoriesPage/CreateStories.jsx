@@ -74,9 +74,10 @@ function CreateStories() {
         params.set('userId',user._id)
         params.set('currentChunkIndex', currentChunkIndex);
         params.set('totalChunks', Math.ceil(file.size / chunkSize));
-        const headers = { 'Content-Type': 'application/octet-stream' };
+        const token = localStorage.getItem("token")
+        const headers = { 'Content-Type': 'application/octet-stream', Authorization: token  };
         const url = 'http://localhost:4000/api/v1/user/addStory?' + params.toString();
-        axios.post(url, data, { headers })
+        axios.post(url, data, headers )
             .then(response => {
                 const file = files[currentFileIndex];
                 const filesize = files[currentFileIndex].size;
