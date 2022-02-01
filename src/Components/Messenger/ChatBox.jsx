@@ -37,7 +37,6 @@ function ChatBox({ currentUser, selectedChat }) {
     useEffect(() => {
 
         setChat(selectedChat)
-        alert(selectedChat)
     }, [selectedChat])
 
 
