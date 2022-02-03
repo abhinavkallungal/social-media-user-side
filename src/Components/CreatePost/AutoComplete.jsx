@@ -11,7 +11,6 @@ function AutoCompleted({setLocation}) {
   };
 
   const handleSelect = address => {
-    console.log(address)
     let add = address.split(",");
     
     setLocation(add[0])

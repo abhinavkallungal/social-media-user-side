@@ -7,7 +7,7 @@ const socket = io(URL, { transports: ["websocket"] })
 
 
 
-console.log(socket);
+
 
 
 
@@ -20,7 +20,7 @@ const user = JSON.parse(localStorage.getItem('user'))
 
 socket.on("connect", () => {
     if (user && socket) {
-        alert()
+       
 
         socket.emit("login", { id: socket.id, userId: user._id })
         

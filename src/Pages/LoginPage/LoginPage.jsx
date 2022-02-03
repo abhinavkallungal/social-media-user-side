@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -13,15 +13,16 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Card, IconButton } from '@mui/material';
 import { FacebookOutlined, Google } from '@mui/icons-material';
-import {  thirdPartyLogin, login } from '../../Axios'
+import { thirdPartyLogin, login } from '../../Axios'
 import { useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAction } from "../../Redux/userSlice"
 import { setNotificationCountAction } from "../../Redux/notificationCountSlice"
 import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
-import socket  from '../../Utils/socket'
-console.log("socket",socket);
+import socket from '../../Utils/socket'
+import './LoginPage.css'
+
 
 
 
@@ -60,7 +61,7 @@ export default function SignIn() {
 
 
     if (e.target.name === "email") {
-      console.log("emailtest");
+
       const trimEmail = e.target.value.trim()
 
       if (trimEmail === "") {
@@ -69,7 +70,7 @@ export default function SignIn() {
       } else if (new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(trimEmail)) {
         const { password } = form
         setForm({ password, email: trimEmail })
-        console.log("test2");
+
         setErrors({ error: false, emailErr: "" })
       }
       else if (new RegExp("^[A-Za-z]\\w{4,29}$").test(trimEmail)) {
@@ -92,12 +93,12 @@ export default function SignIn() {
     }
     if (e.target.name === "password") {
       const trimPassword = e.target.value.trim()
-      console.log(trimPassword);
+
       if (trimPassword === "") {
         setErrors({ error: true, passwordErr: "password is required " })
 
       } else {
-        console.log("password");
+
         setForm({ ...form, password: trimPassword })
         setErrors({ error: false, passwordErr: "" })
       }
@@ -120,8 +121,8 @@ export default function SignIn() {
     } else {
       if (!errors.error) {
         login(form).then((data) => {
-          
-        
+
+
           socket.emit("login", { id: socket.id, userId: data.user._id })
           dispatch(loginAction(data.user))
           dispatch(setNotificationCountAction(data.unReadNotificationsCount))
@@ -131,7 +132,7 @@ export default function SignIn() {
 
 
         }).catch((err) => {
-          setErrors({ error: true, emailErr: err?.response?.data?.message})
+          setErrors({ error: true, emailErr: err?.response?.data?.message })
 
         })
 
@@ -143,160 +144,175 @@ export default function SignIn() {
   };
 
   const responseGoogle = (response) => {
-    console.log(response.Du.tv);
-    
+
+
     const email = response.Du.tv
-    thirdPartyLogin({email}).then((data) => {
-      console.log("login data from server", data.user);
-      dispatch(loginAction(data.user))
-      dispatch(setNotificationCountAction(data.unReadNotificationsCount))
+    if (email) {
+
+      thirdPartyLogin({ email }).then((data) => {
+
+        dispatch(loginAction(data.user))
+        dispatch(setNotificationCountAction(data.unReadNotificationsCount))
 
 
-      socket?.emit("login", { id: socket.id, userId: data.user._id })
+        socket?.emit("login", { id: socket.id, userId: data.user._id })
 
-      history.push('/')
+        history.push('/')
 
-    }).catch((err) => {
-      setErrors({ error: true, emailErr: err?.response?.data?.message})
+      }).catch((err) => {
+        setErrors({ error: true, emailErr: err?.response?.data?.message })
 
 
 
-    })
+      })
+    }
   }
   const responseFacebook = (response) => {
-    console.log(response.email);
-    thirdPartyLogin({email:response.email}).then((data) => {
-      socket?.emit("login", { id: socket.id, userId: data.user._id })
-      console.log("login data from server", data.user);
-      dispatch(loginAction(data.user))
-      dispatch(setNotificationCountAction(data.unReadNotificationsCount))
 
-      history.push('/')
+    if (response.email) {
+      thirdPartyLogin({ email: response.email }).then((data) => {
+        socket?.emit("login", { id: socket.id, userId: data.user._id })
 
-    }).catch((err) => {
+        dispatch(loginAction(data.user))
+        dispatch(setNotificationCountAction(data.unReadNotificationsCount))
 
-      setErrors({ error: true, emailErr: err.response.data.message})
+        history.push('/')
+
+      }).catch((err) => {
+
+        setErrors({ error: true, emailErr: err.response.data.message })
 
 
 
-    })
+      })
+    }
   }
 
 
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <Card className="card py-5 px-4 mt-5 shadow">
-          <CssBaseline />
-          <Typography variant="h4" className="text-center fw-bold Typography " style={{ color: "#1877F2", fontFamily: 'Montserrat' }} >Social Media</Typography>
-          <Box
-            sx={{
-              marginTop: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography className="Typography " component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={handleChange}
-              />
-              <Typography variant="span" style={{ color: 'red' }}>{errors.error ? errors.emailErr : null}</Typography>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={handleChange}
-
-              />
-              <Typography variant="span" style={{ color: 'red' }}>{errors.error ? errors.passwordErr : null}</Typography>
+    <div className="col-lg-9 mx-auto">
 
 
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-              <hr />
-              <div className="d-flex justify-content-evenly">
 
-                <GoogleLogin
-                  clientId="967826436699-lmpvmcre1r12tn050u52phkfs9aro8jv.apps.googleusercontent.com"
-                  buttonText="Login"
-                  render={renderProps => (
+      <div className="row justify-content-between align-items-center">
 
-                    <IconButton style={{ backgroundColor: "#F7010130", borderRadius: 10 }} size="medium" onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                      <Google style={{ color: "#F70101", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
-                    </IconButton>
-                  )}
-                  onSuccess={responseGoogle}
-                  onFailure={responseGoogle}
-                  cookiePolicy={'single_host_origin'}
+        <div className="col-lg-5   d-lg-block  d-none">
+          <Typography variant="h4" className=" fw-bold Typography " style={{ color: "#1877F2", fontFamily: 'Montserrat' }} >Social Media</Typography>
+          <Typography variant='h6' style={{ fontFamily: 'Montserrat' }}>Connect with friends and the world around you on Social Media</Typography>
+
+        </div>
+        <div className="col-lg-5">
+          <Card className="card p-4 mt-5 shadow">
+            <CssBaseline />
+            <Box
+              sx={{
+                marginTop: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+
+              <Typography className="Typography " component="h1" variant="h5">
+                Sign in
+              </Typography>
+              <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={handleChange}
                 />
+                <Typography variant="span" style={{ color: 'red' }}>{errors.error ? errors.emailErr : null}</Typography>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={handleChange}
 
-              
-
-                <FacebookLogin
-                  appId="4796539330410041"
-                  autoLoad={false}
-                  fields="name,email,picture"
-                  callback={responseFacebook}
-
-                  render={renderProps => (
-                    <IconButton style={{ backgroundColor: "#1877F230", borderRadius: 10 }} size="medium" onClick={()=>renderProps.onClick} >
-                    <FacebookOutlined style={{ color: "#1877F2", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
-                  </IconButton>
-                  )}
-                  callback={responseFacebook} />,
-
+                />
+                <Typography variant="span" style={{ color: 'red' }}>{errors.error ? errors.passwordErr : null}</Typography>
 
 
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+                <hr />
+                <div className="d-flex flex-column align-items-center">
+                  <div className="mt-2">
 
-              </div>
+                    <FacebookLogin
+                      appId="4796539330410041"
+                      autoLoad={false}
+                      fields="name,email,picture"
+                      callback={responseFacebook}
+                      cssClass="facebook"
+                      icon="fa-facebook"
 
-              <hr />
-              <Grid container>
-                
-                <Grid item xs>
-                  <Link to="/forgotpassword" variant="body2">
-                    Forgot password?
-                  </Link>
+                      render={renderProps => (
+                        <IconButton style={{ backgroundColor: "#1877F230", borderRadius: 10 }} size="medium" onClick={() => renderProps.onClick} >
+                          <FacebookOutlined style={{ color: "#1877F2", fontSize: "50", borderRadius: 10, border: "3px solid #ffffff" }} size="large" />
+                        </IconButton>
+                      )}
+                      callback={responseFacebook} >
+                      login
+                    </FacebookLogin>
+                  </div>
+
+                  <div className="mt-3">
+
+                    <GoogleLogin
+                      clientId="967826436699-lmpvmcre1r12tn050u52phkfs9aro8jv.apps.googleusercontent.com"
+                      onSuccess={responseGoogle}
+                      isSignedIn={false}
+                      onSuccess={responseGoogle}
+                      onFailure={responseGoogle}
+                      cookiePolicy={'single_host_origin'}
+                    />
+                  </div>
+                </div>
+
+
+
+                <hr />
+                <Grid container>
+
+                  <Grid item xs>
+                    <Link to="/forgotpassword" variant="body2" style={{ textDecoration: "none" }}>
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link to='/signup' variant="body2" style={{ textDecoration: "none" }}>
+                      Don't have an account? Sign Up
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Link to='/signup' variant="body2">
-                    Don't have an account? Sign Up
-                  </Link>
-                </Grid>
-              </Grid>
+              </Box>
             </Box>
-          </Box>
-        </Card>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </ThemeProvider>
+          </Card>
+        </div>
+      </div>
+
+    </div>
+
+
   );
 }
 

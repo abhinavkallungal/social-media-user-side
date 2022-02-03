@@ -95,7 +95,7 @@ function AddCoverPhoto() {
 
     const onCropComplete = crop => {
         if (imageRef && crop.width && crop.height) {
-            console.log("onCropComplete2");
+            
             const croppedImageUrl = getCroppedImg(imageRef, crop)
             setCropImageUrl(croppedImageUrl)
         }
@@ -106,7 +106,7 @@ function AddCoverPhoto() {
     }
 
     const getCroppedImg=(image, crop)=>{
-        console.log("getCroppedImg");
+       
         const canvas = document.createElement("canvas");
         const scaleX = image.naturalWidth / image.width;
         const scaleY = image.naturalHeight / image.height;
@@ -137,7 +137,7 @@ function AddCoverPhoto() {
     }
 
     const  dataURLtoFile=(dataurl, filename)=> {
-        console.log("dataURLtoFile");
+     
         let arr = dataurl.split(','),
             mime = arr[0].match(/:(.*?);/)[1],
             bstr = atob(arr[1]), 
@@ -149,14 +149,14 @@ function AddCoverPhoto() {
         }
         let croppedImage = new File([u8arr], filename, {type:mime});
         setCropImage(croppedImage)
-        console.log("croppedImage",croppedImage);
+
     }
 
     const handleUpload = () => {
-        console.log(cropImage);
+      
         handleClose()
         S3FileUpload.uploadFile(cropImage, config).then((data) => {
-           console.log(data);
+         
 
            DoAddCoverPhoto({coverPhoto:data.location,currentuserId:currentuser._id}).then((user)=>{
             dispatch(loginAction(user))
@@ -170,7 +170,7 @@ function AddCoverPhoto() {
            })
 
         }).catch((err) => {
-            console.log(err);
+          
 
         })
        

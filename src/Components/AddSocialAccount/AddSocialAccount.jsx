@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { ArrowBack, Facebook, Google, Instagram, LinkedIn, Twitter } from '@mui/icons-material'
+import { ArrowBack, Facebook, Instagram, LinkedIn, Twitter } from '@mui/icons-material'
 import { Button, IconButton, InputAdornment, TextField, Typography } from '@mui/material'
 import React from 'react'
 import './AddSocialAccount.css'
@@ -25,8 +25,7 @@ function AddSocialAccount({user}) {
 
     const submit = () => {
 
-        console.log(socialAccounts);
-
+      
         AddSocialAccounts({ socialAccounts:socialAccounts, userId: user._id }).then(() => {
             Swal.fire(
                 'Updated!',
@@ -47,7 +46,7 @@ function AddSocialAccount({user}) {
         }else{
             getSocialAccounts(user?._id).then((data) => {
                 
-                console.log(data);
+             
                 setSocialAccouts(data?.socialAccounts[0])
                 
             })

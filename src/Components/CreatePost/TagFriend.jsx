@@ -162,9 +162,9 @@ export default function TagFriend({ userId, setTag }) {
   const history = useHistory()
 
   useEffect(() => {
-    console.log(userId);
+  
     getFriends({ userId }).then((data) => {
-      console.log(data);
+    
       setFriends(data)
 
     }).catch((err) => {

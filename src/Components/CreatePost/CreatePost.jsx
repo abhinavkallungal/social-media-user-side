@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { AddLocationAlt, AddToPhotos, ArrowBack, PersonAdd, SearchOutlined, VideoLibrary } from '@mui/icons-material'
-import { InputBase, Typography, TextField, Button, IconButton, Select, MenuItem, FormControl, InputLabel, Box, LinearProgress } from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { AddLocationAlt, AddToPhotos, ArrowBack, PersonAdd, VideoLibrary } from '@mui/icons-material'
+import { Typography, Button, IconButton, Box, LinearProgress } from '@mui/material'
 import { styled } from '@mui/material/styles';
-import S3FileUpload from 'react-s3'
 import { createPost } from '../../Axios'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import AutoComplete from './AutoComplete'
 
 
@@ -32,11 +31,6 @@ SwiperCore.use([Pagination]);
 const Input = styled('input')({
     display: 'none'
 });
-
-const config = {
-
-}
-
 
 
 const chunkSize = 5 * 1024;
@@ -77,21 +71,21 @@ function CreatePost() {
 
     const onInputChange = (event) => {
         let newFiles = []
-        console.log(1);
+      
         if (event.target.files.length !== 0) {
             const files = event.target.files;
             setOrgFiles(files)
 
-            console.log(2);
+        
             let file
 
             for (let i = 0; i < files.length; i++) {
                 file = URL.createObjectURL(files[i])
                 newFiles = [...newFiles, file]
                 setBlobFiles(newFiles)
-                console.log(file);
+               
             }
-            console.log(5);
+          
 
 
         } else {
@@ -100,8 +94,7 @@ function CreatePost() {
 
 
         }
-        console.log(4);
-        console.log(newFiles);
+      
     }
     const TextOnChange = (e) => {
         setText(e.target.value)
@@ -115,14 +108,14 @@ function CreatePost() {
         event.preventDefault();
         setsend(true)
 
-        console.log(text, orgfiles.length);
+      
 
         formData.append("desc", text)
         formData.append("Accessibility", access)
         formData.append("userId", user._id)
         formData.append("location", location)
         if (tag.length > 0) {
-            console.log(tag);
+           
             let array = []
 
             tag.map((item) => {
@@ -146,7 +139,7 @@ function CreatePost() {
 
 
         } else if (orgfiles.length !== 0) {
-            console.log("post with files");
+            
             setError("")
 
 
@@ -158,12 +151,12 @@ function CreatePost() {
 
 
             createPost(formData).then((post) => {
-                console.log("post updated");
+              
                 if (video.length > 0) {
                     setPostId(post._id)
                 } else {
                     setsend(false)
-                    console.log(post);
+                 
                     history.push('/')
 
                 }
@@ -181,15 +174,14 @@ function CreatePost() {
 
         } else {
             setError("")
-            console.log("only test");
+          
             createPost(formData).then((post) => {
-                console.log("post updated");
-
+               
                 if (video.length > 0) {
                     setPostId(post._id)
                 } else {
                     setsend(false)
-                    console.log(post);
+                   
                     history.push('/')
 
                 }
@@ -214,7 +206,7 @@ function CreatePost() {
     }
 
     useEffect(() => {
-        console.log(tag);
+      
     }, [tag])
 
 
@@ -246,8 +238,7 @@ function CreatePost() {
         const file = video[currentFileIndex];
         const data = readerEvent.target.result;
         const params = new URLSearchParams();
-        console.log(file);
-        console.log(data);
+       
         params.set('name', file.name);
         params.set('postId', postId);
         params.set('size', file.size);
@@ -395,7 +386,7 @@ function CreatePost() {
                                     {
                                         video?.map((vi) => {
                                             let blob = URL.createObjectURL(vi)
-                                            console.log(blob)
+                                           
                                             return (
                                                 <SwiperSlide> <video autoPlay muted className=""> <source src={blob} />This browser doesn't support video tag.</video> </SwiperSlide>
                                             )

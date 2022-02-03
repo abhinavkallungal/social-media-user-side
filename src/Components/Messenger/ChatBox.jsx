@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import './Messenger.css'
 import userAvathar from "../../Assets/userAvathar.jpg"
-import { IconButton, TextField } from '@mui/material'
+import { IconButton } from '@mui/material'
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,17 +11,21 @@ import Tooltip from '@mui/material/Tooltip';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import { ArrowBackRounded, AttachmentRounded, EmojiEmotionsRounded, LocalFireDepartment, MoreVertSharp, Pin, SendRounded } from '@mui/icons-material';
+import { ArrowBackRounded, AttachmentRounded, EmojiEmotionsRounded, MoreVertSharp, SendRounded } from '@mui/icons-material';
 import Message from './Message';
 import { useState } from 'react';
-import { getMessages, getUserDetailes, resetPassword } from "../../Axios"
+import { getMessages, getUserDetailes } from "../../Axios"
 import socket from '../../Utils/socket'
+import { useHistory } from "react-router-dom";
+
+
 
 
 
 
 
 function ChatBox({ currentUser, selectedChat }) {
+    let history = useHistory();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -193,9 +197,11 @@ function ChatBox({ currentUser, selectedChat }) {
 
                 <div className="detailes">
                     <div className="backbtn">
-                        <IconButton style={{ background: '#ffffff' }}>
+                       
+                        <IconButton style={{ background: '#ffffff' }} onClick={history.goBack} >
                             <ArrowBackRounded style={{ color: '#007fff' }} />
                         </IconButton>
+                      
                     </div>
                     <div className="img">
                         <img src={user.ProfilePhotos ? user.ProfilePhotos : userAvathar} alt="" />

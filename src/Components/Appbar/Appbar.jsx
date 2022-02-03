@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './appbar.css'
 import { AppBar, Toolbar, Typography, Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button, Badge  } from "@mui/material"
 import LogoutIcon from '@mui/icons-material/Logout';
-import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
-import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search, NotificationsActiveRounded } from '@mui/icons-material';
+import { HomeRounded, ChatRounded, PeopleAltRounded, Search, NotificationsActiveRounded } from '@mui/icons-material';
 import { makeStyles } from '@mui/styles';
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutAction } from "../../Redux/userSlice"
@@ -84,7 +83,7 @@ function Appbar() {
                             Social Media
                         </Typography>
                         <div className="navItems">
-                            <Button variant="text" className={classes.navItem, 'navItem'} sx={classes.mobileNavbar} component={Link}
+                            <Button variant="text" className={classes.navItem, 'navItem'} component={Link}
                                 to="/" >
                                 <HomeRounded color="primary" fontSize="medium" />
                             </Button>

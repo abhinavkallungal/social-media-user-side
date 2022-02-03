@@ -27,10 +27,10 @@ function  MessengerHomePage() {
         <div className='MessengerPage'>
             <Grid container>
 
-                <Grid item xs={0}  md={4} sx={{ display: { xs: 'none', md: 'block', lg: 'block' } }} style={{margin:'0px',padding:'0px'}}    >
+                <Grid item xs={12}  md={4} style={{margin:'0px',padding:'0px'}}    >
                   {user && <ChatList userId={user._id} handleChatSelected={handleChatSelected}/> }  
                 </Grid>
-                <Grid item xs={12} md={8} className="">
+                <Grid item xs={0} md={8} sx={{ display: { xs: 'none', md: 'block', lg: 'block' } }}  className="">
                     {
 
                          <OpenMessageBox/>

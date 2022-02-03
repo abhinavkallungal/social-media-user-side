@@ -3,7 +3,6 @@ import { Switch, Route, Redirect, useHistory, useLocation } from "react-router-d
 import jwtDecode from 'jwt-decode';
 import { useDispatch } from 'react-redux'
 import { loginAction } from "./Redux/userSlice"
-import { setSoketAction } from './Redux/socketSlice'
 import { setNotificationCountAction } from './Redux/notificationCountSlice'
 import socket  from './Utils/socket'
 
@@ -65,8 +64,7 @@ function Router() {
 
     useEffect(() => {
         let user = JSON.parse(localStorage.getItem('user'))
-        //dispatch(setSoketAction(socket))
-        console.log("routersoket", socket);
+        
 
 
 
@@ -93,10 +91,19 @@ function Router() {
         socket.emit("getNotificationCound", { userId: user?._id })
 
         socket.on('notificationCound', (notificationCound) => {
-            console.log(notificationCound);
+           
             dispatch(setNotificationCountAction(notificationCound.notification))
 
         })
+
+        return () => {
+            socket.off('likemsg')
+            socket.off('sendLikeNotification')
+            socket.off('sendCommentNotification')
+            socket.off('save')
+            socket.off('getNotificationCound')
+            socket.off('notificationCound')
+          };
 
 
 
@@ -112,7 +119,7 @@ function Router() {
 
 
     useEffect(() => {
-        console.log("router");
+        
         const token = localStorage.getItem('token')
         if (token) {
             dispatch(loginAction(JSON.parse(localStorage.getItem('user'))))
@@ -189,7 +196,7 @@ function Router() {
                
             </Route>
             <Route path="/passwordReset">
-                {Token ? <ForgotPasswordResat /> : <Redirect to="/login" />}
+                <ForgotPasswordResat /> 
 
                 
             </Route>

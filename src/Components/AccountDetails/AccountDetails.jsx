@@ -23,7 +23,7 @@ const history =useHistory()
 
     }
     const onSubmit = () => {
-        console.log(userData);
+        
         addAccountDetails(userData).then((data) => {
             
         }).catch((error) => {

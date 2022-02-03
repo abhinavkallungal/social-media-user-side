@@ -37,12 +37,12 @@ function HeroStorySection() {
 
             <HeroAddStory/>
             {
-                stories?.map((story)=>   <ViewStoryModal stories={allStories} story={story}/> )
+                stories?.map((story,index)=>   <ViewStoryModal stories={allStories} story={story} key={index}/> )
 
           
             }
             {
-                trendingStorie?.map((story)=>   <ViewStoryModal stories={allStories} story={story}/> )
+                trendingStorie?.map((story,index)=>   <ViewStoryModal stories={allStories} story={story} key={index}/> )
 
           
             }

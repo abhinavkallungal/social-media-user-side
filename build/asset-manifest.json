@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/social-media-user-side/static/css/main.a22280ac.chunk.css",
-    "main.js": "/social-media-user-side/static/js/main.8e924e73.chunk.js",
-    "main.js.map": "/social-media-user-side/static/js/main.8e924e73.chunk.js.map",
-    "runtime-main.js": "/social-media-user-side/static/js/runtime-main.227263f7.js",
-    "runtime-main.js.map": "/social-media-user-side/static/js/runtime-main.227263f7.js.map",
-    "static/css/2.eb9739c4.chunk.css": "/social-media-user-side/static/css/2.eb9739c4.chunk.css",
-    "static/js/2.a64ef50a.chunk.js": "/social-media-user-side/static/js/2.a64ef50a.chunk.js",
-    "static/js/2.a64ef50a.chunk.js.map": "/social-media-user-side/static/js/2.a64ef50a.chunk.js.map",
-    "index.html": "/social-media-user-side/index.html",
-    "static/css/2.eb9739c4.chunk.css.map": "/social-media-user-side/static/css/2.eb9739c4.chunk.css.map",
-    "static/css/main.a22280ac.chunk.css.map": "/social-media-user-side/static/css/main.a22280ac.chunk.css.map",
-    "static/js/2.a64ef50a.chunk.js.LICENSE.txt": "/social-media-user-side/static/js/2.a64ef50a.chunk.js.LICENSE.txt",
-    "static/media/Messenger.css": "/social-media-user-side/static/media/chatBackground.60f0cc5d.jpg",
-    "static/media/messageFun.efa5801e.svg": "/social-media-user-side/static/media/messageFun.efa5801e.svg",
-    "static/media/undraw_add_files.1a535b7f.svg": "/social-media-user-side/static/media/undraw_add_files.1a535b7f.svg",
-    "static/media/userAvathar.6c66ac2f.jpg": "/social-media-user-side/static/media/userAvathar.6c66ac2f.jpg"
+    "main.css": "/static/css/main.b79b3b84.chunk.css",
+    "main.js": "/static/js/main.9fca832a.chunk.js",
+    "main.js.map": "/static/js/main.9fca832a.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.776c1e0d.js",
+    "runtime-main.js.map": "/static/js/runtime-main.776c1e0d.js.map",
+    "static/css/2.eb9739c4.chunk.css": "/static/css/2.eb9739c4.chunk.css",
+    "static/js/2.0e67514d.chunk.js": "/static/js/2.0e67514d.chunk.js",
+    "static/js/2.0e67514d.chunk.js.map": "/static/js/2.0e67514d.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.eb9739c4.chunk.css.map": "/static/css/2.eb9739c4.chunk.css.map",
+    "static/css/main.b79b3b84.chunk.css.map": "/static/css/main.b79b3b84.chunk.css.map",
+    "static/js/2.0e67514d.chunk.js.LICENSE.txt": "/static/js/2.0e67514d.chunk.js.LICENSE.txt",
+    "static/media/Messenger.css": "/static/media/chatBackground.60f0cc5d.jpg",
+    "static/media/messageFun.efa5801e.svg": "/static/media/messageFun.efa5801e.svg",
+    "static/media/undraw_add_files.1a535b7f.svg": "/static/media/undraw_add_files.1a535b7f.svg",
+    "static/media/userAvathar.6c66ac2f.jpg": "/static/media/userAvathar.6c66ac2f.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.227263f7.js",
+    "static/js/runtime-main.776c1e0d.js",
     "static/css/2.eb9739c4.chunk.css",
-    "static/js/2.a64ef50a.chunk.js",
-    "static/css/main.a22280ac.chunk.css",
-    "static/js/main.8e924e73.chunk.js"
+    "static/js/2.0e67514d.chunk.js",
+    "static/css/main.b79b3b84.chunk.css",
+    "static/js/main.9fca832a.chunk.js"
   ]
 }

@@ -1,18 +1,18 @@
 import axios from 'axios';
 
-
+let BASE_URL ='http://socialmediaserver.kallungal.tech'
 
 
 
 export const checkUserName = (formdata) => {
-    console.log("checking");
+  
     return new Promise(async (resolve, reject) => {
-        await axios.post('http://localhost:4000/api/v1/user/checkUserName', formdata).then((data) => {
-            console.log(data);
+        await axios.post(BASE_URL+'/api/v1/user/checkUserName', formdata).then((data) => {
+            
             resolve(data)
 
         }).catch((err) => {
-            console.log(err);
+          
             reject({ usernameExist: true, message: "choose another one" })
         })
     })
@@ -20,9 +20,9 @@ export const checkUserName = (formdata) => {
 
 
 export const doSignup = (formdata) => {
-    console.log(formdata);
+   
     return new Promise(async (resolve, reject) => {
-        await axios.post('http://localhost:4000/api/v1/user/signup', formdata).then((data) => {
+        await axios.post(BASE_URL+'/api/v1/user/signup', formdata).then((data) => {
             resolve(data.data)
 
         }).catch((err) => {
@@ -35,9 +35,9 @@ export const doSignup = (formdata) => {
 }
 
 export const emailOtpResend = ({ email }) => {
-    console.log(email);
+   
     return new Promise(async (resolve, reject) => {
-        axios.post('http://localhost:4000/api/v1/user/reSendEmailOtp', { email }).then((data) => {
+        axios.post(BASE_URL+'/api/v1/user/reSendEmailOtp', { email }).then((data) => {
 
             resolve(data)
 
@@ -50,7 +50,7 @@ export const emailOtpResend = ({ email }) => {
 
 export const verifyEmailotp = (fromdata) => {
     return new Promise(async (resolve, reject) => {
-        axios.post('http://localhost:4000/api/v1/user/verifyEmailOtp', fromdata).then((data) => {
+        axios.post(BASE_URL+'/api/v1/user/verifyEmailOtp', fromdata).then((data) => {
 
             localStorage.setItem("token", data.data.token)
             localStorage.setItem("user", JSON.stringify(data.data.user))
@@ -65,9 +65,9 @@ export const verifyEmailotp = (fromdata) => {
 }
 
 export const phoneOtpResend = ({ phone }) => {
-    console.log(phone);
+  
     return new Promise(async (resolve, reject) => {
-        axios.post('http://localhost:4000/api/v1/user/reSendEmailOtp', { phone }).then((data) => {
+        axios.post(BASE_URL+'/api/v1/user/reSendEmailOtp', { phone }).then((data) => {
 
             resolve(data)
 
@@ -80,7 +80,7 @@ export const phoneOtpResend = ({ phone }) => {
 
 export const verifyMobileOtp = (fromdata) => {
     return new Promise(async (resolve, reject) => {
-        axios.post('http://localhost:4000/api/v1/user/verifyMobileOtp', fromdata).then((data) => {
+        axios.post(BASE_URL+'/api/v1/user/verifyMobileOtp', fromdata).then((data) => {
 
             localStorage.setItem("token", data.data.token)
             localStorage.setItem("user", JSON.stringify(data.data.user))
@@ -88,8 +88,8 @@ export const verifyMobileOtp = (fromdata) => {
             resolve(data)
 
         }).catch((err) => {
-            console.log("otpverifissssscation err");
-            console.log('err', err);
+            
+            
             reject(err)
         })
     })
@@ -103,19 +103,18 @@ export const verifyMobileOtp = (fromdata) => {
 
 export const login = (formdata) => {
     return new Promise(async (resolve, reject) => {
-        console.log(formdata);
-        axios.post('http://localhost:4000/api/v1/user/login', formdata).then((data) => {
+       
+        axios.post(BASE_URL+'/api/v1/user/login', formdata).then((data) => {
 
-            console.log("login data", data);
+          
             localStorage.setItem("token", data.data.token)
-            console.log("login user", data.data.user);
-            console.log("login success");
+           
             localStorage.setItem("user", JSON.stringify(data.data.user))
 
             resolve(data.data)
 
         }).catch((err) => {
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -127,16 +126,15 @@ export const thirdPartyLogin = ({ email }) => {
     return new Promise(async (resolve, reject) => {
         axios.post("http://localhost:4000/api/v1/user/thirdPartyLogin", { email }).then((data) => {
 
-            console.log("login data", data);
+          
             localStorage.setItem("token", data.data.token)
-            console.log("login user", data.data.user);
-            console.log("login success");
+           
             localStorage.setItem("user", JSON.stringify(data.data.user))
 
             resolve(data.data)
 
         }).catch((err) => {
-            console.log('err', err);
+            
             reject(err)
 
         })
@@ -148,13 +146,13 @@ export const forgotPasswordRequest = (formData) => {
     return new Promise(async (resolve, reject) => {
         axios.post("http://localhost:4000/api/v1/user/forgotPasswordRequest", formData).then((data) => {
 
-            console.log("send data", data);
+           
 
 
             resolve(data.data.user)
 
         }).catch((err) => {
-            console.log('err', err.response);
+           
             reject(err)
 
         })
@@ -162,18 +160,18 @@ export const forgotPasswordRequest = (formData) => {
 }
 
 export const forgotPasswordReset = (formData) => {
-    console.log(formData);
+   
 
     return new Promise(async (resolve, reject) => {
         axios.post("http://localhost:4000/api/v1/user/forgotPasswordReset", formData,).then((data) => {
 
-            console.log("send data", data);
+           
 
 
             resolve(data.data.user)
 
         }).catch((err) => {
-            console.log('err', err.response.data);
+            
             reject(err)
 
         })
@@ -182,18 +180,17 @@ export const forgotPasswordReset = (formData) => {
 
 
 export const resetPassword = (formData) => {
-    console.log(formData);
-
+   
     return new Promise(async (resolve, reject) => {
         axios.post("http://localhost:4000/api/v1/user/resetPassword", formData,).then((data) => {
 
-            console.log("send data", data);
+           
 
 
             resolve(data.data.user)
 
         }).catch((err) => {
-            console.log('err', err.response.data.message);
+         
             reject(err.response.data.message)
 
         })
@@ -204,22 +201,21 @@ export const resetPassword = (formData) => {
 
 
 export const createPost = (formdata) => {
-    console.log(">>>>>>>>>>>>>>>>>>>>", formdata);
-    console.log(1);
+
     return new Promise(async (resolve, reject) => {
 
-        console.log(formdata);
+       
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
-            console.log(4);
+        axios.post(BASE_URL+'/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
+          
 
             resolve(data.data.post)
 
         }).catch((err) => {
            
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -227,7 +223,7 @@ export const createPost = (formdata) => {
 }
 
 export const getFriends = ({ userId }) => {
-    console.log(userId);
+    
 
     return new Promise(async (resolve, reject) => {
 
@@ -241,7 +237,7 @@ export const getFriends = ({ userId }) => {
         }).catch((err) => {
            
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -249,21 +245,21 @@ export const getFriends = ({ userId }) => {
 }
 
 export const getTagsDetailes = ({ postId }) => {
-    console.log(postId);
+   
 
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
 
-        axios.post('http://localhost:4000/api/v1/user/getTagsDetailes', { postId }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/getTagsDetailes', { postId }, { headers: { Authorization: token } }).then((data) => {
+            
             resolve(data.data.tagWith)
 
         }).catch((err) => {
            
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -274,19 +270,19 @@ export const getTagsDetailes = ({ postId }) => {
 
 export const getAllpost = ({ userId, page }) => {
 
-    console.log(userId, page);
+    
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/getAllPost', { userId, page }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/getAllPost', { userId, page }, { headers: { Authorization: token } }).then((data) => {
+            
 
             resolve(data.data.posts)
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -298,8 +294,8 @@ export const getTrendingPost = () => {
 
         const token = localStorage.getItem("token")
 
-        axios.get('http://localhost:4000/api/v1/user/getTrendingPost', { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.get(BASE_URL+'/api/v1/user/getTrendingPost', { headers: { Authorization: token } }).then((data) => {
+            
 
             resolve(data.data)
 
@@ -315,20 +311,21 @@ export const getTrendingPost = () => {
 }
 
 export const getProfileDetails = (userId) => {
-    console.log(userId);
+  
+
 
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
         axios.get(`http://localhost:4000/api/v1/user/getProfileDetails/${userId}`,  { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+            
 
             resolve({ user: data.data.user[0], posts: data.data.posts })
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -336,14 +333,14 @@ export const getProfileDetails = (userId) => {
 }
 
 export const addAccountDetails = (userdata) => {
-    console.log(userdata.state, userdata.phone);
+  
 
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/addAccountDetails', { userdata }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/addAccountDetails', { userdata }, { headers: { Authorization: token } }).then((data) => {
+            
             localStorage.setItem("user", JSON.stringify(data.data))
 
 
@@ -351,7 +348,7 @@ export const addAccountDetails = (userdata) => {
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -361,14 +358,14 @@ export const addAccountDetails = (userdata) => {
 
 export const AddSocialAccounts = ({socialAccounts,userId}) => {
 
-    console.log(socialAccounts,userId);
+    
 
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/AddSocialAccount',  {socialAccounts,userId} , { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/AddSocialAccount',  {socialAccounts,userId} , { headers: { Authorization: token } }).then((data) => {
+            
             localStorage.setItem("user", JSON.stringify(data.data))
 
 
@@ -376,7 +373,7 @@ export const AddSocialAccounts = ({socialAccounts,userId}) => {
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -392,14 +389,14 @@ export const getSocialAccounts = (userId) => {
 
 
         axios.get(`http://localhost:4000/api/v1/user/getSocialAccounts/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+            
 
 
             resolve(data.data)
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -410,20 +407,21 @@ export const getSocialAccounts = (userId) => {
 
 export const getTagedPost = ({userId}) => {
 
+
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
 
         axios.get(`http://localhost:4000/api/v1/user/getTagedPost/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+            
 
 
             resolve(data.data)
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -438,14 +436,14 @@ export const getSavedPosts = ({userId}) => {
 
 
         axios.get(`http://localhost:4000/api/v1/user/getSavedPosts/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+            
 
 
             resolve(data.data)
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -460,14 +458,14 @@ export const getFollowers = ({userId}) => {
 
 
         axios.get(`http://localhost:4000/api/v1/user/getFollowers/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+            
 
 
             resolve(data.data)
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -482,14 +480,14 @@ export const getFollowings = ({userId}) => {
 
 
         axios.get(`http://localhost:4000/api/v1/user/getFollowings/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+            
 
 
             resolve(data.data)
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -500,6 +498,7 @@ export const getFollowings = ({userId}) => {
 
 
 export const search = ({ keyword, userId }) => {
+
 
     return new Promise(async (resolve, reject) => {
 
@@ -540,8 +539,8 @@ export const dofollow = ({ userId, currentuserId }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/follow', { userId, currentuserId }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/follow', { userId, currentuserId }, { headers: { Authorization: token } }).then((data) => {
+            
             resolve(data.data)
 
 
@@ -557,13 +556,12 @@ export const dofollow = ({ userId, currentuserId }) => {
 
 
 export const doLike = ({ postId, userId }) => {
-    console.log(userId, postId);
+
     return new Promise((resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/postLike', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/postLike', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
             resolve(data.data)
 
 
@@ -583,8 +581,8 @@ export const doSave = ({ postId, userId }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/postSave', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/postSave', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
+            
             localStorage.setItem("user", JSON.stringify(data.data.user))
 
             resolve(data.data)
@@ -605,8 +603,8 @@ export const doDeletePost = ({ postId, userId }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.delete('http://localhost:4000/api/v1/user/deletePost', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.delete(BASE_URL+'/api/v1/user/deletePost', { userId, postId }, { headers: { Authorization: token } }).then((data) => {
+            
 
             resolve(data.data)
 
@@ -622,13 +620,13 @@ export const doDeletePost = ({ postId, userId }) => {
 }
 
 export const doCommet = ({ postId, userId, comment }) => {
-    console.log(postId, userId, comment);
+
     return new Promise((resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/comment', { userId, postId, comment }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data.data.comments);
+        axios.post(BASE_URL+'/api/v1/user/comment', { userId, postId, comment }, { headers: { Authorization: token } }).then((data) => {
+          
 
             resolve({ comments: data.data.comments, NotificationId: data.data.NotificationId })
 
@@ -648,7 +646,7 @@ export const doReport = ({ postId, userId, optoion, message }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/report', { userId, postId, optoion, message }, { headers: { Authorization: token } }).then((data) => {
+        axios.post(BASE_URL+'/api/v1/user/report', { userId, postId, optoion, message }, { headers: { Authorization: token } }).then((data) => {
 
 
             resolve(data.data.comment)
@@ -670,8 +668,8 @@ export const addProfilePhoto = ({ profilePhoto, currentuserId }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/addProfilePhoto', { profilePhoto, currentuserId }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/addProfilePhoto', { profilePhoto, currentuserId }, { headers: { Authorization: token } }).then((data) => {
+            
             localStorage.setItem("user", JSON.stringify(data.data.user))
 
             resolve(data.data.user)
@@ -692,8 +690,8 @@ export const DoAddCoverPhoto = ({ coverPhoto, currentuserId }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/addCoverPhoto', { coverPhoto, currentuserId }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/addCoverPhoto', { coverPhoto, currentuserId }, { headers: { Authorization: token } }).then((data) => {
+            
             localStorage.setItem("user", JSON.stringify(data.data.user))
 
             resolve(data.data.user)
@@ -714,8 +712,8 @@ export const getAllNotifications = ({ userId }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/getAllNotifications', { userId }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/getAllNotifications', { userId }, { headers: { Authorization: token } }).then((data) => {
+            
 
             resolve(data.data.notifications)
 
@@ -736,14 +734,14 @@ export const getPostComment = ({ postId }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/getPostComments', { postId }, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/getPostComments', { postId }, { headers: { Authorization: token } }).then((data) => {
+            
 
             resolve(data.data.comments)
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -752,7 +750,7 @@ export const getPostComment = ({ postId }) => {
 
 export const getUserDetailes =({userId})=>{
 
-    console.log(userId);
+   
     
     return new Promise(async (resolve,reject)=>{
 
@@ -762,7 +760,7 @@ export const getUserDetailes =({userId})=>{
         axios.get(`http://localhost:4000/api/v1/user/getUserDetailes/${userId}`,{headers:{Authorization:token}}).then((data)=>{
 
 
-        console.log(data);
+        
 
         resolve(data.data)
 
@@ -781,14 +779,14 @@ export const sendmsg = ({message,sender,receiver}) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/sendMessage', {message,sender,receiver}, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/sendMessage', {message,sender,receiver}, { headers: { Authorization: token } }).then((data) => {
+            
 
             resolve(data)
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -803,14 +801,14 @@ export const getMessages = ({sender,userId}) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/getmessages', {   sender,receiver:userId}, { headers: { Authorization: token } }).then((data) => {
-            console.log(data);
+        axios.post(BASE_URL+'/api/v1/user/getmessages', {   sender,receiver:userId}, { headers: { Authorization: token } }).then((data) => {
+            
 
             resolve(data.data.messages)
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -818,22 +816,22 @@ export const getMessages = ({sender,userId}) => {
 }
 
 export const addStory = (formdata) => {
-    console.log(">>>>>>>>>>>>>>>>>>>>", formdata);
-    console.log(1);
+   
+
     return new Promise(async (resolve, reject) => {
 
-        console.log(formdata);
+       
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
-            console.log(4);
-                console.log(data.data.story);
+        axios.post(BASE_URL+'/api/v1/user/addpost', formdata, { headers: { Authorization: token, 'Content-Type': 'multipart/form-data' } }).then((data) => {
+          
+              
             resolve(data.data.story)
 
         }).catch((err) => {
            
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -842,20 +840,20 @@ export const addStory = (formdata) => {
 
 
 export const getALLStories = () => {
-    console.log(1);
+;
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.get('http://localhost:4000/api/v1/user/getALLStories', { headers: { Authorization: token } }).then((data) => {
-            console.log(4);
-                console.log(data.data);
+        axios.get(BASE_URL+'/api/v1/user/getALLStories', { headers: { Authorization: token } }).then((data) => {
+          
+                
             resolve(data.data)
 
         }).catch((err) => {
            
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -868,8 +866,8 @@ export const getTrendingStories = () => {
 
         const token = localStorage.getItem("token")
 
-        axios.get('http://localhost:4000/api/v1/user/getTrendingStories', { headers: { Authorization: token } }).then((data) => {
-                console.log(data.data);
+        axios.get(BASE_URL+'/api/v1/user/getTrendingStories', { headers: { Authorization: token } }).then((data) => {
+               
             resolve(data.data)
 
         }).catch((err) => {
@@ -881,20 +879,20 @@ export const getTrendingStories = () => {
 }
 
 export const getStoriesSideBar = () => {
-    console.log(1);
+;
     return new Promise(async (resolve, reject) => {
 
         const token = localStorage.getItem("token")
 
-        axios.get('http://localhost:4000/api/v1/user/getStoriesSideBar', { headers: { Authorization: token } }).then((data) => {
-            console.log(4);
-                console.log(data.data);
+        axios.get(BASE_URL+'/api/v1/user/getStoriesSideBar', { headers: { Authorization: token } }).then((data) => {
+          
+               
             resolve(data.data)
 
         }).catch((err) => {
            
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -907,13 +905,13 @@ export const viewSroty = ({storyId,ViewerId}) => {
 
         const token = localStorage.getItem("token")
 
-        axios.post('http://localhost:4000/api/v1/user/viewSroty',{storyId,ViewerId}, { headers: { Authorization: token } }).then((data) => {
-                console.log(data.data);
+        axios.post(BASE_URL+'/api/v1/user/viewSroty',{storyId,ViewerId}, { headers: { Authorization: token } }).then((data) => {
+             
             resolve(data.data)
 
         }).catch((err) => {
 
-            console.log('err', err);
+            
             reject(err)
         })
     })
@@ -926,14 +924,14 @@ export const getBanner = () => {
         const token = localStorage.getItem("token")
        
 
-        axios.get('http://localhost:4000/api/v1/user/getBanner', { headers: { Authorization: token } }).then((data) => {
-                console.log(data.data);
+        axios.get(BASE_URL+'/api/v1/user/getBanner', { headers: { Authorization: token } }).then((data) => {
+            
             resolve(data.data)
 
         }).catch((err) => {
            
 
-            console.log('err', err);
+            
             reject(err)
         })
     })

@@ -2,8 +2,8 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://abhinavkallungal.github.io/social-media-user-side",
-  "proxy": "http://localhost:4000",
+  "homepage": "https://social-media-user-side-r6ii7.ondigitalocean.app",
+  "proxy": "http://socialmediaserver.kallungal.tech",
   "dependencies": {
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",

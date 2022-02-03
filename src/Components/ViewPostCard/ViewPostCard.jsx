@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button } from "@mui/material"
+import { Menu, MenuItem, IconButton, Button } from "@mui/material"
 import { doLike, doSave, doDeletePost, doCommet, getPostComment } from '../../Axios'
 import './ViewPostCard.css'
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
@@ -7,7 +7,7 @@ import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineR
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import SwiperCore, { Pagination } from 'swiper';
 import PostReportModal from '../PostReportModal/PostReportModal';
-import socket  from '../../Utils/socket'
+import socket from '../../Utils/socket'
 
 
 
@@ -27,7 +27,7 @@ import userAvatar from '../../Assets/userAvathar.jpg'
 import Checkbox from '@mui/material/Checkbox';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
-import { BookmarkAdd, BookmarkAddedOutlined, ChatBubble, SendRounded, Whatshot } from '@mui/icons-material';
+import { BookmarkAdd, BookmarkAddedOutlined, SendRounded, Whatshot } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import ViewTages from './ViewTages';
@@ -108,14 +108,21 @@ function ViewPostCard(props) {
     };
 
     const handleLike = () => {
+       
         doLike({ userId: currentUser._id, postId: post._id }).then((data) => {
-            if (data.NotificationId) {
-
-                socket.emit("dolike", { NotificationId: data.NotificationId })
-            }
+            
+            console.log(data);
             setlikeCount(data.likes)
             setliked(data.liked)
+            
+          
+            if (data.NotificationId) {
+               
+                socket.emit("dolike", { NotificationId: data.NotificationId })
+            }
+            
         }).catch((err) => {
+          
             console.log(err);
             if (err?.response?.status == 403) {
                 localStorage.removeItem("token");
@@ -123,6 +130,9 @@ function ViewPostCard(props) {
                 history.push('/login')
             }
         })
+        return () => {
+            socket.off('dolike')
+        };
 
     }
 
@@ -147,7 +157,7 @@ function ViewPostCard(props) {
             setDeleted(true)
 
         }).catch((err) => {
-      
+
         })
     }
     const handleCommet = (e) => {
@@ -219,7 +229,7 @@ function ViewPostCard(props) {
                     </div>
                     <div>
                         {
-                            post.trending? <Whatshot color='red' style={{color:'#007fff', fontSize:'36px',marginLeft:'20px'}} /> :null
+                            post.trending ? <Whatshot color='red' style={{ color: '#007fff', fontSize: '36px', marginLeft: '20px' }} /> : null
                         }
                     </div>
                 </div>
@@ -287,8 +297,8 @@ function ViewPostCard(props) {
                                     video ? (
                                         <SwiperSlide>
                                             <video width="500" height="300" controls className="imgOne">
-                                                <source   src={video}  />
-                                                    This browser doesn't support video tag.
+                                                <source src={video} />
+                                                This browser doesn't support video tag.
                                             </video>
                                         </SwiperSlide>
 
@@ -301,7 +311,7 @@ function ViewPostCard(props) {
                                 {
 
 
-                                    file?.map((item,index) => {
+                                    file?.map((item, index) => {
                                         return (
                                             <SwiperSlide key={index}>
                                                 <div className="imgOne">
