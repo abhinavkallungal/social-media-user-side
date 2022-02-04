@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/",
+  "homepage": "https://social-media-user-side-r6ii7.ondigitalocean.app",
   "proxy": "http://socialmediaserver.kallungal.tech",
   "dependencies": {
     "@emotion/react": "^11.6.0",
