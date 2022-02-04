@@ -124,7 +124,7 @@ export const login = (formdata) => {
 export const thirdPartyLogin = ({ email }) => {
 
     return new Promise(async (resolve, reject) => {
-        axios.post("http://localhost:4000/api/v1/user/thirdPartyLogin", { email }).then((data) => {
+        axios.post(BASE_URL+"/api/v1/user/thirdPartyLogin", { email }).then((data) => {
 
           
             localStorage.setItem("token", data.data.token)
@@ -144,7 +144,7 @@ export const thirdPartyLogin = ({ email }) => {
 export const forgotPasswordRequest = (formData) => {
 
     return new Promise(async (resolve, reject) => {
-        axios.post("http://localhost:4000/api/v1/user/forgotPasswordRequest", formData).then((data) => {
+        axios.post(BASE_URL+"/api/v1/user/forgotPasswordRequest", formData).then((data) => {
 
            
 
@@ -163,7 +163,7 @@ export const forgotPasswordReset = (formData) => {
    
 
     return new Promise(async (resolve, reject) => {
-        axios.post("http://localhost:4000/api/v1/user/forgotPasswordReset", formData,).then((data) => {
+        axios.post(BASE_URL+"/api/v1/user/forgotPasswordReset", formData,).then((data) => {
 
            
 
@@ -182,7 +182,7 @@ export const forgotPasswordReset = (formData) => {
 export const resetPassword = (formData) => {
    
     return new Promise(async (resolve, reject) => {
-        axios.post("http://localhost:4000/api/v1/user/resetPassword", formData,).then((data) => {
+        axios.post(BASE_URL+"/api/v1/user/resetPassword", formData,).then((data) => {
 
            
 
@@ -230,7 +230,7 @@ export const getFriends = ({ userId }) => {
         const token = localStorage.getItem("token")
 
 
-        axios.get(`http://localhost:4000/api/v1/user/getFriends/${userId}`,  { headers: { Authorization: token } }).then((data) => {
+        axios.get(`${BASE_URL}/api/v1/user/getFriends/${userId}`,  { headers: { Authorization: token } }).then((data) => {
 
             resolve(data.data.friends)
 
@@ -318,7 +318,7 @@ export const getProfileDetails = (userId) => {
 
         const token = localStorage.getItem("token")
 
-        axios.get(`http://localhost:4000/api/v1/user/getProfileDetails/${userId}`,  { headers: { Authorization: token } }).then((data) => {
+        axios.get(`${BASE_URL}/api/v1/user/getProfileDetails/${userId}`,  { headers: { Authorization: token } }).then((data) => {
             
 
             resolve({ user: data.data.user[0], posts: data.data.posts })
@@ -388,7 +388,7 @@ export const getSocialAccounts = (userId) => {
         const token = localStorage.getItem("token")
 
 
-        axios.get(`http://localhost:4000/api/v1/user/getSocialAccounts/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
+        axios.get(`${BASE_URL}/api/v1/user/getSocialAccounts/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
             
 
 
@@ -413,7 +413,7 @@ export const getTagedPost = ({userId}) => {
         const token = localStorage.getItem("token")
 
 
-        axios.get(`http://localhost:4000/api/v1/user/getTagedPost/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
+        axios.get(`${BASE_URL}/api/v1/user/getTagedPost/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
             
 
 
@@ -435,7 +435,7 @@ export const getSavedPosts = ({userId}) => {
         const token = localStorage.getItem("token")
 
 
-        axios.get(`http://localhost:4000/api/v1/user/getSavedPosts/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
+        axios.get(`${BASE_URL}/api/v1/user/getSavedPosts/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
             
 
 
@@ -457,7 +457,7 @@ export const getFollowers = ({userId}) => {
         const token = localStorage.getItem("token")
 
 
-        axios.get(`http://localhost:4000/api/v1/user/getFollowers/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
+        axios.get(`${BASE_URL}/api/v1/user/getFollowers/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
             
 
 
@@ -479,7 +479,7 @@ export const getFollowings = ({userId}) => {
         const token = localStorage.getItem("token")
 
 
-        axios.get(`http://localhost:4000/api/v1/user/getFollowings/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
+        axios.get(`${BASE_URL}/api/v1/user/getFollowings/${userId}`,  {  headers: { Authorization: token } }).then((data) => {
             
 
 
@@ -504,7 +504,7 @@ export const search = ({ keyword, userId }) => {
 
         const token = localStorage.getItem("token")
 
-        axios.get(`http://localhost:4000/api/v1/user/search/${userId}/${keyword}`,{ headers: { Authorization: token } }).then((data) => {
+        axios.get(`${BASE_URL}/api/v1/user/search/${userId}/${keyword}`,{ headers: { Authorization: token } }).then((data) => {
 
             resolve(data.data)
 
@@ -522,7 +522,7 @@ export const getFollowRequest = ({userId}) => {
 
         const token = localStorage.getItem("token")
 
-        axios.get(`http://localhost:4000/api/v1/user/getFollowRequest/${userId}`, { headers: { Authorization: token } }).then((data) => {
+        axios.get(`${BASE_URL}/api/v1/user/getFollowRequest/${userId}`, { headers: { Authorization: token } }).then((data) => {
             resolve(data.data)
 
         }).catch((err) => {
@@ -757,7 +757,7 @@ export const getUserDetailes =({userId})=>{
 
         const token = localStorage.getItem("token")
 
-        axios.get(`http://localhost:4000/api/v1/user/getUserDetailes/${userId}`,{headers:{Authorization:token}}).then((data)=>{
+        axios.get(`${BASE_URL}/api/v1/user/getUserDetailes/${userId}`,{headers:{Authorization:token}}).then((data)=>{
 
 
         

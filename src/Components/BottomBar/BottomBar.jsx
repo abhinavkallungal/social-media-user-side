@@ -2,7 +2,7 @@ import React from 'react'
 import './BottomBar.css'
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import Badge from '@mui/material/Badge';
+import {Badge} from '@mui/material/';
 
 import { HomeRounded, NotificationsRounded, ChatRounded, PeopleAltRounded, Search } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
@@ -11,10 +11,10 @@ import { useSelector } from 'react-redux'
 
 
 
-const NotificationIcon = () => {
+const NotificationIcon = ({notificationCound}) => {
 
     return (
-        <Badge badgeContent={0} color="primary">
+        <Badge badgeContent={notificationCound} color="primary">
             <NotificationsRounded color="action" />
         </Badge>
     )
@@ -55,7 +55,7 @@ function BottomBar() {
                     label="Notifications"
                     value="Notifications"
              
-                    icon={<NotificationIcon color="action" />}
+                    icon={ <NotificationIcon color="action" notificationCound={notificationCound} />}
                 />
                 <BottomNavigationAction
                     label="Chat"

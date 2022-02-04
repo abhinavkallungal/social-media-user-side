@@ -124,7 +124,7 @@ function ViewPostCard(props) {
         }).catch((err) => {
           
             console.log(err);
-            if (err?.response?.status == 403) {
+            if (err?.response?.status === 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 history.push('/login')
@@ -142,7 +142,7 @@ function ViewPostCard(props) {
             setSaved(data.saved)
 
         }).catch((err) => {
-            if (err.response.status == 403) {
+            if (err.response.status === 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 history.push('/login')
@@ -177,7 +177,7 @@ function ViewPostCard(props) {
             }
 
         }).catch((err) => {
-            if (err.response.status == 403) {
+            if (err.response.status === 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 history.push('/login')
@@ -196,7 +196,7 @@ function ViewPostCard(props) {
             getPostComment({ postId: post._id }).then((comments) => {
                 setComments(comments)
             }).catch((err) => {
-                if (err.response.status == 403) {
+                if (err.response.status === 403) {
                     localStorage.removeItem("token");
                     localStorage.removeItem("user");
                     history.push('/login')

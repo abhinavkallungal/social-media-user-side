@@ -1,14 +1,13 @@
 import React, { useState, useRef } from 'react'
 import Box from '@mui/material/Box';
-import { Typography, IconButton, Button } from '@mui/material';
-import { ArrowBackIos, ArrowForwardIos, CloseRounded, Whatshot } from '@mui/icons-material';
+import {  IconButton } from '@mui/material';
+import {  CloseRounded, Whatshot } from '@mui/icons-material';
 import Modal from '@mui/material/Modal';
 import { useSelector } from 'react-redux';
 import './Stories.css'
-import LinearProgress from '@mui/material/LinearProgress';
 import { useEffect } from 'react';
-import { getALLStories, viewSroty } from '../../Axios';
-import Stories, { WithSeeMore } from 'react-insta-stories';
+import { viewSroty } from '../../Axios';
+import Stories from 'react-insta-stories';
 import moment from 'moment'
 
 

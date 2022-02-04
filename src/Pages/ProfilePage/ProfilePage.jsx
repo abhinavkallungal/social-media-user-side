@@ -6,10 +6,8 @@ import ProfileCard from '../../Components/ProfileCard/ProfileCard'
 import ProfileHeader from '../../Components/ProfileHeader/ProfileHeader'
 import ProfileIntroCard from '../../Components/ProfileIntroCard/ProfileIntroCard'
 import ProfilePostListcard from '../../Components/ProfilePostListcard/ProfilePostListcard'
-import RequestCard from '../../Components/RequestCard/RequestCard'
 import SidebarBanner from '../../Components/SidebarBanner/SidebarBanner'
 import SideNav from '../../Components/SideNav/SideNav'
-import ViewPostCard from '../../Components/ViewPostCard/ViewPostCard'
 import { getProfileDetails } from '../../Axios'
 import { Tab, Box } from "@mui/material"
 import TabContext from '@mui/lab/TabContext';

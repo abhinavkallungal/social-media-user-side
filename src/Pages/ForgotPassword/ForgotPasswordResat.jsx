@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+
 import queryString from 'query-string'
 import { useLocation } from 'react-router-dom';
 import { FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton, Card, Box, Grid, Typography, Button } from '@mui/material';
@@ -10,7 +10,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import Avatar from '@mui/material/Avatar';
 import CssBaseline from '@mui/material/CssBaseline';
-import CircularProgress from '@mui/material/CircularProgress';
 
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -54,7 +53,6 @@ function ForgotPasswordResat() {
         passwordErr: "",
         ConfirmPasswordErr: "",
     });
-    const [submited, setSubmited] = useState(false)
 
 
 
@@ -99,7 +97,7 @@ function ForgotPasswordResat() {
 
         setValues({ ...values, [prop]: event.target.value });
 
-        if (prop === 'password' && event.target.value == "") {
+        if (prop === 'password' && event.target.value === "") {
             setError({ ...error, passwordErr: "Password is required" });
         }
         if (prop === 'password' && event.target.value !== "") {

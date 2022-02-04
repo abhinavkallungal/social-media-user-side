@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,11 +11,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Card } from '@mui/material';
-import { useHistory } from 'react-router-dom'
-import { useDispatch, useStore } from 'react-redux'
+
 import { Link } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
-import { formatMuiErrorMessage } from '@mui/utils';
+
 import { forgotPasswordRequest } from '../../Axios';
 
 
@@ -41,7 +40,6 @@ const theme = createTheme();
 export default function ForgotPassword() {
 
 
-  const history = useHistory()
   const [errors, setErrors] = useState({ error: false, emailErr: "" })
   const [form, setForm] = useState({})
   const[submited,setSubmited]=useState(false)

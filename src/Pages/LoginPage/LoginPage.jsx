@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import Avatar from '@mui/material/Avatar';
+import React  from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -7,15 +6,13 @@ import TextField from '@mui/material/TextField';
 import { Link } from 'react-router-dom'
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles';
 import { Card, IconButton } from '@mui/material';
-import { FacebookOutlined, Google } from '@mui/icons-material';
+import { FacebookOutlined } from '@mui/icons-material';
 import { thirdPartyLogin, login } from '../../Axios'
 import { useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { loginAction } from "../../Redux/userSlice"
 import { setNotificationCountAction } from "../../Redux/notificationCountSlice"
 import { GoogleLogin } from 'react-google-login';
@@ -28,26 +25,10 @@ import './LoginPage.css'
 
 
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const theme = createTheme();
-
 export default function SignIn() {
   const dispatch = useDispatch()
 
   const history = useHistory()
-  const [user, setUser] = React.useState({ email: null, password: "" })
   const [form, setForm] = React.useState({})
   const [errors, setErrors] = React.useState({ error: false, emailErr: "", passwordErr: "" })
 

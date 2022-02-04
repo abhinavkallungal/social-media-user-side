@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './appbar.css'
 import { AppBar, Toolbar, Typography, Menu, MenuItem, Avatar, ListItemIcon, Divider, IconButton, Button, Badge  } from "@mui/material"
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -51,7 +51,7 @@ function Appbar() {
     const history = useHistory()
 
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [user, setUser] = useState("")
+   
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -83,25 +83,25 @@ function Appbar() {
                             Social Media
                         </Typography>
                         <div className="navItems">
-                            <Button variant="text" className={classes.navItem, 'navItem'} component={Link}
+                            <Button variant="text" className={classes.navItem + 'navItem'} component={Link}
                                 to="/" >
                                 <HomeRounded color="primary" fontSize="medium" />
                             </Button>
-                            <Button variant="text" className={classes.navItem, 'navItem'} component={Link}
+                            <Button variant="text" className={classes.navItem + 'navItem'} component={Link}
                                 to="/search" >
                                 <Search color="primary" size="medium" />
                             </Button>
-                            <Button variant="text" className={classes.navItem, 'navItem'} component={Link}
+                            <Button variant="text" className={classes.navItem + 'navItem'} component={Link}
                                 to="/notification">
                                 <Badge badgeContent={notificationCound} color="primary">
                                     <NotificationsActiveRounded color="action" />
                                 </Badge>
                             </Button>
-                            <Button variant="text" className={classes.navItem, 'navItem'} component={Link} to='/Messenger'>
+                            <Button variant="text" className={classes.navItem + 'navItem'} component={Link} to='/Messenger'>
                                 <ChatRounded color="primary" size="medium" />
                             </Button>
 
-                            <Button variant="text" className={classes.navItem, 'navItem'} >
+                            <Button variant="text" className={classes.navItem + 'navItem'} >
                                 <PeopleAltRounded color="primary" size="medium" />
                             </Button>
                             <Button variant="text" className={classes.root} style={{ color: '#ffffff' }} component={Link} to="/createpost" >
@@ -113,8 +113,7 @@ function Appbar() {
 
                             <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
                                 {
-                                    user ? <img src="https://source.unsplash.com/user/erondu/32x32" style={{ borderRadius: 10 }} alt="" /> :
-                                        <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                                    data ? <img src={data ?data.ProfilePhotos : 'https://source.unsplash.com/user/erondu/32x32'} style={{ borderRadius: 10 }} alt="" /> : <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
 
                                 }
                             </IconButton>

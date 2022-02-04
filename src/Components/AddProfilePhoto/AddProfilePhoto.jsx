@@ -97,7 +97,7 @@ function AddProfilePhoto() {
         if (imageRef && crop.width && crop.height) {
            
             const croppedImageUrl = getCroppedImg(imageRef, crop)
-            setCropImageUrl(cropImageUrl)
+            setCropImageUrl(croppedImageUrl)
         }
     }
 
@@ -162,7 +162,7 @@ function AddProfilePhoto() {
             dispatch(loginAction(user))
 
            }).catch((err)=>{
-            if (err.response.status == 403) {
+            if (err.response.status === 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 history.push('/login')

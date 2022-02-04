@@ -6,8 +6,7 @@ import ChatBox from '../../Components/Messenger/ChatBox'
 import BottomBar from '../../Components/BottomBar/BottomBar'
 import ChatList from '../../Components/Messenger/ChatList'
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react'
-import OpenMessageBox from '../../Components/Messenger/OpenMessageBox'
+
 import { useParams ,useHistory } from 'react-router-dom'
 
 
@@ -17,7 +16,6 @@ function  MessengerPage() {
 
     const history =useHistory()
     const data = useSelector((state)=>state.user.user)
-    const[selectedChat,setSelectedChat]=useState('')
    const user =data
 
    

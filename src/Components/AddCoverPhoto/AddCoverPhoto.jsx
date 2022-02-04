@@ -162,7 +162,7 @@ function AddCoverPhoto() {
             dispatch(loginAction(user))
 
            }).catch((err)=>{
-            if (err.response.status == 403) {
+            if (err.response.status === 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 history.push('/login')

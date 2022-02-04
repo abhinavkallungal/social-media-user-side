@@ -46,7 +46,6 @@ function CreatePost() {
 
 
     const [access, setAccess] = useState('PUBLIC')
-    const [result, setResult] = useState([])
     const [error, setError] = useState("")
     const [location, setLocation] = useState("")
     const [selected, setSelected] = useState("")
@@ -60,7 +59,7 @@ function CreatePost() {
     const [progress, setProgress] = useState(null)
 
     const formData = new FormData()
-    let array = []
+  
     const user = useSelector(state => state.user.user)
     const userData = user
     let ProfilePhotos = userData?.ProfilePhotos;
@@ -99,9 +98,7 @@ function CreatePost() {
     const TextOnChange = (e) => {
         setText(e.target.value)
     }
-    const Accesschange = (e) => {
-        setAccess(e.target.value)
-    }
+    
 
 
     const onSubmit = (event) => {
@@ -163,7 +160,7 @@ function CreatePost() {
 
             }).catch((err) => {
                 setsend(false)
-                if (err.response.status == 403) {
+                if (err.response.status === 403) {
                     localStorage.removeItem("token");
                     localStorage.removeItem("user");
                 }
@@ -190,7 +187,7 @@ function CreatePost() {
             }).catch((err) => {
                 setsend(false)
 
-                if (err.response.status == 403) {
+                if (err.response.status === 403) {
                     localStorage.removeItem("token");
                     localStorage.removeItem("user");
                     history.push('/login')

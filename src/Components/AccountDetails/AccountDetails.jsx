@@ -27,7 +27,7 @@ const history =useHistory()
         addAccountDetails(userData).then((data) => {
             
         }).catch((error) => {
-            if (error.response.status == 403) {
+            if (error.response.status === 403) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
                 history.push('/login')

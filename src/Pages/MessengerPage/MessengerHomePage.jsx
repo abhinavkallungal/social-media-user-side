@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import {Grid} from "@mui/material"
 import './MessengerPage.css'
-import ChatBox from '../../Components/Messenger/ChatBox'
 import BottomBar from '../../Components/BottomBar/BottomBar'
 import ChatList from '../../Components/Messenger/ChatList'
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react'
 import OpenMessageBox from '../../Components/Messenger/OpenMessageBox'
-import { useParams ,useHistory } from 'react-router-dom'
+import {  useHistory } from 'react-router-dom'
 
 
 function  MessengerHomePage() {
