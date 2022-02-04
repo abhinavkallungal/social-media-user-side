@@ -245,7 +245,7 @@ function CreatePost() {
         params.set('currentChunkIndex', currentChunkIndex);
         params.set('totalChunks', Math.ceil(file.size / chunkSize));
         const headers = { 'Content-Type': 'application/octet-stream' };
-        const url = 'http://localhost:4000/api/v1/user/upload?' + params.toString();
+        const url = 'http://socialmediaserver.kallungal.tech/api/v1/user/upload?' + params.toString();
         axios.post(url, data, { headers })
             .then(response => {
                 const file = video[currentFileIndex];
